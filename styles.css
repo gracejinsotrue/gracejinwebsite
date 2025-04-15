@@ -182,16 +182,14 @@ h3 {
     position: relative;
     z-index: 5;
     max-width: 35%;
-    /* Adjusted to fit left half with some margin */
     margin-left: 20px;
-    /* Align with left edge with some margin */
 
 }
 
 .project-bar.expanded .project-content {
     padding: 20px;
     padding-top: 100px;
-    /* Increase this value to push content lower */
+    /* increase this value to push content lower */
 }
 
 .project-content p {
@@ -214,23 +212,23 @@ h3 {
 
 /* Individual project background images */
 #NeuroScent .project-bar-bg {
-    background-image: url('images/neuroscent.png');
+    background-image: url('/images/neuroscent.png');
 }
 
 #Sentiment .project-bar-bg {
-    background-image: url("images/sentiment.png")
+    background-image: url("/images/sentiment.png")
 }
 
 #PhysicsXR .project-bar-bg {
-    background-image: url('images/xr.png');
+    background-image: url('/images/xr.png');
 }
 
 #anime .project-bar-bg {
-    background-image: url('images/cloud.png');
+    background-image: url('/images/cloud.png');
 }
 
 #personalproject .project-bar-bg {
-    background-image: url('images/companion.png');
+    background-image: url('/images/companion.png');
 }
 
 
