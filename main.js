@@ -182,12 +182,12 @@ function loadTextures() {
         //     back: 'image'
         // };
         const texturePaths = {
-            right: 'images/gallery/video/cooking1.mp4',
-            left: 'images/gallery/video/sushi.mp4',
-            top: 'images/gallery/video/spiderman.mp4',
-            bottom: 'images/gallery/video/genshin.mp4',
-            front: 'images/gallery/video/flower.mp4',
-            back: 'images/gallery/video/noodles.mp4'
+            right: '/images/gallery/video/cooking1.mp4',
+            left: '/images/gallery/video/sushi.mp4',
+            top: '/images/gallery/video/spiderman.mp4',
+            bottom: '/images/gallery/video/genshin.mp4',
+            front: '/images/gallery/video/flower.mp4',
+            back: '/images/gallery/video/noodles.mp4'
         };
 
         const textureTypes = {

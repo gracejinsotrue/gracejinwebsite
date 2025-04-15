@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "temporary": "file:",
     "three": "^0.175.0"
   },
   "devDependencies": {
