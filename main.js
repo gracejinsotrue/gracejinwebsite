@@ -934,27 +934,27 @@ window.addEventListener('scroll', function () {
         document.getElementById('canvas-container').style.opacity = '1';
     }
 });
-document.addEventListener('DOMContentLoaded', function () {
-    // Check if we're running on Vercel
-    if (window.location.hostname.includes('vercel.app') ||
-        window.location.hostname.includes('gracejinwebsite')) {
-        //i'll change the domain later
-        // Add a data attribute to the body element
-        document.body.setAttribute('data-deploy', 'vercel');
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Check if we're running on Vercel
+//     if (window.location.hostname.includes('vercel.app') ||
+//         window.location.hostname.includes('gracejinwebsite')) {
+//         //i'll change the domain later
+//         // Add a data attribute to the body element
+//         document.body.setAttribute('data-deploy', 'vercel');
 
 
-        const canvas = document.getElementById('canvas-container');
-        if (canvas) {
-            canvas.style.width = '45%';
-            canvas.style.height = '45vh';
-        }
+//         const canvas = document.getElementById('canvas-container');
+//         if (canvas) {
+//             canvas.style.width = '45%';
+//             canvas.style.height = '45vh';
+//         }
 
-        const projectBars = document.querySelectorAll('.project-bar');
-        projectBars.forEach(bar => {
-            bar.style.height = '7.5rem';
-        });
-    }
-});
+//         const projectBars = document.querySelectorAll('.project-bar');
+//         projectBars.forEach(bar => {
+//             bar.style.height = '7.5rem';
+//         });
+//     }
+// });
 
 if (document.getElementById('home')) {
     init();
