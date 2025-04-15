@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx vite build",
+    "dev": "npx vite dev",
+    "preview": "npx vite preview"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +16,5 @@
   },
   "devDependencies": {
     "vite": "^6.2.6"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
   }
 }
