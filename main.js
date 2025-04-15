@@ -590,14 +590,9 @@ function principalComponent(v) {
 }
 
 function onWindowResize() {
-    // Get the actual size of the container
-    const container = document.getElementById('canvas-container');
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-
-    camera.aspect = width / height;
+    camera.aspect = window.innerWidth / 2 / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
+    renderer.setSize(window.innerWidth / 2, window.innerHeight);
 }
 
 // Add this to ensure proper initial sizing
