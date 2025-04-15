@@ -1,18 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap');
 
+/* CSS Reset and base styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    /* Base font size */
+}
+
 #canvas-container {
     transition: opacity 0.3s ease;
 }
 
 body {
     margin: 0;
-    /* background-color: rgb(59, 29, 49); */
     background-color: rgb(12, 12, 12);
-    /* background-image: url("images/homebg2.png"); */
     color: white;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 200;
-
+    line-height: 1.5;
 }
 
 nav {
@@ -21,13 +31,13 @@ nav {
     left: 0;
     width: 100%;
     background-color: rgba(3, 0, 2, 0.884);
-    padding: 15px 0;
+    padding: 0.9375rem 0;
     text-align: center;
     z-index: 100;
 }
 
 nav a {
-    margin: 0 15px;
+    margin: 0 0.9375rem;
     color: #af6bb1;
     text-decoration: none;
     font-weight: 500;
@@ -45,17 +55,17 @@ nav a:hover {
 .left-content {
     width: 100%;
     height: 100%;
-    padding: 80px 30px 30px 30px;
+    padding: 5rem 1.875rem 1.875rem 1.875rem;
     box-sizing: border-box;
     margin-left: 45%;
-    max-width: 670px;
+    max-width: 41.875rem;
 }
 
 /*left content modifies the bounding box, elastic line modifies the length!*/
 
 #projects {
     min-height: 100vh;
-    padding: 60px 30px 30px 30px;
+    padding: 3.75rem 1.875rem 1.875rem 1.875rem;
     /*this modifies the top project br distance*/
     width: 100%;
     max-width: 100%;
@@ -67,46 +77,41 @@ nav a:hover {
 p {
     word-wrap: break-word;
     white-space: normal;
-
 }
 
 h1 {
-
     word-wrap: break-word;
     white-space: normal;
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 700;
-
 }
 
 h2 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: 500;
-
 }
 
 h3 {
-    /* padding-left: 30px; */
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
 .intro-text {
-    margin-top: 100px;
-    font-size: 14px;
+    margin-top: 6.25rem;
+    font-size: 0.875rem;
 }
 
 .project-bar.expanded::after {
     content: '';
     position: absolute;
-    top: 100px;
+    top: 6.25rem;
     /* Start after the header bar */
     left: 0;
     width: 40%;
     /* Only cover the left half */
-    height: calc(100% - 100px);
+    height: calc(100% - 6.25rem);
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 2;
 }
@@ -114,14 +119,14 @@ h3 {
 /* Project Bars Styling */
 .project-bars {
     width: 100%;
-    margin: 20px 0;
+    margin: 1.25rem 0;
 }
 
 .project-bar {
     position: relative;
     width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
+    height: 6.25rem;
+    margin-bottom: 0.625rem;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -133,27 +138,26 @@ h3 {
 
 .project-title {
     position: absolute;
-    left: 50px;
+    left: 3.125rem;
     top: 50%;
     transform: translateY(-50%);
     color: white;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 300;
     z-index: 10;
     transition: all 0.3s ease;
 }
 
 .project-bar.expanded .project-title {
-    top: 20px;
+    top: 1.25rem;
     transform: none;
-    font-size: 28px;
-
+    font-size: 1.75rem;
 }
 
 .project-bar-bg {
     width: 100%;
     height: 100%;
-    min-height: 100px;
+    min-height: 6.25rem;
     background-size: cover;
     background-position: center;
     position: absolute;
@@ -177,26 +181,25 @@ h3 {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
-    padding: 0 20px;
+    padding: 0 1.25rem;
     color: white;
     position: relative;
     z-index: 5;
     max-width: 35%;
-    margin-left: 20px;
-
+    margin-left: 1.25rem;
 }
 
 .project-bar.expanded .project-content {
-    padding: 20px;
-    padding-top: 100px;
+    padding: 1.25rem;
+    padding-top: 6.25rem;
     /* increase this value to push content lower */
 }
 
 .project-content p {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 200;
-    font-size: 14px
+    font-size: 0.875rem;
 }
 
 .project-content a {
@@ -216,7 +219,7 @@ h3 {
 }
 
 #Sentiment .project-bar-bg {
-    background-image: url("/images/sentiment.png")
+    background-image: url("/images/sentiment.png");
 }
 
 #PhysicsXR .project-bar-bg {
@@ -231,13 +234,9 @@ h3 {
     background-image: url('/images/companion.png');
 }
 
-
-
 .about-footer-home {
-    /* background-color: rgb(12, 12, 12); */
     background: linear-gradient(rgb(12, 12, 12), rgb(105, 39, 102));
     padding: 2rem 2rem;
-
 }
 
 .about-footer-content-home {
@@ -307,14 +306,12 @@ h3 {
     justify-content: space-around;
 }
 
-
 .text-separator-home {
     text-align: center;
     margin: 1rem 0;
     color: white;
-    font-size: 1.2rem;
-    letter-spacing: 3px;
-    font-size: 24px
+    letter-spacing: 0.1875rem;
+    font-size: 1.5rem;
 }
 
 #particles-js {
@@ -324,6 +321,33 @@ h3 {
     top: 0;
     left: 0;
     z-index: 0;
+}
 
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
 
+    .left-content {
+        margin-left: 5%;
+        max-width: 90%;
+    }
+
+    .project-content {
+        max-width: 80%;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+/* Vercel-specific adjustment */
+@media screen and (min-width: 768px) {
+    .intro-text {
+        margin-top: 8rem;
+    }
 }

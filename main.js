@@ -601,7 +601,7 @@ function onWindowResize() {
 }
 
 // Add this to ensure proper initial sizing
-window.addEventListener('load', onWindowResize);
+//window.addEventListener('load', onWindowResize);
 // we dont even use keyboard
 function onKeyDown(event) {
     if (isMoving) return;
