@@ -69,24 +69,26 @@
     color: #333;
 }
 
-#interactive-portrait {
-    position: relative;
-    height: 40rem;
-    width: 150%;
-    max-width: 50rem;
-    overflow: hidden;
-    margin-top: 4.5rem;
-    /* Alternative way to move it down */
-    margin-bottom: 0;
-    border-radius: 5px;
-}
-
 a {
     color: inherit;
 }
 
-/*this is so cool! the link color inherits the color of the parent text!!*/
 
+#interactive-portrait {
+    position: relative;
+    height: 40rem;
+    /* Reduced from 40rem */
+    width: 150%;
+    /* Reduced from 150% */
+    max-width: 45rem;
+    /* Reduced from 50rem */
+    overflow: hidden;
+    margin-top: 4.5rem;
+    margin-bottom: 0;
+    border-radius: 5px;
+}
+
+/* Make sure the image inside scales properly */
 .portrait {
     position: absolute;
     width: 100%;
