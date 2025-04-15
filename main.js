@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-
 let scene, camera, renderer, controls;
 let cubeGroup, allCubes = [];
 let isMoving = false;
