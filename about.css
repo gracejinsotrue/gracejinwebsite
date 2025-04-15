@@ -2,7 +2,8 @@
 
 /* General Layout - using 'about-' prefix to avoid conflicts */
 .about-section {
-    padding: 5.5rem 0;
+    padding: 5.2rem 0;
+    /* Reduced by 5% */
     overflow: hidden;
     background-color: rgb(12, 12, 12);
     /* background-image: url(images/aboutbg1.png); */
@@ -12,35 +13,43 @@
 }
 
 .about-container {
-    max-width: 82.5rem;
+    max-width: 78.5rem;
+    /* Reduced by 5% */
     margin: 0 auto;
-    padding: 0 2.75rem;
+    padding: 0 2.6rem;
+    /* Reduced by 5% */
 }
 
 /* Override body styles only within about page sections */
 .about-section h1 {
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.65rem;
+    /* Reduced by 5% */
     font-weight: 700;
-    font-size: 2.1rem;
+    font-size: 2rem;
+    /* Reduced by 5% */
 }
 
 .about-section h2 {
-    font-size: 3.1rem;
-    margin-bottom: 2.75rem;
+    font-size: 2.95rem;
+    /* Reduced by 5% */
+    margin-bottom: 2.6rem;
+    /* Reduced by 5% */
     display: flex;
     align-items: center;
     font-weight: 700;
 }
 
 .about-section h3 {
-    font-size: 2.1rem;
+    font-size: 2rem;
+    /* Reduced by 5% */
     margin-bottom: 0;
     font-weight: 700;
 }
 
 /* Hero Section with interactive portrait */
 #about-hero {
-    padding: 6.9rem 0 0;
+    padding: 6.5rem 0 0;
+    /* Reduced by 5% */
     background-color: rgb(255, 255, 255);
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
@@ -49,12 +58,14 @@
 .about-content-wrapper {
     display: flex;
     align-items: flex-start;
-    gap: 2.75rem;
+    gap: 2.6rem;
+    /* Reduced by 5% */
 }
 
 .about-text-side {
     flex: 1;
-    font-size: 1.25rem;
+    font-size: 1.19rem;
+    /* Reduced by 5% */
 }
 
 .about-image-side {
@@ -63,9 +74,11 @@
 }
 
 .about-intro {
-    font-size: 1.65rem;
+    font-size: 1.57rem;
+    /* Reduced by 5% */
     font-weight: 500;
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.33rem;
+    /* Reduced by 5% */
     color: #333;
 }
 
@@ -76,14 +89,15 @@ a {
 
 #interactive-portrait {
     position: relative;
-    height: 40rem;
-    /* Reduced from 40rem */
-    width: 150%;
-    /* Reduced from 150% */
-    max-width: 45rem;
-    /* Reduced from 50rem */
+    height: 38rem;
+    /* Reduced by 5% */
+    width: 142.5%;
+    /* Reduced by 5% */
+    max-width: 42.75rem;
+    /* Reduced by 5% */
     overflow: hidden;
-    margin-top: 4.5rem;
+    margin-top: 4.3rem;
+    /* Reduced by 5% */
     margin-bottom: 0;
     border-radius: 5px;
 }
@@ -117,14 +131,18 @@ a {
 }
 
 .about-skill-column h3 {
-    font-size: 2.5rem;
-    margin-bottom: 1.4rem;
+    font-size: 2.38rem;
+    /* Reduced by 5% */
+    margin-bottom: 1.33rem;
+    /* Reduced by 5% */
 }
 
 /* Card Grid Sections */
 .flower {
-    font-size: 2.75rem;
-    margin-left: 0.7rem;
+    font-size: 2.6rem;
+    /* Reduced by 5% */
+    margin-left: 0.65rem;
+    /* Reduced by 5% */
 }
 
 #on-campus,
@@ -136,6 +154,7 @@ a {
     color: white;
 }
 
+/* Rest of the CSS remains unchanged */
 #on-campus h2,
 #off-campus h2,
 #on-campus p,
