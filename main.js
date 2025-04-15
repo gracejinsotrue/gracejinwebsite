@@ -589,15 +589,19 @@ function principalComponent(v) {
     return maxAxis;
 }
 
-// window resize handler
 function onWindowResize() {
-    camera.aspect = window.innerWidth / 2 / window.innerHeight;
+    // Get the actual size of the container
+    const container = document.getElementById('canvas-container');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth / 2, window.innerHeight);
+    renderer.setSize(width, height);
 }
 
-
-
+// Add this to ensure proper initial sizing
+window.addEventListener('load', onWindowResize);
 // we dont even use keyboard
 function onKeyDown(event) {
     if (isMoving) return;
