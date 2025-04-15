@@ -2,7 +2,7 @@
 
 /* General Layout - using 'about-' prefix to avoid conflicts */
 .about-section {
-    padding: 5rem 0;
+    padding: 5.5rem 0;
     overflow: hidden;
     background-color: rgb(12, 12, 12);
     /* background-image: url(images/aboutbg1.png); */
@@ -12,84 +12,73 @@
 }
 
 .about-container {
-    max-width: 75rem;
+    max-width: 82.5rem;
     margin: 0 auto;
-    padding: 0 2.5rem;
+    padding: 0 2.75rem;
 }
 
 /* Override body styles only within about page sections */
 .about-section h1 {
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.7rem;
     font-weight: 700;
-    font-size: 1.875rem;
+    font-size: 2.1rem;
 }
 
 .about-section h2 {
-    font-size: 2.75rem;
-    margin-bottom: 2.5rem;
+    font-size: 3.1rem;
+    margin-bottom: 2.75rem;
     display: flex;
     align-items: center;
     font-weight: 700;
 }
 
 .about-section h3 {
-    font-size: 1.875rem;
+    font-size: 2.1rem;
     margin-bottom: 0;
     font-weight: 700;
 }
 
 /* Hero Section with interactive portrait */
 #about-hero {
-    padding: 6.25rem 0 7rem;
-    /* Added bottom padding to create space for portrait overlap */
+    padding: 6.9rem 0 0;
     background-color: rgb(255, 255, 255);
     margin-bottom: 0 !important;
-    position: relative;
-    /* Added for z-index context */
-    z-index: 1;
-    /* Ensure proper stacking context */
+    padding-bottom: 0 !important;
 }
 
 .about-content-wrapper {
     display: flex;
     align-items: flex-start;
-    gap: 2.5rem;
+    gap: 2.75rem;
 }
 
 .about-text-side {
     flex: 1;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
 }
 
 .about-image-side {
     flex: 1;
     position: relative;
-    display: flex;
-    justify-content: center;
-    /* Center the portrait horizontally */
-    align-items: flex-end;
-    /* Align to bottom to emphasize cutoff */
 }
 
 .about-intro {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 500;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.4rem;
     color: #333;
 }
 
 /* Interactive Portrait */
 #interactive-portrait {
     position: relative;
-    height: 28rem;
+    height: 37.8rem;
     width: 100%;
-    max-width: 32rem;
-    overflow: visible;
-    /* Changed from hidden to allow cutoff effect */
-    margin-bottom: -5rem;
-    /* Negative margin to create overlap with next section */
-    border-radius: 0.3125rem;
-    /* box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); */
+    max-width: 41.25rem;
+    overflow: hidden;
+    margin-bottom: 0;
+    border-radius: 5px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 a {
@@ -126,27 +115,23 @@ a {
 }
 
 .about-skill-column h3 {
-    font-size: 2.25rem;
-    margin-bottom: 1.25rem;
+    font-size: 2.5rem;
+    margin-bottom: 1.4rem;
 }
 
 /* Card Grid Sections */
 .flower {
-    font-size: 2.5rem;
-    margin-left: 0.625rem;
+    font-size: 2.75rem;
+    margin-left: 0.7rem;
 }
 
 #on-campus,
 #off-campus {
     /* background-image: url("images/bg3.png"); */
     background-color: rgb(12, 12, 12);
-    padding: 1.25rem 5rem;
+    padding: 1.4rem 5.5rem;
     /* Dark background for these sections */
     color: white;
-    position: relative;
-    /* Added for proper stacking with portrait */
-    z-index: 2;
-    /* Higher than hero section to create cutoff effect */
 }
 
 #on-campus h2,
@@ -162,23 +147,23 @@ a {
 .about-card-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
+    gap: 2.75rem;
 }
 
 /* .about-card {
     background-image: url("images/homebg2.png");
-    border-radius: 0.5rem;
+    border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s ease;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 } */
 
 .about-card:hover {
-    transform: translateY(-0.3125rem);
+    transform: translateY(-5px);
 }
 
 .about-card-image {
-    height: 12.5rem;
+    height: 13.75rem;
     overflow: hidden;
 }
 
@@ -194,18 +179,18 @@ a {
 }
 
 .about-card-content {
-    padding: 1.875rem;
+    padding: 2.1rem;
 }
 
 .about-card h3 {
     margin-top: 0;
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 500;
     color: white;
 }
 
 .about-card p {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     color: #ccc;
 }
 
@@ -218,7 +203,7 @@ a {
     }
 
     .about-image-side {
-        margin-top: 1.25rem;
+        margin-top: 1.4rem;
     }
 
     .about-card-grid {
@@ -235,7 +220,7 @@ a {
 
     .about-skills-wrapper {
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 1.4rem;
     }
 }
 
@@ -246,7 +231,7 @@ a {
 
 .about-footer {
     background: linear-gradient(rgb(12, 12, 12), rgb(105, 39, 102));
-    padding: 2.5rem;
+    padding: 2.75rem;
 }
 
 .about-footer-content {
@@ -261,8 +246,8 @@ a {
 
 .about-footer-greeting h2 {
     color: white;
-    font-size: 2.5rem;
-    margin-bottom: 0.625rem;
+    font-size: 2.75rem;
+    margin-bottom: 0.7rem;
 }
 
 .about-footer-greeting p {
@@ -276,12 +261,12 @@ a {
 
 .about-footer h3 {
     color: white;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.4rem;
 }
 
 .about-footer a {
     color: #ccc;
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.7rem;
     text-decoration: none;
 }
 
@@ -302,8 +287,8 @@ a {
 
 .about-footer-greeting h2 {
     color: white;
-    font-size: 2.5rem;
-    margin-bottom: 0.625rem;
+    font-size: 2.75rem;
+    margin-bottom: 0.7rem;
 }
 
 .about-footer-greeting p {
@@ -322,8 +307,8 @@ a {
 
 .text-separator {
     text-align: center;
-    margin: 1.25rem 0;
+    margin: 1.4rem 0;
     color: white;
-    font-size: 1.5rem;
-    letter-spacing: 0.1875rem;
+    font-size: 1.65rem;
+    letter-spacing: 3px;
 }
