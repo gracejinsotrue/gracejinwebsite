@@ -1,3 +1,5 @@
+// In gallery.js
+import './gallery.css';
 document.addEventListener('DOMContentLoaded', function () {
     // --- Slideshow Logic for All Carousels ---
     const categorySections = document.querySelectorAll('.category-section');

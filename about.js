@@ -1,5 +1,5 @@
 // about.js - Modified for left-side overlay with smooth transition on mouse leave
-
+import './about.css';
 document.addEventListener('DOMContentLoaded', function () {
     const interactivePortrait = document.getElementById('interactive-portrait');
     const cartoon = document.getElementById('cartoon');
