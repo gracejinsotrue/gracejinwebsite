@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap');
+
+#canvas-container {
+    transition: opacity 0.3s ease;
+}
+
+body {
+    margin: 0;
+    /* background-color: rgb(59, 29, 49); */
+    background-color: rgb(12, 12, 12);
+    /* background-image: url("images/homebg2.png"); */
+    color: white;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 200;
+
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(3, 0, 2, 0.884);
+    padding: 15px 0;
+    text-align: center;
+    z-index: 100;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #af6bb1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+#home {
+    height: 65vh;
+    position: relative;
+}
+
+.left-content {
+    width: 100%;
+    height: 100%;
+    padding: 80px 30px 30px 30px;
+    box-sizing: border-box;
+    margin-left: 45%;
+    max-width: 670px;
+}
+
+/*left content modifies the bounding box, elastic line modifies the length!*/
+
+#projects {
+    min-height: 100vh;
+    padding: 60px 30px 30px 30px;
+    /*this modifies the top project br distance*/
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-weight: 500;
+}
+
+p {
+    word-wrap: break-word;
+    white-space: normal;
+
+}
+
+h1 {
+
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 28px;
+    font-weight: 700;
+
+}
+
+h2 {
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 22px;
+    font-weight: 500;
+
+}
+
+h3 {
+    /* padding-left: 30px; */
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.intro-text {
+    margin-top: 100px;
+    font-size: 14px;
+}
+
+.project-bar.expanded::after {
+    content: '';
+    position: absolute;
+    top: 100px;
+    /* Start after the header bar */
+    left: 0;
+    width: 40%;
+    /* Only cover the left half */
+    height: calc(100% - 100px);
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+/* Project Bars Styling */
+.project-bars {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.project-bar {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.project-bar.expanded {
+    height: auto;
+}
+
+.project-title {
+    position: absolute;
+    left: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 24px;
+    font-weight: 300;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.project-bar.expanded .project-title {
+    top: 20px;
+    transform: none;
+    font-size: 28px;
+
+}
+
+.project-bar-bg {
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.project-bar-bg::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+}
+
+.project-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    padding: 0 20px;
+    color: white;
+    position: relative;
+    z-index: 5;
+    max-width: 35%;
+    /* Adjusted to fit left half with some margin */
+    margin-left: 20px;
+    /* Align with left edge with some margin */
+
+}
+
+.project-bar.expanded .project-content {
+    padding: 20px;
+    padding-top: 100px;
+    /* Increase this value to push content lower */
+}
+
+.project-content p {
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 200;
+    font-size: 14px
+}
+
+.project-content a {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500;
+    color: #8a2be2;
+    text-decoration: none;
+}
+
+.project-content a:hover {
+    text-decoration: underline;
+}
+
+/* Individual project background images */
+#NeuroScent .project-bar-bg {
+    background-image: url('images/neuroscent.png');
+}
+
+#Sentiment .project-bar-bg {
+    background-image: url("images/sentiment.png")
+}
+
+#PhysicsXR .project-bar-bg {
+    background-image: url('images/xr.png');
+}
+
+#anime .project-bar-bg {
+    background-image: url('images/cloud.png');
+}
+
+#personalproject .project-bar-bg {
+    background-image: url('images/companion.png');
+}
+
+
+
+.about-footer-home {
+    /* background-color: rgb(12, 12, 12); */
+    background: linear-gradient(rgb(12, 12, 12), rgb(105, 39, 102));
+    padding: 2rem 2rem;
+
+}
+
+.about-footer-content-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.about-footer-greeting-home {
+    flex: 1;
+}
+
+.about-footer-greeting-home h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.about-footer-greeting-home p {
+    color: #ccc;
+}
+
+.about-footer-section-home {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-footer-home h3 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.about-footer-home a {
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+
+.about-footer-home a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.about-footer-content-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.about-footer-greeting-home {
+    flex: 1;
+}
+
+.about-footer-greeting-home h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.about-footer-greeting-home p {
+    color: #ccc;
+}
+
+.about-footer-links-home {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.text-separator-home {
+    text-align: center;
+    margin: 1rem 0;
+    color: white;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    font-size: 24px
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+
+
+}
