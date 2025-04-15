@@ -2,7 +2,7 @@
 
 /* General Layout - using 'about-' prefix to avoid conflicts */
 .about-section {
-    padding: 4rem 0;
+    padding: 5rem 0;
     overflow: hidden;
     background-color: rgb(12, 12, 12);
     /* background-image: url(images/aboutbg1.png); */
@@ -12,44 +12,35 @@
 }
 
 .about-container {
-    max-width: 1200px;
+    max-width: 75rem;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 2.5rem;
 }
 
-/* Override body styles only within about page sections .about-section h1,
-.about-section h2,
-.about-section h3,
-.about-section p {
-    color: #333;
-    /* Dark text on light background */
-/* font-size: 16px;
-} */
+/* Override body styles only within about page sections */
 .about-section h1 {
-
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.625rem;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 1.875rem;
 }
 
 .about-section h2 {
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
+    font-size: 2.75rem;
+    margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
     font-weight: 700;
 }
 
 .about-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0rem;
+    font-size: 1.875rem;
+    margin-bottom: 0;
     font-weight: 700;
-
 }
 
 /* Hero Section with interactive portrait */
 #about-hero {
-    padding: 100px 0 0;
+    padding: 6.25rem 0 0;
     background-color: rgb(255, 255, 255);
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
@@ -58,12 +49,12 @@
 .about-content-wrapper {
     display: flex;
     align-items: flex-start;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .about-text-side {
     flex: 1;
-    font-size: 14px;
+    font-size: 1.125rem;
 }
 
 .about-image-side {
@@ -72,25 +63,22 @@
 }
 
 .about-intro {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
-
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     color: #333;
 }
 
 /* Interactive Portrait */
 #interactive-portrait {
     position: relative;
+    height: 34.375rem;
     width: 100%;
-    height: 550px;
-    /*FIX: height if you want it to be cutoff or whatever*/
-    width: 600px;
+    max-width: 37.5rem;
     overflow: hidden;
     margin-bottom: 0;
-    border-radius: 5px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-
+    border-radius: 0.3125rem;
+    /* box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); */
 }
 
 a {
@@ -105,7 +93,6 @@ a {
     height: 100%;
     object-fit: cover;
     transition: opacity 0.3s ease;
-
 }
 
 #photo {
@@ -120,7 +107,7 @@ a {
 
 .about-skills-wrapper {
     display: flex;
-    margin-bottom: 0
+    margin-bottom: 0;
 }
 
 .about-skill-column {
@@ -128,25 +115,23 @@ a {
 }
 
 .about-skill-column h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
+    font-size: 2.25rem;
+    margin-bottom: 1.25rem;
 }
 
 /* Card Grid Sections */
 .flower {
-    font-size: 2rem;
-    margin-left: 0.5rem;
+    font-size: 2.5rem;
+    margin-left: 0.625rem;
 }
 
 #on-campus,
 #off-campus {
     /* background-image: url("images/bg3.png"); */
     background-color: rgb(12, 12, 12);
-    padding-top: 0;
+    padding: 1.25rem 5rem;
     /* Dark background for these sections */
     color: white;
-    padding: 1rem 4rem;
-
 }
 
 #on-campus h2,
@@ -155,7 +140,6 @@ a {
 #off-campus p,
 #on-campus h3,
 #off-campus h3 {
-
     color: white;
     /* Override to ensure white text on dark backgrounds */
 }
@@ -163,7 +147,7 @@ a {
 .about-card-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 /* .about-card {
@@ -171,15 +155,15 @@ a {
     border-radius: 0.5rem;
     overflow: hidden;
     transition: transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
 } */
 
 .about-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-0.3125rem);
 }
 
 .about-card-image {
-    height: 200px;
+    height: 12.5rem;
     overflow: hidden;
 }
 
@@ -195,31 +179,31 @@ a {
 }
 
 .about-card-content {
-    padding: 1.5rem;
+    padding: 1.875rem;
 }
 
 .about-card h3 {
     margin-top: 0;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: white;
 }
 
 .about-card p {
-    font-size: 0.9rem;
+    font-size: 1.125rem;
     color: #ccc;
 }
 
-
-
 /* Responsive Design */
-@media (max-width: 992px) {
+@media (max-width: 62rem) {
+
+    /* 992px / 16 = 62rem */
     .about-content-wrapper {
         flex-direction: column;
     }
 
     .about-image-side {
-        margin-top: 1rem;
+        margin-top: 1.25rem;
     }
 
     .about-card-grid {
@@ -227,31 +211,27 @@ a {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
+
+    /* 768px / 16 = 48rem */
     .about-card-grid {
         grid-template-columns: 1fr;
     }
 
     .about-skills-wrapper {
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.25rem;
     }
 }
 
 /* Font override for About page
 .about-section {
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-
-
 } */
-
 
 .about-footer {
     background: linear-gradient(rgb(12, 12, 12), rgb(105, 39, 102));
-    padding: 2rem 2rem;
-
-
-
+    padding: 2.5rem;
 }
 
 .about-footer-content {
@@ -266,8 +246,8 @@ a {
 
 .about-footer-greeting h2 {
     color: white;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.625rem;
 }
 
 .about-footer-greeting p {
@@ -281,12 +261,12 @@ a {
 
 .about-footer h3 {
     color: white;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .about-footer a {
     color: #ccc;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.625rem;
     text-decoration: none;
 }
 
@@ -307,8 +287,8 @@ a {
 
 .about-footer-greeting h2 {
     color: white;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.625rem;
 }
 
 .about-footer-greeting p {
@@ -322,15 +302,13 @@ a {
 }
 
 .ok {
-    text-align: center
+    text-align: center;
 }
-
 
 .text-separator {
     text-align: center;
-    margin: 1rem 0;
+    margin: 1.25rem 0;
     color: white;
-    font-size: 1.2rem;
-    letter-spacing: 3px;
-    font-size: 24px
+    font-size: 1.5rem;
+    letter-spacing: 0.1875rem;
 }
