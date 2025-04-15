@@ -8,8 +8,8 @@
 }
 
 html {
-    font-size: 16px;
-    /* Base font size */
+    font-size: 18px;
+    /* Increased base font size */
 }
 
 #canvas-container {
@@ -55,10 +55,10 @@ nav a:hover {
 .left-content {
     width: 100%;
     height: 100%;
-    padding: 5rem 1.875rem 1.875rem 1.875rem;
+    padding: 5rem 2.5rem 2.5rem 2.5rem;
     box-sizing: border-box;
-    margin-left: 45%;
-    max-width: 41.875rem;
+    margin-left: 42%;
+    max-width: 50rem;
 }
 
 /*left content modifies the bounding box, elastic line modifies the length!*/
@@ -82,25 +82,25 @@ p {
 h1 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 1.75rem;
+    font-size: 2.2rem;
     font-weight: 700;
 }
 
 h2 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 1.375rem;
+    font-size: 1.75rem;
     font-weight: 500;
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 500;
 }
 
 .intro-text {
     margin-top: 6.25rem;
-    font-size: 0.875rem;
+    font-size: 1.1rem;
 }
 
 .project-bar.expanded::after {
@@ -199,7 +199,7 @@ h3 {
     margin-bottom: 1.25rem;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 200;
-    font-size: 0.875rem;
+    font-size: 1.1rem;
 }
 
 .project-content a {
@@ -326,7 +326,7 @@ h3 {
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     html {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .left-content {
@@ -341,7 +341,7 @@ h3 {
 
 @media (min-width: 1200px) {
     html {
-        font-size: 18px;
+        font-size: 20px;
     }
 }
 
@@ -349,5 +349,12 @@ h3 {
 @media screen and (min-width: 768px) {
     .intro-text {
         margin-top: 8rem;
+    }
+}
+
+/* Special adjustment for Vercel environment */
+@media screen and (min-width: 768px) {
+    body[data-deploy="vercel"] .left-content {
+        margin-left: 40%;
     }
 }
