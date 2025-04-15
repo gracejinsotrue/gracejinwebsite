@@ -1,6 +1,6 @@
 // about.js - Modified for left-side overlay with smooth transition on mouse leave
 import './about.css';
-import './particles-config.js';
+// import './particles-config.js';
 document.addEventListener('DOMContentLoaded', function () {
     const interactivePortrait = document.getElementById('interactive-portrait');
     const cartoon = document.getElementById('cartoon');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to set the half-overlay state - modified for left side
     function setHalfOverlay() {
-        cartoon.style.clipPath = `polygon(0 0, 43% 0, 43% 100%, 0 100%)`;
+        cartoon.style.clipPath = `polygon(0 0, 37% 0, 37% 100%, 0 100%)`;
         cartoon.style.opacity = 1; // Always full opacity
         photo.style.transform = 'translateX(0)';
         cartoon.style.transform = 'translateX(0)';

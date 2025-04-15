@@ -69,16 +69,16 @@
     color: #333;
 }
 
-/* Interactive Portrait */
 #interactive-portrait {
     position: relative;
-    height: 37.8rem;
-    width: 100%;
-    max-width: 41.25rem;
+    height: 40rem;
+    width: 150%;
+    max-width: 50rem;
     overflow: hidden;
+    margin-top: 4.5rem;
+    /* Alternative way to move it down */
     margin-bottom: 0;
     border-radius: 5px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 a {
