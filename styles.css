@@ -8,16 +8,12 @@
 }
 
 html {
-    font-size: 20px;
-    /* Larger base font size for all environments */
+    font-size: 18px;
+    /* Increased base font size */
 }
 
 #canvas-container {
     transition: opacity 0.3s ease;
-    width: 45% !important;
-    /* Force width to be consistent */
-    height: 45vh !important;
-    /* Force height to be consistent */
 }
 
 body {
@@ -59,10 +55,10 @@ nav a:hover {
 .left-content {
     width: 100%;
     height: 100%;
-    padding: 5.5rem 3rem 3rem 3rem;
+    padding: 5rem 2.5rem 2.5rem 2.5rem;
     box-sizing: border-box;
-    margin-left: 40%;
-    max-width: 55rem;
+    margin-left: 42%;
+    max-width: 50rem;
 }
 
 /*left content modifies the bounding box, elastic line modifies the length!*/
@@ -86,29 +82,25 @@ p {
 h1 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    line-height: 1.2;
 }
 
 h2 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 1.9rem;
+    font-size: 1.75rem;
     font-weight: 500;
-    line-height: 1.3;
 }
 
 h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 500;
-    line-height: 1.3;
 }
 
 .intro-text {
-    margin-top: 6.5rem;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    margin-top: 6.25rem;
+    font-size: 1.1rem;
 }
 
 .project-bar.expanded::after {
@@ -133,10 +125,8 @@ h3 {
 .project-bar {
     position: relative;
     width: 100%;
-    height: 7.5rem;
-    /* Increased height */
-    margin-bottom: 1rem;
-    /* Increased margin */
+    height: 6.25rem;
+    margin-bottom: 0.625rem;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -148,22 +138,20 @@ h3 {
 
 .project-title {
     position: absolute;
-    left: 3.5rem;
+    left: 3.125rem;
     top: 50%;
     transform: translateY(-50%);
     color: white;
-    font-size: 1.8rem;
-    /* Larger title */
+    font-size: 1.5rem;
     font-weight: 300;
     z-index: 10;
     transition: all 0.3s ease;
 }
 
 .project-bar.expanded .project-title {
-    top: 1.5rem;
+    top: 1.25rem;
     transform: none;
-    font-size: 2.1rem;
-    /* Larger expanded title */
+    font-size: 1.75rem;
 }
 
 .project-bar-bg {
@@ -208,11 +196,10 @@ h3 {
 }
 
 .project-content p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 200;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
 }
 
 .project-content a {
@@ -339,29 +326,35 @@ h3 {
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     html {
-        font-size: 18px;
-        /* Still larger than before, but adjusted for mobile */
+        font-size: 16px;
     }
 
     .left-content {
         margin-left: 5%;
         max-width: 90%;
-        padding: 4rem 1.5rem 1.5rem 1.5rem;
     }
 
     .project-content {
-        max-width: 85%;
-    }
-
-    #canvas-container {
-        width: 90% !important;
-        height: 40vh !important;
+        max-width: 80%;
     }
 }
 
 @media (min-width: 1200px) {
     html {
-        font-size: 22px;
-        /* Even larger for big screens */
+        font-size: 20px;
+    }
+}
+
+/* Vercel-specific adjustment */
+@media screen and (min-width: 768px) {
+    .intro-text {
+        margin-top: 8rem;
+    }
+}
+
+/* Special adjustment for Vercel environment */
+@media screen and (min-width: 768px) {
+    body[data-deploy="vercel"] .left-content {
+        margin-left: 40%;
     }
 }
