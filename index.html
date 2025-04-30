@@ -44,20 +44,63 @@
     <div id="projects" class="project-bars">
         <h3>Projects</h3>
         <!--MIT RH-->
+
         <div id="NeuroScent" class="project-bar">
             <div class="project-bar-bg"></div>
             <h3 class="project-title">NEUROSCENT: MIT REALITY HACK WINNER</h3>
-            <div class="project-content">
-                <p>Inspired by a research paper, I collaborated with a team of 5 to create Neuroscent, a system
-                    connecting VR brain-computer interfaces with olfactory displays to promote users' mental
-                    well-being based on biofeedback. Used OpenBCI's Galea ($30k) BCI VR Headset connected to Unity
-                    with a dynamic interactive environment based off of detected alpha brain waves. Basically,
-                    hands-free exploration in a Unity Enviornment that I designed and coded up from scratch. Trying
-                    to turn this into a cross-university project right now!</p>
-                <p> Tech Stack: C#, Unity, OpenBCI software, Blender, Arduino</p>
-                <a href="https://devpost.com/software/neuroscent" target="_blank">Devpost</a>
+            <div class="project-expanded-content">
+                <div class="project-content">
+                    <p>Inspired by a research paper, I collaborated with a team of 5 to create Neuroscent, a system
+                        connecting VR brain-computer interfaces with olfactory displays to promote users' mental
+                        well-being based on biofeedback. Used OpenBCI's Galea ($30k) BCI VR Headset connected to Unity
+                        with a dynamic interactive environment based off of detected alpha brain waves. Basically,
+                        hands-free exploration in a Unity Environment that I designed and coded up from scratch. Trying
+                        to turn this into a cross-university project right now!</p>
+                    <p>Tech Stack: C#, Unity, OpenBCI software, Blender, Arduino</p>
+                    <a href="https://devpost.com/software/neuroscent" target="_blank">Devpost</a>
+                </div>
+                <div class="project-media">
+
+                    <div class="video-embed-container">
+
+                        <iframe title="vimeo-player" src="https://player.vimeo.com/video/1059625069?h=b9dae32691"
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <style>
+            /* video embed container styles */
+            .video-embed-container {
+                position: relative;
+                width: 100%;
+                max-width: 640px;
+                padding-bottom: 56.25%;
+                /* 16:9 aspect ratio */
+                height: 0;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .video-embed-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+            /* responsive adjustments */
+            @media (max-width: 768px) {
+                .video-embed-container {
+                    max-width: 100%;
+                }
+            }
+        </style>
 
         <div id="Sentiment" class="project-bar">
             <div class="project-bar-bg"></div>
