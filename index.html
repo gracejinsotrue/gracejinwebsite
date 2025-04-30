@@ -108,6 +108,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // simple detection for mobile devices - add a class to the body
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('mobile');
+            }
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth <= 768) {
+                    document.body.classList.add('mobile');
+                } else {
+                    document.body.classList.remove('mobile');
+                }
+            });
+        });
+    </script>
+
     <script type="module" src="/index.js"></script>
     <!-- <script src="elasticLine.js"></script> -->
     <script src="projectBars.js"></script>

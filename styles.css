@@ -358,3 +358,119 @@ h3 {
         margin-left: 40%;
     }
 }
+
+#canvas-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 40%;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* home section should be more flexible */
+#home {
+    min-height: 65vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+/* Make left content more responsive */
+.left-content {
+    width: 50%;
+    height: 100%;
+    padding: 5rem 2rem 2rem 2rem;
+    box-sizing: border-box;
+    margin-left: 45%;
+    max-width: 800px;
+}
+
+/* this should be better media query */
+@media (max-width: 1200px) {
+    .left-content {
+        margin-left: 42%;
+        width: 58%;
+        padding: 5rem 1.5rem 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    #canvas-container {
+        width: 35%;
+    }
+
+    .left-content {
+        margin-left: 40%;
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    #canvas-container {
+        opacity: 0.3;
+        width: 100%;
+        height: 50vh;
+        transform: scale(0.8);
+    }
+
+    .left-content {
+        margin-left: 0;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        width: 100%;
+        z-index: 2;
+        position: relative;
+    }
+
+    .project-content {
+        max-width: 90%;
+    }
+
+    .project-bar-bg::before {
+        width: 100%;
+    }
+
+    .project-bar.expanded .project-content {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 16px;
+    }
+
+    nav {
+        padding: 0.75rem 0;
+    }
+
+    nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .intro-text {
+        margin-top: 5rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .left-content {
+        padding: 4rem 1rem 1rem 1rem;
+    }
+}
