@@ -33,25 +33,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const projectBars = document.querySelectorAll('.project-bar');
+// document.addEventListener('DOMContentLoaded', function () {
+//     const projectBars = document.querySelectorAll('.project-bar');
 
-    projectBars.forEach(bar => {
-        const video = bar.querySelector('video');
+//     projectBars.forEach(bar => {
+//         const video = bar.querySelector('video');
 
-        // pause video when project bar is collapsed
-        bar.addEventListener('click', function (e) {
-            if (this.classList.contains('expanded')) {
-                if (video) {
-                    video.pause();
-                }
-            }
-        });
+//         // pause video when project bar is collapsed
+//         bar.addEventListener('click', function (e) {
+//             if (this.classList.contains('expanded')) {
+//                 if (video) {
+//                     video.pause();
+//                 }
+//             }
+//         });
 
-        if (video) {
-            video.addEventListener('click', function (e) {
-                e.stopPropagation();
-            });
-        }
-    });
-});
+//         if (video) {
+//             video.addEventListener('click', function (e) {
+//                 e.stopPropagation();
+//             });
+//         }
+//     });
+// });

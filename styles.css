@@ -109,7 +109,7 @@ h3 {
     top: 6.25rem;
     /* Start after the header bar */
     left: 0;
-    width: 40%;
+    width: 60%;
     /* Only cover the left half */
     height: calc(100% - 6.25rem);
     background-color: rgba(0, 0, 0, 0.7);
@@ -185,7 +185,7 @@ h3 {
     color: white;
     position: relative;
     z-index: 5;
-    max-width: 35%;
+    max-width: 55%;
     margin-left: 1.25rem;
 }
 
