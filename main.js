@@ -49,7 +49,8 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / 2 / window.innerHeight, 0.1, 1000);
     camera.position.z = 6;
-    camera.position.x = -6;
+    camera.position.x = -10;
+    camera.position.y = 4;
     camera.lookAt(scene.position);
 
 
@@ -67,10 +68,10 @@ function init() {
     const container = document.createElement('div');
     container.id = 'canvas-container';
     container.style.position = 'fixed';
-    container.style.left = '1%';
-    container.style.top = '-25px';
+    container.style.left = '0%';
+    container.style.top = '-50px';
     container.style.width = '40%';
-    container.style.height = '40vh';
+    container.style.height = '20vh';
     container.style.zIndex = '1';
     container.style.pointerEvents = 'auto';
     document.getElementById('home').appendChild(container);
