@@ -1,6 +1,6 @@
 .gallery-header {
     text-align: center;
-    margin: 1.5rem 0 0.5rem 0;
+    margin: 2rem 0 0.5rem 0;
 }
 
 .gallery-header h1 {
@@ -155,7 +155,6 @@
     border: none;
     border-radius: 50%;
     width: clamp(1.5rem, 4vw, 2rem);
-    /* Responsive arrow size */
     height: clamp(1.5rem, 4vw, 2rem);
     font-size: clamp(0.7rem, 2vw, 0.875rem);
     cursor: pointer;
@@ -432,5 +431,170 @@
 
     .slide {
         padding: 0 0.1rem;
+    }
+}
+
+/* Commission Banner Styles */
+.commission-banner {
+    /* background: linear-gradient(135deg, rgba(175, 107, 177, 0.1) 0%, rgba(175, 107, 177, 0.05) 100%); */
+    /* border: 2px solid rgba(175, 107, 177, 0.3); */
+    /* border-radius: 1rem; */
+    margin: 0rem auto;
+    max-width: 50%;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* box-shadow: 0 8px 32px rgba(175, 107, 177, 0.1); */
+    /* backdrop-filter: blur(10px); */
+    transition: all 0.3s ease;
+}
+
+/* .commission-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(175, 107, 177, 0.15);
+    border-color: rgba(175, 107, 177, 0.5);
+} */
+
+.commission-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(175, 107, 177, 0.05) 0%, transparent 70%);
+    animation: gentle-pulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes gentle-pulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.commission-content {
+    position: relative;
+    z-index: 2;
+}
+
+.commission-banner h2 {
+    /* color: #af6bb1; */
+    font-size: clamp(2rem, 3vw, 1rem);
+    margin-top: 6rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(175, 107, 177, 0.2);
+}
+
+.commission-banner p {
+    color: #ccc;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.commission-note {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: #999;
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+.commission-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+}
+
+.commission-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: rgba(175, 107, 177, 0.15);
+    border: 1px solid rgba(175, 107, 177, 0.3);
+    border-radius: 1rem;
+    color: #af6bb1;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+}
+
+.commission-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.commission-link:hover::before {
+    left: 100%;
+}
+
+.commission-link:hover {
+    background: rgba(175, 107, 177, 0.25);
+    border-color: rgba(175, 107, 177, 0.6);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(175, 107, 177, 0.3);
+}
+
+.commission-link:active {
+    transform: translateY(0);
+}
+
+.commission-link span {
+    position: relative;
+    z-index: 1;
+}
+
+
+@media (max-width: 768px) {
+    .commission-banner {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+    }
+
+    .commission-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .commission-link {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .commission-banner {
+        margin: 1rem auto;
+        padding: 1rem;
+        max-width: 95%;
+    }
+
+    .commission-links {
+        gap: 0.5rem;
     }
 }

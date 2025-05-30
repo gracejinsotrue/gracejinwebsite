@@ -213,7 +213,11 @@ h3 {
     text-decoration: underline;
 }
 
-/* Individual project background images */
+
+#Zoodini .project-bar-bg {
+    background-image: url('/images/zoodini.png');
+}
+
 #NeuroScent .project-bar-bg {
     background-image: url('/images/neuroscent.png');
 }
@@ -227,11 +231,11 @@ h3 {
 }
 
 #anime .project-bar-bg {
-    background-image: url('/images/cloud.png');
+    background-image: url('/images/companion.png');
 }
 
 #personalproject .project-bar-bg {
-    background-image: url('/images/companion.png');
+    background-image: url('/images/cloud.png');
 }
 
 .about-footer-home {
