@@ -114,7 +114,7 @@ function init() {
         shuffleComplete = false;
 
 
-        shuffleCube(1);
+        shuffleCube(5);
     });
 }
 
