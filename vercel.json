@@ -2,5 +2,15 @@
     "buildCommand": "npx vite build",
     "outputDirectory": "dist",
     "devCommand": "npx vite dev",
-    "installCommand": "npm install"
+    "installCommand": "npm install",
+    "rewrites": [
+        {
+            "source": "/projects",
+            "destination": "/projects/index.html"
+        },
+        {
+            "source": "/projects/",
+            "destination": "/projects/index.html"
+        }
+    ]
 }
