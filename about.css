@@ -1,0 +1,329 @@
+.about-section {
+    padding: 5.2rem 0;
+
+    overflow: hidden;
+    background-color: rgb(12, 12, 12);
+    /* background-image: url(images/aboutbg1.png); */
+    /* Light background for about page only */
+    color: #333;
+    /* Darker text for about page only */
+}
+
+.about-container {
+    max-width: 78.5rem;
+    margin: 0 auto;
+    padding: 0 2.6rem;
+
+}
+
+/* Override body styles only within about page sections */
+.about-section h1 {
+    margin-bottom: 0.65rem;
+    font-weight: 700;
+    font-size: 2rem;
+
+}
+
+.about-section h2 {
+    font-size: 2.95rem;
+    /*  */
+    margin-bottom: 2.6rem;
+    /*  */
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+}
+
+.about-section h3 {
+    font-size: 2rem;
+    /*  */
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+/* Hero Section with interactive portrait */
+#about-hero {
+    padding: 6.5rem 0 0;
+    /*  */
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.about-content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.6rem;
+    /*  */
+}
+
+.about-text-side {
+    flex: 1;
+    font-size: 1.19rem;
+    /*  */
+}
+
+.about-image-side {
+    flex: 1;
+    position: relative;
+}
+
+.about-intro {
+    font-size: 1.57rem;
+    /*  */
+    font-weight: 500;
+    margin-bottom: 1.33rem;
+    /*  */
+    color: #333;
+}
+
+a {
+    color: inherit;
+}
+
+
+#interactive-portrait {
+    position: relative;
+    height: 38rem;
+    /*  */
+    width: 142.5%;
+    /*  */
+    max-width: 42.75rem;
+    /*  */
+    overflow: hidden;
+    margin-top: 4.3rem;
+    /*  */
+    margin-bottom: 0;
+    border-radius: 5px;
+}
+
+/* Make sure the image inside scales properly */
+.portrait {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+#photo {
+    z-index: 1;
+}
+
+#cartoon {
+    z-index: 2;
+    opacity: 0;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+}
+
+.about-skills-wrapper {
+    display: flex;
+    margin-bottom: 0;
+}
+
+.about-skill-column {
+    flex: 1;
+}
+
+.about-skill-column h3 {
+    font-size: 2.38rem;
+    /*  */
+    margin-bottom: 1.33rem;
+    /*  */
+}
+
+/* Card Grid Sections */
+.flower {
+    font-size: 2.6rem;
+    /*  */
+    margin-left: 0.65rem;
+    /*  */
+}
+
+#on-campus,
+#off-campus {
+    /* background-image: url("images/bg3.png"); */
+    background-color: rgb(12, 12, 12);
+    padding: 1.4rem 5.5rem;
+
+    color: white;
+}
+
+#on-campus h2,
+#off-campus h2,
+#on-campus p,
+#off-campus p,
+#on-campus h3,
+#off-campus h3 {
+    color: white;
+    /* Override to ensure white text on dark backgrounds */
+}
+
+.about-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.75rem;
+}
+
+/* .about-card {
+    background-image: url("images/homebg2.png");
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} */
+
+.about-card:hover {
+    transform: translateY(-5px);
+}
+
+.about-card-image {
+    height: 13.75rem;
+    overflow: hidden;
+}
+
+.about-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.about-card:hover .about-card-image img {
+    transform: scale(1.05);
+}
+
+.about-card-content {
+    padding: 2.1rem;
+}
+
+.about-card h3 {
+    margin-top: 0;
+    font-size: 1.65rem;
+    font-weight: 500;
+    color: white;
+}
+
+.about-card p {
+    font-size: 1.25rem;
+    color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 62rem) {
+
+    /* 992px / 16 = 62rem */
+    .about-content-wrapper {
+        flex-direction: column;
+    }
+
+    .about-image-side {
+        margin-top: 1.4rem;
+    }
+
+    .about-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 48rem) {
+
+    /* 768px / 16 = 48rem */
+    .about-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-skills-wrapper {
+        flex-direction: column;
+        gap: 1.4rem;
+    }
+}
+
+/* Font override for About page
+.about-section {
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+} */
+
+.about-footer {
+    background: linear-gradient(rgb(12, 12, 12), rgb(105, 39, 102));
+    padding: 2.75rem;
+}
+
+.about-footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.about-footer-greeting {
+    flex: 1;
+}
+
+.about-footer-greeting h2 {
+    color: white;
+    font-size: 2.75rem;
+    margin-bottom: 0.7rem;
+}
+
+.about-footer-greeting p {
+    color: #ccc;
+}
+
+.about-footer-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-footer h3 {
+    color: white;
+    margin-bottom: 1.4rem;
+}
+
+.about-footer a {
+    color: #ccc;
+    margin-bottom: 0.7rem;
+    text-decoration: none;
+}
+
+.about-footer a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.about-footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.about-footer-greeting {
+    flex: 1;
+}
+
+.about-footer-greeting h2 {
+    color: white;
+    font-size: 2.75rem;
+    margin-bottom: 0.7rem;
+}
+
+.about-footer-greeting p {
+    color: #ccc;
+}
+
+.about-footer-links {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.ok {
+    text-align: center;
+}
+
+.text-separator {
+    text-align: center;
+    margin: 1.4rem 0;
+    color: white;
+    font-size: 1.65rem;
+    letter-spacing: 3px;
+}
