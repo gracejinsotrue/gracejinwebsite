@@ -5,12 +5,36 @@
     "installCommand": "npm install",
     "rewrites": [
         {
+            "source": "/about",
+            "destination": "/about.html"
+        },
+        {
+            "source": "/gallery",
+            "destination": "/gallery.html"
+        },
+        {
             "source": "/projects",
             "destination": "/projects/index.html"
         },
         {
             "source": "/projects/",
             "destination": "/projects/index.html"
+        },
+        {
+            "source": "/projects/project1",
+            "destination": "/projects/project1/index.html"
+        },
+        {
+            "source": "/projects/handsome-programming-languages",
+            "destination": "/projects/handsome-programming-languages/index.html"
+        },
+        {
+            "source": "/projects/game-thing",
+            "destination": "/projects/game-thing/index.html"
+        },
+        {
+            "source": "/projects/web-experiment",
+            "destination": "/projects/web-experiment/index.html"
         }
     ]
 }
