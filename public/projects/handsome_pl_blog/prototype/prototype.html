@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handsome Programming Languages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* HOMEE SCREEN AND BG */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /*PLACEHOLDER GRADIENT, TODO: CHANGE TO IMAGE*/
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /*: background-image: url('images/BACKGOUNRD.jpg'); */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .home-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .home-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .menu-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Visual Novel Screen */
+        .vn-screen {
+            background-size: cover;
+            background-position: center;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff9a9e;stop-opacity:1" /><stop offset="100%" style="stop-color:%23fecfef;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23bg)"/></svg>');
+        }
+
+        .split-screen {
+            display: flex;
+            height: 100vh;
+        }
+
+        .vn-side {
+            flex: 1;
+            position: relative;
+        }
+
+        .code-side {
+            flex: 1;
+            background: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Character Sprites */
+        .characters {
+            position: absolute;
+            bottom: 200px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            z-index: 2;
+        }
+
+        .character {
+            width: 400px;
+            /* CHARACTER WIDTH/*/
+            height: 300px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .character.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .character-sprite {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .character-fallback {
+            width: 400px;
+            /* TODO: REMOVE LATER BUT THIS IS FOR DEVELOPMENT FALLBACK*/
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .character-emoji {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .character-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+            text-align: center;
+        }
+
+        .character-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* UI Controls */
+        .ui-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .control-button {
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100px;
+            transition: background 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .settings-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+            width: 200px;
+        }
+
+        .settings-panel.open {
+            display: block;
+        }
+
+        .setting-item {
+            margin: 10px 0;
+            color: white;
+        }
+
+        .setting-item label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .setting-item input {
+            margin-right: 10px;
+        }
+
+        /* Ttext box */
+        .text-box {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            z-index: 5;
+            backdrop-filter: blur(10px);
+        }
+
+        .speaker-name {
+            font-weight: bold;
+            color: #ff9a9e;
+            margin-bottom: 10px;
+        }
+
+        .text-content {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+
+        .next-button {
+            background: #ff9a9e;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            transition: background 0.3s ease;
+        }
+
+        .next-button:hover {
+            background: #ff8a94;
+        }
+
+        /* stuff for code sandbox */
+        .code-header {
+            background: #2d2d2d;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #444;
+        }
+
+        .code-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-input {
+            flex: 1;
+            background: #1e1e1e;
+            color: #f8f8f2;
+            border: none;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+
+        .code-controls {
+            background: #2d2d2d;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-button {
+            background: #007acc;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .code-button:hover {
+            background: #005999;
+        }
+
+        .code-output {
+            background: #0d1117;
+            color: #f0f6fc;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            border-top: 1px solid #444;
+        }
+
+        .challenge-info {
+            background: #2d2d2d;
+            color: white;
+            padding: 15px;
+            border-bottom: 1px solid #444;
+            font-size: 14px;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        @media (max-width: 768px) {
+            .split-screen {
+                flex-direction: column;
+            }
+
+            .vn-side,
+            .code-side {
+                flex: none;
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HOME SCREEN!!! -->
+    <div class="screen active" id="home-screen">
+        <div class="home-screen">
+            <h1 class="home-title">💻 Handsome Programming Languages 💻</h1>
+            <p class="home-subtitle">Fall in love with code... literally!!</p>
+            <button class="menu-button" onclick="showScreen('vn-screen')">Start Story</button>
+            <button class="menu-button" onclick="showScreen('coding-screen')">Coding Challenge</button>
+        </div>
+    </div>
+
+    <!--GENERAL GAMEPLY SCREEN -->
+    <div class="screen" id="vn-screen">
+        <div class="vn-screen">
+            <div class="ui-controls">
+                <button class="control-button" onclick="showScreen('home-screen')">🏠 Home</button>
+                <button class="control-button" onclick="toggleSettings()">⚙️ Settings</button>
+                <div class="settings-panel" id="settings-panel">
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="music-toggle" checked>
+                            BGM
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="auto-play" checked>
+                            Auto-play Text
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="range" id="text-speed" min="1" max="5" value="3">
+                            Text Speed
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="characters" id="characters">
+                <!-- placeholder to dynamically add charactrs -->
+            </div>
+
+            <div class="text-box">
+                <div class="speaker-name" id="speaker-name">JavaScript</div>
+                <div class="text-content" id="text-content">
+                    (should add in windows rn lmao but shes like hey u woke up cutie blah blah)
+                </div>
+                <button class="next-button" onclick="nextDialogue()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coding challenge for if people just wana code -->
+    <div class="screen" id="coding-screen">
+        <div class="split-screen">
+            <div class="vn-side">
+                <div class="ui-controls">
+                    <button class="control-button" onclick="showScreen('home-screen')">🏠 Home</button>
+                    <button class="control-button" onclick="toggleSettings()">⚙️ Settings</button>
+                    <div class="settings-panel" id="settings-panel-2">
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="music-toggle-2" checked>
+                                Background Music
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="auto-play-2" checked>
+                                Auto-play Text
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="characters" id="characters-coding">
+                    <!-- characters for coding screen -->
+                </div>
+
+                <div class="text-box">
+                    <div class="speaker-name" id="speaker-name-coding">Python</div>
+                    <div class="text-content" id="text-content-coding">
+                        Heyyy there cutie💕! I'm Python, and I have a special challenge for you. Show me you can handle
+                        my
+                        elegant syntax, and maybe we can get to know each other better... 💕
+                    </div>
+                    <button class="next-button" onclick="nextCodingDialogue()">Next</button>
+                </div>
+            </div>
+
+            <div class="code-side">
+                <div class="code-header">Python Challenge: First Date</div>
+                <div class="challenge-info" id="challenge-info">
+                    Write a function called 'greet_python' that takes a name as input and returns "Hello [name], nice to
+                    meet you!"
+                </div>
+                <div class="code-container">
+                    <textarea class="code-input" id="code-input" placeholder="# Write your code here...
+def greet_python(name):
+    # Your code here
+    pass"></textarea>
+                    <div class="code-controls">
+                        <button class="code-button" onclick="runCode()">Run Code</button>
+                        <button class="code-button" onclick="checkSolution()">Check Solution</button>
+                        <button class="code-button" onclick="clearCode()">Clear</button>
+                    </div>
+                    <div class="code-output" id="code-output">Ready to code! Write your function and click "Check
+                        Solution" to see if Python approves! 💖</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // game state
+        let currentScreen = 'home-screen';
+        let dialogueIndex = 0;
+        let codingDialogueIndex = 0;
+
+        // CHARACTER DATA WITH MOODS/EMOTIONS
+        const characters = {
+            javascript: {
+                name: "JavaScript",
+                description: "Dynamic & Flexible",
+                emoji: "⚡",
+                moods: {
+                    neutral: "images/javascript_neutral.png",
+                    happy: "images/javascript_happy.png",
+                    excited: "images/javascript_excited.png",
+                    confused: "images/javascript_confused.png",
+                    smug: "images/javascript_smug.png"
+                }
+            },
+            python: {
+                name: "Python",
+                description: "Elegant & Readable",
+                emoji: "🐍",
+                moods: {
+                    neutral: "images/python1.png",
+                    happy: "images/python_happy.png",
+                    smiling: "images/python_smiling.png",
+                    shy: "images/python_shy.png",
+                    upset: "images/python_upset.png",
+                    blushing: "images/python_blushing.png"
+                }
+            },
+            cpp: {
+                name: "C++",
+                description: "Powerful & Fast",
+                emoji: "⚔️",
+                moods: {
+                    neutral: "images/cpp_neutral.png",
+                    happy: "images/cpp_happy.png",
+                    serious: "images/cpp_serious.png",
+                    angry: "images/cpp_angry.png",
+                    smug: "images/cpp_smug.png",
+                    intimidating: "images/cpp_intimidating.png"
+                }
+            }
+        };
+
+        // DIALOGUE DATA WITH CHARACTER MOODS
+        const dialogues = [
+            {
+                speaker: "JavaScript",
+                text: "Welcome to the Programming Academy! I'm JavaScript, and I'll be your guide through this romantic coding adventure. Are you ready to meet some of the most handsome languages in the digital world?",
+                characters: [
+                    { id: "javascript", mood: "happy" }
+                ]
+            },
+            {
+                speaker: "JavaScript",
+                text: "Let me introduce you to some of my friends. Each of us has our own unique personality and strengths. Who knows? Maybe you'll find your perfect coding companion!",
+                characters: [
+                    { id: "javascript", mood: "excited" },
+                    { id: "python", mood: "neutral" },
+                    { id: "cpp", mood: "serious" }
+                ]
+            },
+            {
+                speaker: "Python",
+                text: "Greetings! I'm Python. I believe in clean, readable code and elegant solutions. Some say I'm the most approachable language... would you like to find out?",
+                characters: [
+                    { id: "python", mood: "smiling" }
+                ]
+            },
+            {
+                speaker: "C++",
+                text: "I am C++. I may seem intimidating at first, but I offer power and performance like no other. Are you brave enough to handle my complexity?",
+                characters: [
+                    { id: "cpp", mood: "intimidating" }
+                ]
+            }
+        ];
+
+        const codingDialogues = [
+            {
+                speaker: "Python",
+                text: "Hello there! I'm Python, and I have a special challenge for you. Show me you can handle my elegant syntax, and maybe we can get to know each other better... 💕",
+                characters: [
+                    { id: "python", mood: "shy" }
+                ]
+            },
+            {
+                speaker: "Python",
+                text: "I love how you think! Your approach to problem-solving is quite... attractive. Ready for the next challenge?",
+                characters: [
+                    { id: "python", mood: "blushing" }
+                ]
+            }
+        ];
+
+        // Screen management
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            currentScreen = screenId;
+
+            if (screenId === 'vn-screen') {
+                displayCharacters(dialogues[dialogueIndex].characters, 'characters');
+            } else if (screenId === 'coding-screen') {
+                displayCharacters(codingDialogues[codingDialogueIndex].characters, 'characters-coding');
+            }
+        }
+
+        // Settings management
+        function toggleSettings() {
+            const settingsPanel = currentScreen === 'coding-screen' ?
+                document.getElementById('settings-panel-2') :
+                document.getElementById('settings-panel');
+            settingsPanel.classList.toggle('open');
+        }
+
+        // CHARACTER DISPLAY WITH MOOD SYSTEM
+        function displayCharacters(characterData, containerId) {
+            console.log('=== DISPLAYING CHARACTERS ===');
+            console.log('Character Data:', characterData);
+            console.log('Container:', containerId);
+
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error('Container not found:', containerId);
+                return;
+            }
+
+            container.innerHTML = '';
+
+            characterData.forEach((charData, index) => {
+                // Handle both old format ["javascript"] and new format [{id: "javascript", mood: "happy"}]
+                let charId, mood;
+
+                if (typeof charData === 'string') {
+                    // Old format - just character ID
+                    charId = charData;
+                    mood = 'neutral';
+                    console.log('Old format detected:', charId, 'defaulting to neutral mood');
+                } else if (charData && typeof charData === 'object' && charData.id) {
+                    // New format - object with id and mood
+                    charId = charData.id;
+                    mood = charData.mood || 'neutral';
+                    console.log('New format detected:', charId, 'with mood:', mood);
+                } else {
+                    console.error('Invalid character data format:', charData);
+                    return;
+                }
+
+                const char = characters[charId];
+                if (!char) {
+                    console.error(`Character '${charId}' not found`);
+                    return;
+                }
+
+                console.log('Character found:', char);
+
+                const charElement = document.createElement('div');
+                charElement.className = 'character';
+                charElement.setAttribute('data-character', charId);
+                charElement.setAttribute('data-mood', mood);
+
+                // Start with emoji fallback immediately
+                charElement.innerHTML = `
+                    <div class="character-fallback">
+                        <div class="character-emoji">${char.emoji}</div>
+                        <div class="character-name">${char.name}</div>
+                        <div>${char.description}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">(${mood})</div>
+                    </div>
+                `;
+
+                container.appendChild(charElement);
+
+                // Animate in with delay
+                setTimeout(() => {
+                    charElement.classList.add('visible');
+                }, index * 200);
+
+                // Try to load the mood-specific image
+                if (char.moods && char.moods[mood]) {
+                    const imagePath = char.moods[mood];
+                    console.log('Attempting to load mood image:', imagePath);
+                    const img = new Image();
+
+                    img.onload = function () {
+                        console.log('✅ Mood image loaded:', imagePath);
+                        // Replace emoji with actual image
+                        charElement.innerHTML = `
+                            <img src="${imagePath}" alt="${char.name} (${mood})" class="character-sprite">
+                            <div class="character-info">
+                                <div class="character-name">${char.name}</div>
+                                <div>${char.description}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8;">(${mood})</div>
+                            </div>
+                        `;
+                    };
+
+                    img.onerror = function () {
+                        console.log('❌ Mood image failed:', imagePath, '- keeping emoji fallback');
+                    };
+
+                    img.src = imagePath;
+                } else {
+                    console.log('No mood image available for', charId, mood, '- using emoji only');
+                }
+
+                console.log(`Character ${charId} (${mood}) displayed successfully`);
+            });
+
+            console.log('=== DONE DISPLAYING CHARACTERS ===');
+        }
+
+        // Function to change character mood dynamically
+        function changeCharacterMood(characterId, newMood, containerId = null) {
+            // If no container specified, try both main containers
+            const containers = containerId ? [containerId] : ['characters', 'characters-coding'];
+
+            containers.forEach(cId => {
+                const container = document.getElementById(cId);
+                if (!container) return;
+
+                const charElement = container.querySelector(`[data-character="${characterId}"]`);
+                if (!charElement) return;
+
+                const char = characters[characterId];
+                if (!char || !char.moods || !char.moods[newMood]) {
+                    console.error(`Invalid mood '${newMood}' for character '${characterId}'`);
+                    return;
+                }
+
+                console.log(`Changing ${characterId} to ${newMood} mood`);
+                charElement.setAttribute('data-mood', newMood);
+
+                // Try to load the new mood image
+                const imagePath = char.moods[newMood];
+                const img = new Image();
+
+                img.onload = function () {
+                    charElement.innerHTML = `
+                        <img src="${imagePath}" alt="${char.name} (${newMood})" class="character-sprite">
+                        <div class="character-info">
+                            <div class="character-name">${char.name}</div>
+                            <div>${char.description}</div>
+                            <div style="font-size: 0.8rem; opacity: 0.8;">(${newMood})</div>
+                        </div>
+                    `;
+                };
+
+                img.onerror = function () {
+                    // Fallback to emoji with mood indicator
+                    charElement.innerHTML = `
+                        <div class="character-fallback">
+                            <div class="character-emoji">${char.emoji}</div>
+                            <div class="character-name">${char.name}</div>
+                            <div>${char.description}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">(${newMood})</div>
+                        </div>
+                    `;
+                };
+
+                img.src = imagePath;
+            });
+        }
+
+        // Dialogue management
+        function nextDialogue() {
+            dialogueIndex++;
+            if (dialogueIndex >= dialogues.length) {
+                showScreen('coding-screen');
+                return;
+            }
+
+            const dialogue = dialogues[dialogueIndex];
+            document.getElementById('speaker-name').textContent = dialogue.speaker;
+            document.getElementById('text-content').textContent = dialogue.text;
+            displayCharacters(dialogue.characters, 'characters');
+        }
+
+        function nextCodingDialogue() {
+            codingDialogueIndex++;
+            if (codingDialogueIndex >= codingDialogues.length) {
+                codingDialogueIndex = 0; // Loop back
+            }
+
+            const dialogue = codingDialogues[codingDialogueIndex];
+            document.getElementById('speaker-name-coding').textContent = dialogue.speaker;
+            document.getElementById('text-content-coding').textContent = dialogue.text;
+            displayCharacters(dialogue.characters, 'characters-coding');
+        }
+
+        // Code sandbox functionality
+        const challenges = {
+            current: {
+                description: "Write a function called 'greet_python' that takes a name as input and returns 'Hello [name], nice to meet you!'",
+                solution: function (code) {
+                    try {
+                        if (code.includes('def greet_python') &&
+                            code.includes('return') &&
+                            code.includes('Hello') &&
+                            code.includes('nice to meet you')) {
+                            return { success: true, message: "Perfect! Python is impressed with your elegant solution! 💖" };
+                        } else {
+                            return { success: false, message: "Hmm, that's not quite right. Make sure you define 'greet_python' and return the correct greeting!" };
+                        }
+                    } catch (error) {
+                        return { success: false, message: "There's an error in your code: " + error.message };
+                    }
+                }
+            }
+        };
+
+        function runCode() {
+            const code = document.getElementById('code-input').value;
+            const output = document.getElementById('code-output');
+
+            output.innerHTML = `<div style="color: #4caf50;">Code executed! Here's what would happen:</div>
+                               <div>${code.replace(/\n/g, '<br>')}</div>
+                               <div style="margin-top: 10px; color: #ff9a9e;">Ready to check your solution?</div>`;
+        }
+
+        function checkSolution() {
+            const code = document.getElementById('code-input').value;
+            const output = document.getElementById('code-output');
+            const result = challenges.current.solution(code);
+
+            output.innerHTML = `<div class="${result.success ? 'success' : 'error'}">${result.message}</div>`;
+
+            if (result.success) {
+                // Change Python's mood to happy when solution is correct
+                changeCharacterMood('python', 'happy', 'characters-coding');
+
+                setTimeout(() => {
+                    document.getElementById('text-content-coding').textContent =
+                        "Wonderful! Your code is as beautiful as your mind. I think this could be the start of something special... 💕";
+                }, 1000);
+            } else {
+                // Change Python's mood to upset when solution is wrong
+                changeCharacterMood('python', 'upset', 'characters-coding');
+            }
+        }
+
+        function clearCode() {
+            document.getElementById('code-input').value = `# Write your code here...
+def greet_python(name):
+    # Your code here
+    pass`;
+            document.getElementById('code-output').textContent = "Code cleared! Ready for a fresh start! 💖";
+        }
+
+        // Initialize the game
+        window.onload = function () {
+            console.log('Game starting...');
+            console.log('Characters object:', characters);
+            showScreen('home-screen');
+        };
+    </script>
+</body>
+
+</html>
