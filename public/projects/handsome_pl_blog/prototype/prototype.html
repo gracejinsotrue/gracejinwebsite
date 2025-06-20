@@ -114,7 +114,7 @@
         .character {
             width: 400px;
             /* CHARACTER WIDTH/*/
-            height: 300px;
+            height: 600px;
             position: relative;
             opacity: 0;
             transform: translateY(20px);
@@ -399,7 +399,7 @@
             </div>
 
             <div class="text-box">
-                <div class="speaker-name" id="speaker-name">JavaScript</div>
+                <div class="speaker-name" id="speaker-name">java</div>
                 <div class="text-content" id="text-content">
                     (should add in windows rn lmao but shes like hey u woke up cutie blah blah)
                 </div>
@@ -477,42 +477,37 @@ def greet_python(name):
 
         // CHARACTER DATA WITH MOODS/EMOTIONS
         const characters = {
-            javascript: {
-                name: "JavaScript",
-                description: "Dynamic & Flexible",
+            java: {
+                name: "The Janitor",
+                description: "Robust and Responsible",
                 emoji: "⚡",
                 moods: {
-                    neutral: "images/javascript_neutral.png",
-                    happy: "images/javascript_happy.png",
-                    excited: "images/javascript_excited.png",
-                    confused: "images/javascript_confused.png",
-                    smug: "images/javascript_smug.png"
+                    neutral: "images/java_normal.png",
+                    happy: "images/java_blush.png",
+                    waiting: "images/java_waiting.png",
+                    mad: "images/java_mad.png"
                 }
             },
             python: {
-                name: "Python",
+                name: "Peethon",
                 description: "Elegant & Readable",
                 emoji: "🐍",
                 moods: {
-                    neutral: "images/python1.png",
-                    happy: "images/python_happy.png",
-                    smiling: "images/python_smiling.png",
-                    shy: "images/python_shy.png",
-                    upset: "images/python_upset.png",
-                    blushing: "images/python_blushing.png"
+                    neutral: "images/python_normal.png",
+                    happy: "images/python_normal2.png",
+
+                    upset: "images/python_mad.png",
+                    blushing: "images/python_blush.png"
                 }
             },
-            cpp: {
-                name: "C++",
-                description: "Powerful & Fast",
+            c: {
+                name: "Cee",
+                description: "Reliable & Fast",
                 emoji: "⚔️",
                 moods: {
-                    neutral: "images/cpp_neutral.png",
-                    happy: "images/cpp_happy.png",
-                    serious: "images/cpp_serious.png",
-                    angry: "images/cpp_angry.png",
-                    smug: "images/cpp_smug.png",
-                    intimidating: "images/cpp_intimidating.png"
+                    neutral: "images/c_talk.png",
+                    happy: "images/c_blush.png",
+
                 }
             }
         };
@@ -520,33 +515,33 @@ def greet_python(name):
         // DIALOGUE DATA WITH CHARACTER MOODS
         const dialogues = [
             {
-                speaker: "JavaScript",
-                text: "Welcome to the Programming Academy! I'm JavaScript, and I'll be your guide through this romantic coding adventure. Are you ready to meet some of the most handsome languages in the digital world?",
+                speaker: "java",
+                text: "Welcome to the Programming Academy! I'm java, and I'll be your guide through this romantic coding adventure. Are you ready to meet some of the most handsome languages in the digital world?",
                 characters: [
-                    { id: "javascript", mood: "happy" }
+                    { id: "java", mood: "neutral" }
                 ]
             },
             {
-                speaker: "JavaScript",
+                speaker: "java",
                 text: "Let me introduce you to some of my friends. Each of us has our own unique personality and strengths. Who knows? Maybe you'll find your perfect coding companion!",
                 characters: [
-                    { id: "javascript", mood: "excited" },
+                    { id: "java", mood: "neutral" },
                     { id: "python", mood: "neutral" },
-                    { id: "cpp", mood: "serious" }
+                    { id: "c", mood: "neutral" }
                 ]
             },
             {
                 speaker: "Python",
                 text: "Greetings! I'm Python. I believe in clean, readable code and elegant solutions. Some say I'm the most approachable language... would you like to find out?",
                 characters: [
-                    { id: "python", mood: "smiling" }
+                    { id: "python", mood: "happy" }
                 ]
             },
             {
-                speaker: "C++",
-                text: "I am C++. I may seem intimidating at first, but I offer power and performance like no other. Are you brave enough to handle my complexity?",
+                speaker: "Cee",
+                text: "I am Cee. I may seem intimidating at first, but I offer power and performance like no other. Are you brave enough to handle my complexity?",
                 characters: [
-                    { id: "cpp", mood: "intimidating" }
+                    { id: "c", mood: "neutral" }
                 ]
             }
         ];
@@ -556,7 +551,7 @@ def greet_python(name):
                 speaker: "Python",
                 text: "Hello there! I'm Python, and I have a special challenge for you. Show me you can handle my elegant syntax, and maybe we can get to know each other better... 💕",
                 characters: [
-                    { id: "python", mood: "shy" }
+                    { id: "python", mood: "happy" }
                 ]
             },
             {
@@ -606,7 +601,7 @@ def greet_python(name):
             container.innerHTML = '';
 
             characterData.forEach((charData, index) => {
-                // Handle both old format ["javascript"] and new format [{id: "javascript", mood: "happy"}]
+                // Handle both old format ["java"] and new format [{id: "java", mood: "happy"}]
                 let charId, mood;
 
                 if (typeof charData === 'string') {
