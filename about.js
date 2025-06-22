@@ -12,20 +12,20 @@ document.addEventListener('DOMContentLoaded', function () {
     cartoon.style.transition = "clip-path 0.5s ease-out, transform 0.5s ease-out";
     photo.style.transition = "transform 0.5s ease-out";
 
-    // Set initial state - half overlay on load, but now from the left
+
     setHalfOverlay();
 
-    // Function to set the half-overlay state - modified for left side
+    // Function to set the half-overlay state 
     function setHalfOverlay() {
-        cartoon.style.clipPath = `polygon(0 0, 37% 0, 37% 100%, 0 100%)`;
+        cartoon.style.clipPath = `polygon(0 0, 50% 0, 48% 100%, 0 100%)`;
         cartoon.style.opacity = 1; // Always full opacity
         photo.style.transform = 'translateX(0)';
         cartoon.style.transform = 'translateX(0)';
     }
 
-    // Update cartoon clip-path based on mouse position - modified for left side
+
     interactivePortrait.addEventListener('mousemove', function (e) {
-        // Remove transition during active mousemove for immediate response
+
         cartoon.style.transition = "none";
         photo.style.transition = "none";
 
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Reset to half overlay when mouse leaves, with smooth transition
     interactivePortrait.addEventListener('mouseleave', function () {
-        // Restore transition for smooth reset
+        // Restore transition to rse
         cartoon.style.transition = "clip-path 0.5s ease-out, transform 0.5s ease-out";
         photo.style.transition = "transform 0.5s ease-out";
         setHalfOverlay();

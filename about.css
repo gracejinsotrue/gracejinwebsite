@@ -3,10 +3,9 @@
 
     overflow: hidden;
     background-color: rgb(12, 12, 12);
-    /* background-image: url(images/aboutbg1.png); */
-    /* Light background for about page only */
+
     color: #333;
-    /* Darker text for about page only */
+
 }
 
 .about-container {
@@ -46,8 +45,8 @@
     padding: 6.5rem 0 0;
     /*  */
     background-color: rgb(255, 255, 255);
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
+    /* margin-bottom: 0 !important;
+    padding-bottom: 0 !important; */
 }
 
 .about-content-wrapper {
@@ -84,17 +83,16 @@ a {
 
 #interactive-portrait {
     position: relative;
-    height: 38rem;
+    height: 40rem;
     /*  */
-    width: 142.5%;
+    width: 100%;
     /*  */
-    max-width: 42.75rem;
+    /* max-width: 42.75rem; */
     /*  */
     overflow: hidden;
     margin-top: 4.3rem;
     /*  */
-    margin-bottom: 0;
-    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 /* Make sure the image inside scales properly */
