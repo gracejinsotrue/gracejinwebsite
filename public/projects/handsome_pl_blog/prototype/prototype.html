@@ -31,30 +31,39 @@
         }
 
         /* HOMEE SCREEN AND BG */
+
         .home-screen {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /*PLACEHOLDER GRADIENT, TODO: CHANGE TO IMAGE*/
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            /*: background-image: url('images/BACKGOUNRD.jpg'); */
+            width: 100%;
+            height: 100vh;
+            background-image: url('images/homescreen1.png');
             background-size: cover;
             background-position: center;
             color: white;
-            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .home-content {
+            margin-left: 60px;
+            /*THIS FOR ADJUSTING CONTENT LEFT/RIGHT*/
+            max-width: 500px;
         }
 
         .home-title {
             font-size: 3rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            /*LEFT ALIGN TITLE FOR NOW*/
         }
 
         .home-subtitle {
             font-size: 1.2rem;
             margin-bottom: 2rem;
             opacity: 0.9;
+            text-align: left;
+            /* LEFT ALIGN SUBTITLE*/
         }
 
         .menu-button {
@@ -62,12 +71,19 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
             padding: 15px 30px;
-            margin: 10px;
+            margin: 10px 0;
+
             border-radius: 10px;
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            display: block;
+            /* BUTTONS STACK VERTICALLY*/
+            width: 300px;
+            height: 75px;
+
+
         }
 
         .menu-button:hover {
@@ -359,10 +375,12 @@
     <!-- HOME SCREEN!!! -->
     <div class="screen active" id="home-screen">
         <div class="home-screen">
-            <h1 class="home-title">💻 Handsome Programming Languages 💻</h1>
-            <p class="home-subtitle">Fall in love with code... literally!!</p>
-            <button class="menu-button" onclick="showScreen('vn-screen')">Start Story</button>
-            <button class="menu-button" onclick="showScreen('coding-screen')">Coding Challenge</button>
+            <div class="home-content">
+                <h1 class="home-title">Handsome Programming Languages 💻</h1>
+                <p class="home-subtitle">Fall in love with code... literally!!</p>
+                <button class="menu-button" onclick="showScreen('vn-screen')">Start Story</button>
+                <button class="menu-button" onclick="showScreen('coding-screen')">Coding Challenge</button>
+            </div>
         </div>
     </div>
 
