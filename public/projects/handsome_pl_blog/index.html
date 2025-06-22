@@ -4,9 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handsome Programming Languages - Dev Log</title>
-    <link rel="icon" type="png" href="images/favicon.png">
-
+    <title>Grace's Dev Log: Handsome Programming Languages</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
 
     <style>
         body {
@@ -170,9 +169,6 @@
             max-width: 225px;
         }
 
-
-
-
         .img-float-right {
             float: right;
             margin: 0 0 20px 20px;
@@ -191,8 +187,6 @@
             text-align: center;
         }
 
-
-
         .clearfix::after {
             content: "";
             display: table;
@@ -201,6 +195,62 @@
 
         .clear-float {
             clear: both;
+        }
+
+        /* Table of Contents Styling */
+        .toc {
+            background: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 3px solid #af6bb1;
+        }
+
+        .toc h3 {
+            color: #af6bb1;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: none;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+        }
+
+        .toc a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #af6bb1;
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .back-to-top a {
+            color: #af6bb1;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-to-top a:hover {
+            text-decoration: underline;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -211,7 +261,7 @@
         <a href="/">← Back to Main Site</a>
     </div>
 
-    <div class="project-header">
+    <div class="project-header" id="top">
         <h1 class="project-title">Handsome Programming Languages - The Visual Novel </h1>
         <p class="project-subtitle">Grace's Dev Log for making a goofy visual novel</p>
         <span class="status-badge">Work in Progress</span>
@@ -220,15 +270,26 @@
     <div class="tech-stack">
         <h3>Tech Stack</h3>
         <ul>
-            <li><strong>HTML, JAVASCRIPT, CSS</strong> - For prototyping right now</li>
+            <li><strong>HTML, JAVASCRIPT, CSS</strong> - For prototyping. Also, for this whole dev log.</li>
             <li><strong>google docs...</strong> - Need to write the cringe and family reunion of branching choices
                 somewhere</li>
             <li><strong>Unity...or godot because the contreversy...</strong> - Game engine, prone to change</li>
 
         </ul>
     </div>
-    <div class="dev-entry">
 
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h3>Jump to Entry:</h3>
+        <ul>
+            <li><a href="#june-21-2025">📅 June 21, 2025 - Someone Likes Drawing Useless Things Too Much</a></li>
+            <li><a href="#june-20-2025">📅 June 20, 2025 - add some things in</a></li>
+            <li><a href="#june-19-2025">📅 June 19, 2025 - Some Brainstorming for the UI</a></li>
+            <li><a href="#june-18-2025">📅 June 18, 2025 - Project Started!</a></li>
+        </ul>
+    </div>
+
+    <div class="dev-entry" id="june-21-2025">
         <div class="entry-date">📅 June 21, 2025</div>
         <h3 class="entry-title">Someone Likes Drawing Useless Things Too Much</h3>
         <div class="entry-content">
@@ -246,8 +307,6 @@
 
             </div>
 
-
-
             <div class="image-container">
                 <img src="images/plhomescreen.png" alt="initial sketc of python" class="dev-image ">
                 <div class="image-caption">New Home Screen VS the old one lol. Do we call it Homescreen v1.0.0 versus
@@ -255,15 +314,13 @@
                 </div>
             </div>
 
-
-
-
-
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
         </div>
     </div>
 
-    <div class="dev-entry">
-
+    <div class="dev-entry" id="june-20-2025">
         <div class="entry-date">📅 June 20, 2025</div>
         <h3 class="entry-title">add some things in</h3>
         <div class="entry-content">
@@ -312,8 +369,6 @@
                 </div>
             </div>
 
-
-
             <p class="clear-float">Also, it's the first Friday since I've made this devlog. Let's see if I will do more
                 and add more work given it is the weekend, or completely fall off during the weekend :3. Like, I haven't
                 even touched code at the time of writing this. Also, I am not good at neithr
@@ -330,10 +385,14 @@
                 <div class="image-caption">
                 </div>
             </div>
+
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
         </div>
     </div>
 
-    <div class="dev-entry">
+    <div class="dev-entry" id="june-19-2025">
         <div class="entry-date">📅 June 19, 2025</div>
         <h3 class="entry-title">Some Brainstorming for the UI</h3>
         <div class="entry-content">
@@ -346,8 +405,6 @@
                     style="color: #af6bb1" ;>Obey Me!</a>. Most visual novels have simplistic layouts, with the text box
                 being the element that takes up the most space, and some variation of a noticeable but small back,
                 forward, settings and menu button.
-
-
             </p>
             <p> A unique feature for my game would be allowing users to input code, and if they get it right, we've
                 successfully rizzed
@@ -360,8 +417,6 @@
                 for our player goes up (I realize it should be indicated somewhere, unless I want to keep it a
                 mystery in the backend.) I may include a set of hints, and an option to skip, but obviously with a
                 warning that skipping is not a good idea! Your cute crush will not be happy with you!</p>
-
-
 
             <div class="image-container">
                 <img src="images/sketch1.png" alt="initial sketches" class="dev-image img-medium">
@@ -383,12 +438,13 @@
                     outfit. Will either draw the backgrounds or take pictures and blur them, not sure yet!</div>
             </div>
 
-
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
         </div>
     </div>
 
-
-    <div class="dev-entry">
+    <div class="dev-entry" id="june-18-2025">
         <div class="entry-date">📅 June 18, 2025</div>
         <h3 class="entry-title">Project Started!</h3>
         <div class="entry-content">
@@ -425,7 +481,6 @@
                     company :3</div>
             </div>
 
-
             <div class="image-container">
                 <img src="images/googledocsjun18.png" alt="cringe script" class="dev-image img-medium">
                 <div class="image-caption">most readable script</div>
@@ -455,18 +510,19 @@
                 </div>
 
             </ul>
+
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
         </div>
     </div>
 
-
-
-    <!-- -->
-    <!--
-    <div class="dev-entry">
+    <!-- 
+    <div class="dev-entry" id="date-id">
         <div class="entry-date">📅 [DATE]</div>
         <h3 class="entry-title">[ENTRY TITLE]</h3>
         <div class="entry-content">
-            <p>CONTNT HERE</p>
+            <p>CONTENT HERE</p>
             
             Optional image:
             <div class="image-container">
@@ -477,6 +533,10 @@
             code:
             <div class="code-block">
                 <pre>[CODE HERE]</pre>
+            </div>
+
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
             </div>
         </div>
     </div>
