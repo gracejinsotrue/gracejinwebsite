@@ -19,12 +19,12 @@
 .about-section h1 {
     margin-bottom: 0.65rem;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 1.75rem;
 
 }
 
 .about-section h2 {
-    font-size: 2.95rem;
+    font-size: 2.5rem;
     /*  */
     margin-bottom: 2.6rem;
     /*  */
@@ -42,23 +42,22 @@
 
 /* Hero Section with interactive portrait */
 #about-hero {
-    padding: 6.5rem 0 0;
+    padding: 3rem 0 0;
     /*  */
     background-color: rgb(255, 255, 255);
-    /* margin-bottom: 0 !important;
-    padding-bottom: 0 !important; */
+
 }
 
 .about-content-wrapper {
     display: flex;
     align-items: flex-start;
-    gap: 2.6rem;
+    gap: 2.5rem;
     /*  */
 }
 
 .about-text-side {
     flex: 1;
-    font-size: 1.19rem;
+    font-size: 1.15rem;
     /*  */
 }
 
@@ -71,7 +70,7 @@
     font-size: 1.57rem;
     /*  */
     font-weight: 500;
-    margin-bottom: 1.33rem;
+    margin-bottom: 1rem;
     /*  */
     color: #333;
 }
@@ -83,7 +82,7 @@ a {
 
 #interactive-portrait {
     position: relative;
-    height: 30rem;
+    height: 35rem;
     /*  */
     width: 100%;
     /*  */
