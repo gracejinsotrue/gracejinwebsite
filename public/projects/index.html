@@ -5,75 +5,139 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
-    <link rel="icon" type="png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
             background: #1a1a1a;
-            color: #fff
+            color: #e0e0e0;
         }
 
         .back-link {
-            color: #ab52ff;
+            color: #af6bb1;
             text-decoration: none;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             display: inline-block;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            width: 100%;
         }
 
         .back-link:hover {
             text-decoration: underline;
         }
 
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            color: #ab52ff;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
         .project-list {
             list-style: none;
             padding: 0;
-
+            margin: 0;
         }
 
         .project-list li {
-            margin: 15px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
+            margin: 25px 0;
+            padding: 20px;
+            background: #2a2a2a;
+            border-left: 3px solid #af6bb1;
             border-radius: 5px;
+            transition: all 0.3s ease;
+        }
 
+        .project-list li:hover {
+            background: #333;
+            transform: translateX(5px);
         }
 
         .project-list a {
-            color: #ab52ff;
+            color: #af6bb1;
             text-decoration: none;
             font-weight: bold;
-
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 10px;
         }
 
         .project-list a:hover {
             text-decoration: underline;
+            color: #ab52ff;
+        }
+
+        .project-list p {
+            color: #ccc;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #af6bb1;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .status-badge.coming-soon {
+            background: #666;
         }
     </style>
 </head>
 
 <body>
-    <a href="/" class="back-link">← Back to Main Site</a>
+    <div class="back-link">
+        <a href="/" style="color: #af6bb1; text-decoration: none;">← Back to Main Site</a>
+    </div>
 
-    <h1>Fun Projects</h1>
-    <p>Welcme to the playground.</p>
+    <div class="page-header">
+        <h1 class="page-title">Fun Projects</h1>
+        <p class="page-subtitle">Welcome to the playground.</p>
+    </div>
 
     <ul class="project-list">
         <li>
-            <a href="handsome_pl_blog/">Handsome Programming Languages Dev Log</a>
+            <a href="handsome_pl_blog/">
+                Handsome Programming Languages Dev Log
+                <span class="status-badge">Active</span>
+            </a>
             <p>Dev log for the visual novel/dating sim game I am building. Aka game-fied way to learn easy and medium
-                leetcode. </p>
+                leetcode.</p>
         </li>
         <li>
-            <a href="project1/">funny neural network threejs visualizer</a>
-            <p>coming soon!</p>
+            <a href="project1/">
+                Funny Neural Network Three.js Visualizer
+                <span class="status-badge coming-soon">Coming Soon</span>
+            </a>
+            <p class="coming-soon">Interactive 3D visualization of neural networks using Three.js. Watch neurons learn
+                in real-time!</p>
         </li>
-
-
     </ul>
 </body>
 
