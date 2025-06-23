@@ -58,13 +58,41 @@
         }
 
         .project-main {
+            padding: 15px 20px 15px 40px;
+            background: #252525;
+            border-left: 4px solid #af6bb1;
+            border-top: 1px solid #333;
+            position: relative;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .project-main::before {
+            content: '└──';
+            position: absolute;
+            left: 15px;
+            top: 18px;
+            color: #af6bb1;
+            font-weight: bold;
+        }
+
+        .project-main:hover {
+            background: #2a2a2a;
+            transition: all 0.3s ease;
+        }
+
+        .dev-log {
             padding: 20px;
             border-left: 4px solid #af6bb1;
             background: #2a2a2a;
             position: relative;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
         }
 
-        .project-main::after {
+        .dev-log::after {
             content: '';
             position: absolute;
             right: 15px;
@@ -78,31 +106,9 @@
             opacity: 0.6;
         }
 
-        .project-main:hover {
+        .dev-log:hover {
             background: #333;
             transform: translateX(3px);
-            transition: all 0.3s ease;
-        }
-
-        .dev-log {
-            padding: 15px 20px 15px 40px;
-            background: #252525;
-            border-left: 4px solid #af6bb1;
-            border-top: 1px solid #333;
-            position: relative;
-        }
-
-        .dev-log::before {
-            content: '└──';
-            position: absolute;
-            left: 15px;
-            top: 18px;
-            color: #af6bb1;
-            font-weight: bold;
-        }
-
-        .dev-log:hover {
-            background: #2a2a2a;
             transition: all 0.3s ease;
         }
 
@@ -113,6 +119,9 @@
             border-left: 3px solid #666;
             border-radius: 5px;
             transition: all 0.3s ease;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
         }
 
         .standalone-project:hover {
@@ -138,7 +147,7 @@
             color: #9d5ca0;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             display: block;
             margin-bottom: 10px;
         }
@@ -149,16 +158,16 @@
         }
 
         .project-description {
-            color: #ccc;
-            margin: 0;
-            font-size: 0.95rem;
-        }
-
-        .dev-log-description {
             color: #bbb;
             margin: 0;
             font-size: 0.9rem;
             font-style: italic;
+        }
+
+        .dev-log-description {
+            color: #ccc;
+            margin: 0;
+            font-size: 0.95rem;
         }
 
         .coming-soon {
@@ -189,6 +198,39 @@
             margin-bottom: 5px;
             opacity: 0.8;
         }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            background: #333;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #af6bb1;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        /* 
+        .thumbnail:hover {
+            opacity: 1;
+            border-color: #ab52ff;
+        } */
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
     </style>
 </head>
 
@@ -204,55 +246,81 @@
 
     <!-- Paired Projects -->
     <div class="project-group">
-        <div class="project-pair-label">Project + Dev Log</div>
-        <div class="project-main">
-            <a href="handsome_pl_blog/prototype/prototype.html" class="project-title">
-                Handsome Programming Languages Web Prototype. STARTED: 6/16/2025
-                <span class="status-badge">Active</span>
-            </a>
-            <p class="project-description"> Web prototype of the Visual Novel/Dating Sim of a funny
-                concept that I am taking too seriously - personified programming languages that you can fall in love
-                with??</p>
-        </div>
+        <div class="project-pair-label">Dev Log + Project</div>
         <div class="dev-log">
-            <a href="handsome_pl_blog/" class="dev-log-title">
-                📋 Dev Log: Handsome Programming Languages. STARTED: 6/16/2025
-                <span class="status-badge">Active</span>
-            </a>
-            <p class="dev-log-description"> Dev log for the visual novel/dating sim game I am
-                building. Aka game-fied way to learn easy and medium leetcode.</p>
+            <div class="thumbnail">
+                <img src="handsome_pl_blog/images/icon1.png" alt="Handsome Programming Languages Dev Log">
+            </div>
+            <div class="content-wrapper">
+                <a href="handsome_pl_blog/" class="dev-log-title">
+                    Dev Log: Handsome Programming Languages. STARTED: 6/16/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="dev-log-description"> Dev log for the visual novel/dating sim game I am
+                    building. Aka game-fied way to learn easy and medium leetcode.</p>
+            </div>
+        </div>
+        <div class="project-main">
+            <div class="thumbnail">
+                <img src="handsome_pl_blog/images/icon2.png" alt="Handsome Programming Languages Game">
+            </div>
+            <div class="content-wrapper">
+                <a href="handsome_pl_blog/prototype/prototype.html" class="project-title">
+                    Handsome Programming Languages Web Prototype. STARTED: 6/16/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="project-description"> Web prototype of the Visual Novel/Dating Sim of a funny
+                    concept that I am taking too seriously - personified programming languages that you can fall in love
+                    with??</p>
+            </div>
         </div>
     </div>
 
     <div class="project-group">
-        <div class="project-pair-label">Project + Dev Log</div>
-        <div class="project-main">
-            <a href="https://alpha-cubesat.github.io/Silver-Holograph/" class="project-title">
-                Cornell Engineering Space Systems Design Studio Website. STARTED: 6/22/2025
-                <span class="status-badge">Active</span>
-            </a>
-            <p class="project-description"> Website for Cornell Engineering's Space Systems Design
-                Studio. Grace develops a website</p>
-        </div>
+        <div class="project-pair-label">Dev Log + Project</div>
         <div class="dev-log">
-            <a href="grace-solos-a-website/" class="dev-log-title">
-                📋 Dev Log: Grace Solos the Cornell Website Development. STARTED: 6/23/2025
-                <span class="status-badge">Active</span>
-            </a>
-            <p class="dev-log-description"> Developing an informative, responsive, beautiful
-                website. Aka the consequences of my own actions. We should have finished this during the spring
-                semester, but we said "we have time to do it during the summer." Well, it is now summer.</p>
+            <div class="thumbnail">
+                <img src="grace-solos-a-website/images/html.png" alt="Cornell Website Dev Log">
+            </div>
+            <div class="content-wrapper">
+                <a href="grace-solos-a-website/" class="dev-log-title">
+                    Dev Log: Grace Solos the Cornell Website Development. STARTED: 6/23/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="dev-log-description"> Developing an informative, responsive, beautiful
+                    website. Aka the consequences of my own actions. We should have finished this during the spring
+                    semester, but we said "we have time to do it during the summer." Well, it is now summer.</p>
+            </div>
+        </div>
+        <div class="project-main">
+            <div class="thumbnail">
+                <img src="grace-solos-a-website/images/cube.jpg" alt="Cornell Space Systems Website">
+            </div>
+            <div class="content-wrapper">
+                <a href="https://alpha-cubesat.github.io/Silver-Holograph/" class="project-title">
+                    Cornell Engineering Space Systems Design Studio Website. STARTED: 6/22/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="project-description"> Website for Cornell Engineering's Space Systems Design
+                    Studio. Grace develops a website</p>
+            </div>
         </div>
     </div>
 
     <!-- Standalone Projects -->
     <div class="standalone-project">
-        <a href="project1/" class="project-title">
-            Funny Neural Network Three.js Visualizer
-            <span class="status-badge coming-soon">Coming Soon</span>
-        </a>
-        <p class="project-description coming-soon">Interactive 3D visualization of neural networks using Three.js. Watch
-            neurons learn in real-time!</p>
+        <div class="thumbnail">
+            <div class="thumbnail-icon">🧠</div>
+        </div>
+        <div class="content-wrapper">
+            <a href="project1/" class="project-title">
+                Funny Neural Network Three.js Visualizer
+                <span class="status-badge coming-soon">Coming Soon</span>
+            </a>
+            <p class="project-description coming-soon">Interactive 3D visualization of neural networks using Three.js.
+                Watch
+                neurons learn in real-time!</p>
+        </div>
     </div>
 
 </body>
