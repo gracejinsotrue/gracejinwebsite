@@ -49,27 +49,183 @@
             margin-bottom: 20px;
         }
 
-        .project-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .project-group {
+            margin-bottom: 35px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #2a2a2a;
         }
 
-        .project-list li {
-            margin: 25px 0;
+        .project-main {
             padding: 20px;
+            border-left: 4px solid #af6bb1;
             background: #2a2a2a;
-            border-left: 3px solid #af6bb1;
-            border-radius: 5px;
+            position: relative;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .project-main::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid #af6bb1;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            opacity: 0.6;
+        }
+
+        .project-main:hover {
+            background: #333;
+            transform: translateX(3px);
             transition: all 0.3s ease;
         }
 
-        .project-list li:hover {
+        .project-content {
+            flex: 1;
+        }
+
+        .project-thumbnail {
+            width: 120px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 2px solid #af6bb1;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .project-thumbnail:hover {
+            opacity: 1;
+            transform: scale(1.05);
+            border-color: #ab52ff;
+        }
+
+        .project-thumbnail.placeholder {
+            background: linear-gradient(45deg, #1e1e1e, #252525);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #af6bb1;
+            font-size: 0.8rem;
+            text-align: center;
+            border: 2px dashed #af6bb1;
+        }
+
+        .dev-log {
+            padding: 15px 20px 15px 40px;
+            background: #313131;
+            border-left: 4px solid #af6bb1;
+            border-top: 1px solid #333;
+            position: relative;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .dev-log::before {
+            content: '┌──';
+            position: absolute;
+            left: 15px;
+            top: 18px;
+            color: #af6bb1;
+            font-weight: bold;
+        }
+
+        .dev-log:hover {
+            background: #3d3d3d;
+            transition: all 0.3s ease;
+        }
+
+        .dev-log-content {
+            flex: 1;
+        }
+
+        .dev-log-thumbnail {
+            width: 100px;
+            height: 60px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid #9d5ca0;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .dev-log-thumbnail:hover {
+            opacity: 1;
+            transform: scale(1.05);
+            border-color: #af6bb1;
+        }
+
+        .dev-log-thumbnail.placeholder {
+            background: linear-gradient(45deg, #3a3a3a, #404040);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9d5ca0;
+            font-size: 0.7rem;
+            text-align: center;
+            border: 1px dashed #9d5ca0;
+        }
+
+        .standalone-project {
+            margin: 25px 0;
+            padding: 20px;
+            background: #2a2a2a;
+            border-left: 3px solid #666;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .standalone-project:hover {
             background: #333;
             transform: translateX(5px);
         }
 
-        .project-list a {
+        .standalone-content {
+            flex: 1;
+        }
+
+        .standalone-thumbnail {
+            width: 120px;
+            height: 80px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 2px solid #666;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .standalone-thumbnail:hover {
+            opacity: 1;
+            transform: scale(1.05);
+            border-color: #888;
+        }
+
+        .standalone-thumbnail.placeholder {
+            background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            text-align: center;
+            border: 2px dashed #666;
+        }
+
+        .project-title {
             color: #af6bb1;
             text-decoration: none;
             font-weight: bold;
@@ -78,15 +234,36 @@
             margin-bottom: 10px;
         }
 
-        .project-list a:hover {
+        .project-title:hover {
             text-decoration: underline;
             color: #ab52ff;
         }
 
-        .project-list p {
+        .dev-log-title {
+            color: #9d5ca0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .dev-log-title:hover {
+            text-decoration: underline;
+            color: #af6bb1;
+        }
+
+        .project-description {
             color: #ccc;
             margin: 0;
             font-size: 0.95rem;
+        }
+
+        .dev-log-description {
+            color: #bbb;
+            margin: 0;
+            font-size: 0.9rem;
+            font-style: italic;
         }
 
         .coming-soon {
@@ -108,6 +285,43 @@
         .status-badge.coming-soon {
             background: #666;
         }
+
+        .project-pair-label {
+            font-size: 0.75rem;
+            color: #af6bb1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+
+            .project-main,
+            .dev-log,
+            .standalone-project {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .project-thumbnail,
+            .standalone-thumbnail {
+                width: 100%;
+                height: 120px;
+                align-self: center;
+            }
+
+            .dev-log-thumbnail {
+                width: 100%;
+                height: 80px;
+                align-self: center;
+            }
+
+            .project-main::after {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -117,40 +331,94 @@
     </div>
 
     <div class="page-header">
-        <h1 class="page-title">Fun, Useless, Work-In-Progress Projects</h1>
+        <h1 class="page-title">Cool and/or Fun and/or Useless, Work-In-Progress Projects</h1>
         <p class="page-subtitle">Welcome to the playground. Here are WIP projects, dev logs, watch me go insane</p>
     </div>
 
-    <ul class="project-list">
+    <!-- Paired Projects -->
+    <div class="project-group">
+        <div class="project-pair-label">Dev Log + Project</div>
+        <div class="dev-log">
+            <div class="dev-log-content">
+                <a href="handsome_pl_blog/" class="dev-log-title">
+                    📋 Dev Log: Handsome Programming Languages. STARTED: 6/16/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="dev-log-description"> Dev log for the visual novel/dating sim game I am
+                    building. Aka game-fied way to learn easy and medium leetcode.</p>
+            </div>
+            <div class="dev-log-thumbnail placeholder">
+                📝<br>Log
+            </div>
 
-        <li>
-            <a href="handsome_pl_blog/">
-                Dev Log: Handsome Programming Languages
-                <span class="status-badge">Active</span>
-            </a>
-            <p>Dev log for the visual novel/dating sim game I am building. Aka game-fied way to learn easy and medium
-                leetcode.</p>
-        </li>
-        <li>
-            <a href="grace-solos-a-website/">
-                Dev Log: Grace Solos Developing A Website for Cornell Engineering's Space Systems Design Studio in a Few
-                Days
-                <span class="status-badge">Active</span>
-            </a>
-            <p>Developing an informative, responsive, pleasant to look at website. Aka the
-                consquences of my own actions. Aka: We should have finished this during the spring semester, but we said
-                "we'll do it during the
-                summer." And since I feel very bad for the other person who set it up, I am soloing it.</p>
-        </li>
-        <li>
-            <a href="project1/">
+        </div>
+        <div class="project-main">
+            <div class="project-content">
+                <a href="handsome_pl_blog/prototype/prototype.html" class="project-title">
+                    Handsome Programming Languages Web Prototype. STARTED: 6/16/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="project-description"> Web prototype of the Visual Novel/Dating Sim of a funny
+                    concept that I am taking too seriously - personified programming languages that you can fall in love
+                    with??</p>
+            </div>
+            <div class="project-thumbnail placeholder">
+                💕<br>VN<br>Preview
+            </div>
+
+        </div>
+    </div>
+
+    <div class="project-group">
+        <div class="project-pair-label">Dev Log + Project</div>
+        <div class="dev-log">
+            <div class="dev-log-content">
+                <a href="grace-solos-a-website/" class="dev-log-title">
+                    📋 Dev Log: Grace Solos the Cornell Website Development. STARTED: 6/23/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="dev-log-description"> Developing an informative, responsive, beautiful
+                    website. Aka the consequences of my own actions. We should have finished this during the spring
+                    semester, but we said "we have time to do it during the summer." Well, it is now summer.</p>
+            </div>
+            <div class="dev-log-thumbnail placeholder">
+                🌐<br>Dev
+            </div>
+
+        </div>
+        <div class="project-main">
+            <div class="project-content">
+                <a href="https://alpha-cubesat.github.io/Silver-Holograph/" class="project-title">
+                    Cornell Engineering Space Systems Design Studio Website. STARTED: 6/22/2025
+                    <span class="status-badge">Active</span>
+                </a>
+                <p class="project-description"> Website for Cornell Engineering's Space Systems Design
+                    Studio. Grace develops a website</p>
+            </div>
+            <div class="project-thumbnail placeholder">
+                🚀<br>Cornell<br>SSDS
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Standalone Projects -->
+    <div class="standalone-project">
+        <div class="standalone-content">
+            <a href="project1/" class="project-title">
                 Funny Neural Network Three.js Visualizer
                 <span class="status-badge coming-soon">Coming Soon</span>
             </a>
-            <p class="coming-soon">Interactive 3D visualization of neural networks using Three.js. Watch neurons learn
-                in real-time!</p>
-        </li>
-    </ul>
+            <p class="project-description coming-soon">Interactive 3D visualization of neural networks using Three.js.
+                Watch
+                neurons learn in real-time!</p>
+        </div>
+        <div class="standalone-thumbnail placeholder">
+            🧠<br>Neural<br>Network
+        </div>
+        <!-- : <img src="path/.png" alt="Neural Network Visualizer" class="standalone-thumbnail"> -->
+    </div>
+
 </body>
 
 </html>
