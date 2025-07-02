@@ -31,8 +31,26 @@
             display: block;
         }
 
-        /* HOMEE SCREEN AND BG */
+        /* Scene fade overlay */
+        .scene-fade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0;
+            z-index: 100;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in-out;
+        }
 
+        .scene-fade-overlay.fading {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* HOME SCREEN AND BG */
         .home-screen {
             width: 100%;
             height: 100vh;
@@ -47,7 +65,6 @@
 
         .home-content {
             margin-left: 60px;
-            /*THIS FOR ADJUSTING CONTENT LEFT/RIGHT*/
             max-width: 500px;
         }
 
@@ -56,7 +73,6 @@
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             text-align: left;
-            /*LEFT ALIGN TITLE FOR NOW*/
         }
 
         .home-subtitle {
@@ -64,7 +80,6 @@
             margin-bottom: 2rem;
             opacity: 0.9;
             text-align: left;
-            /* LEFT ALIGN SUBTITLE*/
         }
 
         .menu-button {
@@ -73,18 +88,14 @@
             color: white;
             padding: 15px 30px;
             margin: 10px 0;
-
             border-radius: 10px;
             font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             display: block;
-            /* BUTTONS STACK VERTICALLY*/
             width: 300px;
             height: 75px;
-
-
         }
 
         .menu-button:hover {
@@ -92,11 +103,12 @@
             transform: translateY(-2px);
         }
 
-        /* Visual Novel Screen */
+        /* Visual novel screen */
         .vn-screen {
             background-size: cover;
             background-position: center;
             background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff9a9e;stop-opacity:1" /><stop offset="100%" style="stop-color:%23fecfef;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23bg)"/></svg>');
+            transition: background-image 0.8s ease-in-out;
         }
 
         .split-screen {
@@ -116,10 +128,10 @@
             flex-direction: column;
         }
 
-        /* Character Sprites */
+        /* Characters */
         .characters {
             position: absolute;
-            bottom: 200px;
+            bottom: 0;
             left: 0;
             right: 0;
             display: flex;
@@ -129,9 +141,7 @@
         }
 
         .character {
-            width: 400px;
-            /* CHARACTER WIDTH/*/
-            height: 600px;
+            height: 900px;
             position: relative;
             opacity: 0;
             transform: translateY(20px);
@@ -148,13 +158,10 @@
             height: 100%;
             object-fit: cover;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .character-fallback {
-            width: 400px;
-            /* TODO: REMOVE LATER BUT THIS IS FOR DEVELOPMENT FALLBACK*/
-            height: 300px;
+            height: 900px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
@@ -187,6 +194,77 @@
         .character-name {
             font-weight: bold;
             margin-bottom: 5px;
+        }
+
+        /* Slide-in animations */
+        .character.slide-in-left {
+            opacity: 0;
+            transform: translateX(-100vw);
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+
+        .character.slide-in-right {
+            opacity: 0;
+            transform: translateX(100vw);
+            animation: slideInRight 0.6s ease-out forwards;
+        }
+
+        .character.bounce {
+            animation: expressionBounce 0.4s ease-in-out;
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw);
+            }
+            70% {
+                transform: translateX(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw);
+            }
+            70% {
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes expressionBounce {
+            0% { transform: scale(1) translateY(0); }
+            25% { transform: scale(0.95) translateY(-10px); }
+            50% { transform: scale(1.05) translateY(-5px); }
+            75% { transform: scale(0.98) translateY(-2px); }
+            100% { transform: scale(1) translateY(0); }
+        }
+
+        .character.slide-out-left {
+            animation: slideOutLeft 0.5s ease-in forwards;
+        }
+
+        .character.slide-out-right {
+            animation: slideOutRight 0.5s ease-in forwards;
+        }
+
+        @keyframes slideOutLeft {
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(-100vw); }
+        }
+
+        @keyframes slideOutRight {
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(100vw); }
         }
 
         /* UI Controls */
@@ -242,7 +320,7 @@
             margin-right: 10px;
         }
 
-        /* Ttext box */
+        /* Text box */
         .text-box {
             position: absolute;
             bottom: 20px;
@@ -283,7 +361,7 @@
             background: #ff8a94;
         }
 
-        /* stuff for code sandbox */
+        /* Code sandbox styles */
         .code-header {
             background: #2d2d2d;
             color: white;
@@ -362,9 +440,7 @@
             .split-screen {
                 flex-direction: column;
             }
-
-            .vn-side,
-            .code-side {
+            .vn-side, .code-side {
                 flex: none;
                 height: 50vh;
             }
@@ -373,19 +449,22 @@
 </head>
 
 <body>
-    <!-- HOME SCREEN!!! -->
+    <!-- Scene fade overlay -->
+    <div class="scene-fade-overlay" id="scene-fade-overlay"></div>
+
+    <!-- HOME SCREEN -->
     <div class="screen active" id="home-screen">
         <div class="home-screen">
             <div class="home-content">
                 <h1 class="home-title">Handsome Programming Languages 💻</h1>
                 <p class="home-subtitle">Fall in love with code... literally!!</p>
-                <button class="menu-button" onclick="showScreen('vn-screen')">Start Story</button>
+                <button class="menu-button" onclick="startStory()">Start Story</button>
                 <button class="menu-button" onclick="showScreen('coding-screen')">Coding Challenge</button>
             </div>
         </div>
     </div>
 
-    <!--GENERAL GAMEPLY SCREEN -->
+    <!-- VISUAL NOVEL SCREEN -->
     <div class="screen" id="vn-screen">
         <div class="vn-screen">
             <div class="ui-controls">
@@ -413,53 +492,33 @@
                 </div>
             </div>
 
-            <div class="characters" id="characters">
-                <!-- placeholder to dynamically add charactrs -->
-            </div>
+            <div class="characters" id="characters"></div>
 
             <div class="text-box">
-                <div class="speaker-name" id="speaker-name">java</div>
+                <div class="speaker-name" id="speaker-name">Java</div>
                 <div class="text-content" id="text-content">
-                    (should add in windows rn lmao but shes like hey u woke up cutie blah blah)
+                    Welcome to the Programming Academy!
                 </div>
                 <button class="next-button" onclick="nextDialogue()">Next</button>
             </div>
         </div>
     </div>
 
-    <!-- Coding challenge for if people just wana code -->
+    <!-- CODING CHALLENGE SCREEN -->
     <div class="screen" id="coding-screen">
         <div class="split-screen">
             <div class="vn-side">
                 <div class="ui-controls">
                     <button class="control-button" onclick="showScreen('home-screen')">🏠 Home</button>
                     <button class="control-button" onclick="toggleSettings()">⚙️ Settings</button>
-                    <div class="settings-panel" id="settings-panel-2">
-                        <div class="setting-item">
-                            <label>
-                                <input type="checkbox" id="music-toggle-2" checked>
-                                Background Music
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <label>
-                                <input type="checkbox" id="auto-play-2" checked>
-                                Auto-play Text
-                            </label>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="characters" id="characters-coding">
-                    <!-- characters for coding screen -->
-                </div>
+                <div class="characters" id="characters-coding"></div>
 
                 <div class="text-box">
                     <div class="speaker-name" id="speaker-name-coding">Python</div>
                     <div class="text-content" id="text-content-coding">
-                        Heyyy there cutie💕! I'm Python, and I have a special challenge for you. Show me you can handle
-                        my
-                        elegant syntax, and maybe we can get to know each other better... 💕
+                        Ready for a coding challenge?
                     </div>
                     <button class="next-button" onclick="nextCodingDialogue()">Next</button>
                 </div>
@@ -468,8 +527,7 @@
             <div class="code-side">
                 <div class="code-header">Python Challenge: First Date</div>
                 <div class="challenge-info" id="challenge-info">
-                    Write a function called 'greet_python' that takes a name as input and returns "Hello [name], nice to
-                    meet you!"
+                    Write a function called 'greet_python' that takes a name as input and returns "Hello [name], nice to meet you!"
                 </div>
                 <div class="code-container">
                     <textarea class="code-input" id="code-input" placeholder="# Write your code here...
@@ -481,21 +539,22 @@ def greet_python(name):
                         <button class="code-button" onclick="checkSolution()">Check Solution</button>
                         <button class="code-button" onclick="clearCode()">Clear</button>
                     </div>
-                    <div class="code-output" id="code-output">Ready to code! Write your function and click "Check
-                        Solution" to see if Python approves! 💖</div>
+                    <div class="code-output" id="code-output">Ready to code! 💖</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // game state
-        let currentScreen = 'home-screen';
-        let dialogueIndex = 0;
-        let codingDialogueIndex = 0;
+        // === GAME CONFIGURATION ===
+        const GameConfig = {
+            fadeTransitions: true, // Set to false to disable scene fading
+            fadeDuration: 800,     // Fade duration in milliseconds
+            autoAdvanceDelay: 3000 // Auto-advance delay (if enabled)
+        };
 
-        // CHARACTER DATA WITH MOODS/EMOTIONS
-        const characters = {
+        // === CHARACTER DEFINITIONS ===
+        const Characters = {
             java: {
                 name: "The Janitor",
                 description: "Robust and Responsible",
@@ -508,13 +567,12 @@ def greet_python(name):
                 }
             },
             python: {
-                name: "Peethon",
+                name: "Peethon", 
                 description: "Elegant & Readable",
                 emoji: "🐍",
                 moods: {
                     neutral: "images/python_normal.png",
                     happy: "images/python_normal2.png",
-
                     upset: "images/python_mad.png",
                     blushing: "images/python_blush.png"
                 }
@@ -525,188 +583,290 @@ def greet_python(name):
                 emoji: "⚔️",
                 moods: {
                     neutral: "images/c_talk.png",
-                    happy: "images/c_blush.png",
-
+                    happy: "images/c_blush.png"
                 }
             }
         };
 
-        // DIALOGUE DATA WITH CHARACTER MOODS
-        const dialogues = [
-            {
-                speaker: "java",
-                text: "Welcome to the Programming Academy! I'm java, and I'll be your guide through this romantic coding adventure. Are you ready to meet some of the most handsome languages in the digital world?",
-                characters: [
-                    { id: "java", mood: "neutral" }
+        // === STORY STRUCTURE ===
+        const Stories = {
+            main: {
+                title: "Main Story",
+                background: "url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 800\"><defs><linearGradient id=\"bg\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\"><stop offset=\"0%\" style=\"stop-color:%23ff9a9e;stop-opacity:1\" /><stop offset=\"100%\" style=\"stop-color:%23fecfef;stop-opacity:1\" /></linearGradient></defs><rect width=\"1200\" height=\"800\" fill=\"url(%23bg)\"/></svg>')",
+                scenes: [
+                    {
+                        id: "intro",
+                        background: null, // Use story default
+                        useFade: true,
+                        dialogue: [
+                            {
+                                speaker: "java",
+                                text: "Welcome to the Programming Academy! I'm Java, and I'll be your guide through this romantic coding adventure.",
+                                characters: [
+                                    { id: "java", mood: "neutral", side: "left" }
+                                ],
+                                actions: [] // Optional: mood changes, scene transitions, etc.
+                            },
+                            {
+                                speaker: "java", 
+                                text: "Are you ready to meet some of the most handsome languages in the digital world?",
+                                characters: [
+                                    { id: "java", mood: "happy", side: "left" }
+                                ]
+                            },
+                            {
+                                speaker: "java",
+                                text: "Let me introduce you to some of my friends. Each of us has our own unique personality and strengths.",
+                                characters: [
+                                    { id: "java", mood: "neutral", side: "left" },
+                                    { id: "python", mood: "neutral", side: "right" },
+                                    { id: "c", mood: "neutral", side: "center" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: "meet_python",
+                        useFade: true,
+                        dialogue: [
+                            {
+                                speaker: "python",
+                                text: "Greetings! I'm Python. I believe in clean, readable code and elegant solutions.",
+                                characters: [
+                                    { id: "python", mood: "happy", side: "center" }
+                                ]
+                            },
+                            {
+                                speaker: "python",
+                                text: "Some say I'm the most approachable language... would you like to find out? 💕",
+                                characters: [
+                                    { id: "python", mood: "blushing", side: "center" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: "meet_c", 
+                        useFade: false, // Example of no fade
+                        dialogue: [
+                            {
+                                speaker: "c",
+                                text: "I am C. I may seem intimidating at first, but I offer power and performance like no other.",
+                                characters: [
+                                    { id: "c", mood: "neutral", side: "center" }
+                                ]
+                            },
+                            {
+                                speaker: "c",
+                                text: "Are you brave enough to handle my complexity?",
+                                characters: [
+                                    { id: "c", mood: "happy", side: "center" }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             },
-            {
-                speaker: "java",
-                text: "Let me introduce you to some of my friends. Each of us has our own unique personality and strengths. Who knows? Maybe you'll find your perfect coding companion!",
-                characters: [
-                    { id: "java", mood: "neutral" },
-                    { id: "python", mood: "neutral" },
-                    { id: "c", mood: "neutral" }
-                ]
-            },
-            {
-                speaker: "Python",
-                text: "Greetings! I'm Python. I believe in clean, readable code and elegant solutions. Some say I'm the most approachable language... would you like to find out?",
-                characters: [
-                    { id: "python", mood: "happy" }
-                ]
-            },
-            {
-                speaker: "Cee",
-                text: "I am Cee. I may seem intimidating at first, but I offer power and performance like no other. Are you brave enough to handle my complexity?",
-                characters: [
-                    { id: "c", mood: "neutral" }
+            coding: {
+                title: "Coding Challenge",
+                background: null,
+                scenes: [
+                    {
+                        id: "python_challenge",
+                        dialogue: [
+                            {
+                                speaker: "python",
+                                text: "Hello there! I'm Python, and I have a special challenge for you. Show me you can handle my elegant syntax! 💕",
+                                characters: [
+                                    { id: "python", mood: "happy", side: "center" }
+                                ]
+                            },
+                            {
+                                speaker: "python",
+                                text: "I love how you think! Your approach to problem-solving is quite... attractive. Ready for the next challenge?",
+                                characters: [
+                                    { id: "python", mood: "blushing", side: "center" }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
-        ];
+        };
 
-        const codingDialogues = [
-            {
-                speaker: "Python",
-                text: "Hello there! I'm Python, and I have a special challenge for you. Show me you can handle my elegant syntax, and maybe we can get to know each other better... 💕",
-                characters: [
-                    { id: "python", mood: "happy" }
-                ]
-            },
-            {
-                speaker: "Python",
-                text: "I love how you think! Your approach to problem-solving is quite... attractive. Ready for the next challenge?",
-                characters: [
-                    { id: "python", mood: "blushing" }
-                ]
-            }
-        ];
+        // === GAME STATE ===
+        let gameState = {
+            currentScreen: 'home-screen',
+            currentStory: null,
+            currentScene: 0,
+            currentDialogue: 0
+        };
 
-        // Screen management
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById(screenId).classList.add('active');
-            currentScreen = screenId;
+        // === CORE FUNCTIONS ===
 
-            if (screenId === 'vn-screen') {
-                displayCharacters(dialogues[dialogueIndex].characters, 'characters');
-            } else if (screenId === 'coding-screen') {
-                displayCharacters(codingDialogues[codingDialogueIndex].characters, 'characters-coding');
-            }
-        }
-
-        // Settings management
-        function toggleSettings() {
-            const settingsPanel = currentScreen === 'coding-screen' ?
-                document.getElementById('settings-panel-2') :
-                document.getElementById('settings-panel');
-            settingsPanel.classList.toggle('open');
-        }
-
-        // CHARACTER DISPLAY WITH MOOD SYSTEM
-        function displayCharacters(characterData, containerId) {
-            console.log('=== DISPLAYING CHARACTERS ===');
-            console.log('Character Data:', characterData);
-            console.log('Container:', containerId);
-
-            const container = document.getElementById(containerId);
-            if (!container) {
-                console.error('Container not found:', containerId);
+        // Scene fade functionality
+        function fadeScene(callback, duration = GameConfig.fadeDuration) {
+            if (!GameConfig.fadeTransitions) {
+                if (callback) callback();
                 return;
             }
+
+            const overlay = document.getElementById('scene-fade-overlay');
+            overlay.classList.add('fading');
+
+            setTimeout(() => {
+                if (callback) callback();
+                
+                setTimeout(() => {
+                    overlay.classList.remove('fading');
+                }, 100);
+            }, duration / 2);
+        }
+
+        // Screen management with optional fading
+        function showScreen(screenId, useFade = false) {
+            const transitionFn = () => {
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                document.getElementById(screenId).classList.add('active');
+                gameState.currentScreen = screenId;
+
+                // Initialize screen-specific content
+                if (screenId === 'vn-screen' && gameState.currentStory) {
+                    displayCurrentDialogue();
+                } else if (screenId === 'coding-screen') {
+                    initializeCodingScreen();
+                }
+            };
+
+            if (useFade) {
+                fadeScene(transitionFn);
+            } else {
+                transitionFn();
+            }
+        }
+
+        // Start story with optional scene selection
+        function startStory(storyName = 'main', sceneIndex = 0) {
+            gameState.currentStory = storyName;
+            gameState.currentScene = sceneIndex;
+            gameState.currentDialogue = 0;
+
+            const story = Stories[storyName];
+            const scene = story.scenes[sceneIndex];
+            
+            showScreen('vn-screen', scene.useFade);
+        }
+
+        // Display current dialogue
+        function displayCurrentDialogue() {
+            const story = Stories[gameState.currentStory];
+            const scene = story.scenes[gameState.currentScene];
+            const dialogue = scene.dialogue[gameState.currentDialogue];
+
+            if (!dialogue) return;
+
+            // Update text
+            document.getElementById('speaker-name').textContent = dialogue.speaker;
+            document.getElementById('text-content').textContent = dialogue.text;
+
+            // Update background if specified
+            if (scene.background) {
+                document.querySelector('.vn-screen').style.backgroundImage = scene.background;
+            } else if (story.background) {
+                document.querySelector('.vn-screen').style.backgroundImage = story.background;
+            }
+
+            // Display characters
+            displayCharacters(dialogue.characters, 'characters');
+
+            // Execute any actions
+            if (dialogue.actions) {
+                dialogue.actions.forEach(action => executeAction(action));
+            }
+        }
+
+        // Execute story actions (mood changes, etc.)
+        function executeAction(action) {
+            switch (action.type) {
+                case 'mood_change':
+                    setTimeout(() => {
+                        changeCharacterMood(action.character, action.mood);
+                    }, action.delay || 0);
+                    break;
+                case 'scene_transition':
+                    setTimeout(() => {
+                        gameState.currentScene = action.sceneIndex;
+                        gameState.currentDialogue = 0;
+                        displayCurrentDialogue();
+                    }, action.delay || 0);
+                    break;
+            }
+        }
+
+        // Enhanced character display
+        function displayCharacters(characterData, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
 
             container.innerHTML = '';
 
             characterData.forEach((charData, index) => {
-                // Handle both old format ["java"] and new format [{id: "java", mood: "happy"}]
-                let charId, mood;
-
-                if (typeof charData === 'string') {
-                    // Old format - just character ID
-                    charId = charData;
-                    mood = 'neutral';
-                    console.log('Old format detected:', charId, 'defaulting to neutral mood');
-                } else if (charData && typeof charData === 'object' && charData.id) {
-                    // New format - object with id and mood
-                    charId = charData.id;
-                    mood = charData.mood || 'neutral';
-                    console.log('New format detected:', charId, 'with mood:', mood);
-                } else {
-                    console.error('Invalid character data format:', charData);
-                    return;
-                }
-
-                const char = characters[charId];
-                if (!char) {
-                    console.error(`Character '${charId}' not found`);
-                    return;
-                }
-
-                console.log('Character found:', char);
+                const char = Characters[charData.id];
+                if (!char) return;
 
                 const charElement = document.createElement('div');
                 charElement.className = 'character';
-                charElement.setAttribute('data-character', charId);
-                charElement.setAttribute('data-mood', mood);
+                charElement.setAttribute('data-character', charData.id);
+                charElement.setAttribute('data-mood', charData.mood);
 
-                // Start with emoji fallback immediately
+                // Create fallback first
                 charElement.innerHTML = `
                     <div class="character-fallback">
                         <div class="character-emoji">${char.emoji}</div>
                         <div class="character-name">${char.name}</div>
                         <div>${char.description}</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8;">(${mood})</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">(${charData.mood})</div>
                     </div>
                 `;
 
                 container.appendChild(charElement);
 
-                // Animate in with delay
+                // Apply slide animation
+                const slideDirection = charData.side === 'center' ? (index % 2 === 0 ? 'left' : 'right') : 
+                                      charData.side === 'left' ? 'left' : 'right';
+
                 setTimeout(() => {
-                    charElement.classList.add('visible');
+                    charElement.classList.add(`slide-in-${slideDirection}`);
+                    setTimeout(() => {
+                        charElement.classList.add('visible');
+                        charElement.classList.remove(`slide-in-${slideDirection}`);
+                    }, 600);
                 }, index * 200);
 
-                // Try to load the mood-specific image
-                if (char.moods && char.moods[mood]) {
-                    const imagePath = char.moods[mood];
-                    console.log('Attempting to load mood image:', imagePath);
+                // Load mood image
+                if (char.moods && char.moods[charData.mood]) {
                     const img = new Image();
-
-                    img.onload = function () {
-                        console.log('✅ Mood image loaded:', imagePath);
-                        // Replace emoji with actual image
+                    img.onload = function() {
                         charElement.innerHTML = `
-                            <img src="${imagePath}" alt="${char.name} (${mood})" class="character-sprite">
+                            <img src="${char.moods[charData.mood]}" alt="${char.name} (${charData.mood})" class="character-sprite">
                             <div class="character-info">
                                 <div class="character-name">${char.name}</div>
                                 <div>${char.description}</div>
-                                <div style="font-size: 0.8rem; opacity: 0.8;">(${mood})</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8;">(${charData.mood})</div>
                             </div>
                         `;
                     };
-
-                    img.onerror = function () {
-                        console.log('❌ Mood image failed:', imagePath, '- keeping emoji fallback');
-                    };
-
-                    img.src = imagePath;
-                } else {
-                    console.log('No mood image available for', charId, mood, '- using emoji only');
+                    img.src = char.moods[charData.mood];
                 }
-
-                console.log(`Character ${charId} (${mood}) displayed successfully`);
             });
-
-            console.log('=== DONE DISPLAYING CHARACTERS ===');
         }
 
-        // Function to change character mood dynamically
+        // Enhanced mood changing
         function changeCharacterMood(characterId, newMood, containerId = null) {
-            // If no container specified, try both main containers
             const containers = containerId ? [containerId] : ['characters', 'characters-coding'];
-
+            
             containers.forEach(cId => {
                 const container = document.getElementById(cId);
                 if (!container) return;
@@ -714,88 +874,146 @@ def greet_python(name):
                 const charElement = container.querySelector(`[data-character="${characterId}"]`);
                 if (!charElement) return;
 
-                const char = characters[characterId];
-                if (!char || !char.moods || !char.moods[newMood]) {
-                    console.error(`Invalid mood '${newMood}' for character '${characterId}'`);
-                    return;
-                }
+                const char = Characters[characterId];
+                if (!char || !char.moods || !char.moods[newMood]) return;
 
-                console.log(`Changing ${characterId} to ${newMood} mood`);
+                charElement.classList.add('bounce');
+                setTimeout(() => charElement.classList.remove('bounce'), 400);
+
                 charElement.setAttribute('data-mood', newMood);
 
-                // Try to load the new mood image
-                const imagePath = char.moods[newMood];
-                const img = new Image();
-
-                img.onload = function () {
-                    charElement.innerHTML = `
-                        <img src="${imagePath}" alt="${char.name} (${newMood})" class="character-sprite">
-                        <div class="character-info">
-                            <div class="character-name">${char.name}</div>
-                            <div>${char.description}</div>
-                            <div style="font-size: 0.8rem; opacity: 0.8;">(${newMood})</div>
-                        </div>
-                    `;
-                };
-
-                img.onerror = function () {
-                    // Fallback to emoji with mood indicator
-                    charElement.innerHTML = `
-                        <div class="character-fallback">
-                            <div class="character-emoji">${char.emoji}</div>
-                            <div class="character-name">${char.name}</div>
-                            <div>${char.description}</div>
-                            <div style="font-size: 0.9rem; opacity: 0.8;">(${newMood})</div>
-                        </div>
-                    `;
-                };
-
-                img.src = imagePath;
+                setTimeout(() => {
+                    const img = new Image();
+                    img.onload = function() {
+                        charElement.innerHTML = `
+                            <img src="${char.moods[newMood]}" alt="${char.name} (${newMood})" class="character-sprite">
+                            <div class="character-info">
+                                <div class="character-name">${char.name}</div>
+                                <div>${char.description}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8;">(${newMood})</div>
+                            </div>
+                        `;
+                    };
+                    img.onerror = function() {
+                        charElement.innerHTML = `
+                            <div class="character-fallback">
+                                <div class="character-emoji">${char.emoji}</div>
+                                <div class="character-name">${char.name}</div>
+                                <div>${char.description}</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">(${newMood})</div>
+                            </div>
+                        `;
+                    };
+                    img.src = char.moods[newMood];
+                }, 150);
             });
         }
 
-        // Dialogue management
+        // Dialogue advancement
         function nextDialogue() {
-            dialogueIndex++;
-            if (dialogueIndex >= dialogues.length) {
-                showScreen('coding-screen');
-                return;
+            const story = Stories[gameState.currentStory];
+            const scene = story.scenes[gameState.currentScene];
+            
+            gameState.currentDialogue++;
+            
+            if (gameState.currentDialogue >= scene.dialogue.length) {
+                // Move to next scene or end story
+                gameState.currentScene++;
+                gameState.currentDialogue = 0;
+                
+                if (gameState.currentScene >= story.scenes.length) {
+                    // Story finished - could transition to coding or back to menu
+                    if (gameState.currentStory === 'main') {
+                        showScreen('coding-screen', true);
+                        gameState.currentStory = 'coding';
+                        gameState.currentScene = 0;
+                        gameState.currentDialogue = 0;
+                    } else {
+                        showScreen('home-screen', true);
+                    }
+                    return;
+                }
+                
+                // Check if next scene uses fade
+                const nextScene = story.scenes[gameState.currentScene];
+                if (nextScene.useFade) {
+                    fadeScene(() => displayCurrentDialogue());
+                } else {
+                    displayCurrentDialogue();
+                }
+            } else {
+                displayCurrentDialogue();
             }
-
-            const dialogue = dialogues[dialogueIndex];
-            document.getElementById('speaker-name').textContent = dialogue.speaker;
-            document.getElementById('text-content').textContent = dialogue.text;
-            displayCharacters(dialogue.characters, 'characters');
         }
 
-        function nextCodingDialogue() {
-            codingDialogueIndex++;
-            if (codingDialogueIndex >= codingDialogues.length) {
-                codingDialogueIndex = 0; // Loop back
-            }
+        // Coding screen initialization
+        function initializeCodingScreen() {
+            gameState.currentStory = 'coding';
+            gameState.currentScene = 0;
+            gameState.currentDialogue = 0;
+            displayCodingDialogue();
+        }
 
-            const dialogue = codingDialogues[codingDialogueIndex];
+        function displayCodingDialogue() {
+            const story = Stories[gameState.currentStory];
+            const scene = story.scenes[gameState.currentScene];
+            const dialogue = scene.dialogue[gameState.currentDialogue];
+
+            if (!dialogue) return;
+
             document.getElementById('speaker-name-coding').textContent = dialogue.speaker;
             document.getElementById('text-content-coding').textContent = dialogue.text;
             displayCharacters(dialogue.characters, 'characters-coding');
         }
 
-        // Code sandbox functionality
+        function nextCodingDialogue() {
+            const story = Stories[gameState.currentStory];
+            const scene = story.scenes[gameState.currentScene];
+            
+            gameState.currentDialogue++;
+            
+            if (gameState.currentDialogue >= scene.dialogue.length) {
+                gameState.currentDialogue = 0; // Loop in coding mode
+            }
+            
+            displayCodingDialogue();
+        }
+
+        // Settings management
+        function toggleSettings() {
+            const settingsPanel = gameState.currentScreen === 'coding-screen' ?
+                document.getElementById('settings-panel-2') || document.getElementById('settings-panel') :
+                document.getElementById('settings-panel');
+            if (settingsPanel) {
+                settingsPanel.classList.toggle('open');
+            }
+        }
+
+        // === CODE CHALLENGE SYSTEM ===
         const challenges = {
             current: {
                 description: "Write a function called 'greet_python' that takes a name as input and returns 'Hello [name], nice to meet you!'",
-                solution: function (code) {
+                solution: function(code) {
                     try {
                         if (code.includes('def greet_python') &&
                             code.includes('return') &&
                             code.includes('Hello') &&
                             code.includes('nice to meet you')) {
-                            return { success: true, message: "Perfect! Python is impressed with your elegant solution! 💖" };
+                            return { 
+                                success: true, 
+                                message: "Perfect! Python is impressed with your elegant solution! 💖" 
+                            };
                         } else {
-                            return { success: false, message: "Hmm, that's not quite right. Make sure you define 'greet_python' and return the correct greeting!" };
+                            return { 
+                                success: false, 
+                                message: "Hmm, that's not quite right. Make sure you define 'greet_python' and return the correct greeting!" 
+                            };
                         }
                     } catch (error) {
-                        return { success: false, message: "There's an error in your code: " + error.message };
+                        return { 
+                            success: false, 
+                            message: "There's an error in your code: " + error.message 
+                        };
                     }
                 }
             }
@@ -818,15 +1036,12 @@ def greet_python(name):
             output.innerHTML = `<div class="${result.success ? 'success' : 'error'}">${result.message}</div>`;
 
             if (result.success) {
-                // Change Python's mood to happy when solution is correct
                 changeCharacterMood('python', 'happy', 'characters-coding');
-
                 setTimeout(() => {
                     document.getElementById('text-content-coding').textContent =
                         "Wonderful! Your code is as beautiful as your mind. I think this could be the start of something special... 💕";
                 }, 1000);
             } else {
-                // Change Python's mood to upset when solution is wrong
                 changeCharacterMood('python', 'upset', 'characters-coding');
             }
         }
@@ -839,13 +1054,92 @@ def greet_python(name):
             document.getElementById('code-output').textContent = "Code cleared! Ready for a fresh start! 💖";
         }
 
-        // Initialize the game
-        window.onload = function () {
+        // === UTILITY FUNCTIONS FOR EASY CONTENT ADDITION ===
+
+        // Add new character easily
+        function addCharacter(id, data) {
+            Characters[id] = data;
+        }
+
+        // Add new story easily  
+        function addStory(id, storyData) {
+            Stories[id] = storyData;
+        }
+
+        // Add scene to existing story
+        function addScene(storyId, sceneData) {
+            if (Stories[storyId]) {
+                Stories[storyId].scenes.push(sceneData);
+            }
+        }
+
+        // Add dialogue to existing scene
+        function addDialogue(storyId, sceneIndex, dialogueData) {
+            if (Stories[storyId] && Stories[storyId].scenes[sceneIndex]) {
+                Stories[storyId].scenes[sceneIndex].dialogue.push(dialogueData);
+            }
+        }
+
+        // === INITIALIZATION ===
+        window.onload = function() {
             console.log('Game starting...');
-            console.log('Characters object:', characters);
+            console.log('Available Stories:', Object.keys(Stories));
+            console.log('Available Characters:', Object.keys(Characters));
             showScreen('home-screen');
         };
+
+        // === EXAMPLES OF HOW TO ADD CONTENT ===
+        
+        // Example: Add a new character
+        /*
+        addCharacter('javascript', {
+            name: "JavaScript",
+            description: "Dynamic & Versatile", 
+            emoji: "⚡",
+            moods: {
+                neutral: "images/js_normal.png",
+                excited: "images/js_excited.png",
+                confused: "images/js_confused.png"
+            }
+        });
+        */
+
+        // Example: Add a new story
+        /*
+        addStory('bonus', {
+            title: "Bonus Content",
+            background: "url('images/bonus_bg.jpg')",
+            scenes: [
+                {
+                    id: "secret_meeting",
+                    useFade: true,
+                    dialogue: [
+                        {
+                            speaker: "javascript",
+                            text: "Psst! Over here! I have something special to show you...",
+                            characters: [
+                                { id: "javascript", mood: "excited", side: "left" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+        */
+
+        // Example: Add dialogue to existing story
+        /*
+        addDialogue('main', 0, {
+            speaker: "java",
+            text: "Oh, and one more thing before we continue...",
+            characters: [
+                { id: "java", mood: "happy", side: "center" }
+            ],
+            actions: [
+                { type: 'mood_change', character: 'java', mood: 'excited', delay: 1000 }
+            ]
+        });
+        */
     </script>
 </body>
-
 </html>
