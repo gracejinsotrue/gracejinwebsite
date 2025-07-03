@@ -230,6 +230,10 @@ h3 {
     background-image: url('/images/xr.png');
 }
 
+#Sailing .project-bar-bg {
+    background-image: url('/images/sailing.png');
+}
+
 #anime .project-bar-bg {
     background-image: url('/images/companion.png');
 }
