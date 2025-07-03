@@ -331,7 +331,7 @@ h3 {
     z-index: -1;
 }
 
-/* Media Queries for Responsive Design */
+
 @media (max-width: 768px) {
     html {
         font-size: 16px;
@@ -353,14 +353,12 @@ h3 {
     }
 }
 
-/* Vercel-specific adjustment */
 @media screen and (min-width: 768px) {
     .intro-text {
         margin-top: 8rem;
     }
 }
 
-/* Special adjustment for Vercel environment */
 @media screen and (min-width: 768px) {
     body[data-deploy="vercel"] .left-content {
         margin-left: 40%;
