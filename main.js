@@ -92,15 +92,12 @@ function init() {
 
     pivot = new THREE.Object3D();
 
-    // Load textures then build the cube
+    // load textrues and buold cube
     loadTextures().then(() => {
 
         createRubiksCube();
 
-        // console.log("Starting animation...");
         animate();
-
-        // Event listeners
         renderer.domElement.addEventListener('mousedown', onMouseDown);
         renderer.domElement.addEventListener('mouseup', onMouseUp);
         renderer.domElement.addEventListener('mousemove', onMouseMove);
@@ -135,7 +132,7 @@ function shuffleCube(moves = 7) {
         return allCubes[Math.floor(Math.random() * allCubes.length)];
     }
 
-    // Queue up random moves
+    // queue random moves
     for (let i = 0; i < moves; i++) {
         const cube = randomCube();
         pushMove(cube, cube.rubikPosition.clone(), randomAxis(), randomDirection());
@@ -157,13 +154,12 @@ function shuffleCube(moves = 7) {
 
 // post-shuffle events
 function onShuffleComplete() {
-    // console.log("Shuffle complete! Starting floating animation...");
     floatTime = 0;
 
 
 }
 
-// Improved loadTextures function with better video handling
+// image textures look dull and i dont know why! video textures render normally we do a little cheeesing
 function loadTextures() {
     return new Promise((resolve) => {
         // const texturePaths = {
@@ -213,7 +209,7 @@ function loadTextures() {
 
         for (const [face, path] of Object.entries(texturePaths)) {
             if (textureTypes[face] === 'video') {
-                // Create video element with better configuration
+
                 const video = document.createElement('video');
                 video.src = path;
                 video.crossOrigin = 'anonymous';
@@ -222,7 +218,7 @@ function loadTextures() {
                 video.playsInline = true;
                 video.autoplay = true;
 
-                // Create optimized video texture
+                // bideo ttexur
                 const texture = new THREE.VideoTexture(video);
                 texture.minFilter = THREE.LinearFilter;
                 texture.magFilter = THREE.LinearFilter;
@@ -240,14 +236,14 @@ function loadTextures() {
                     checkComplete();
                 });
 
-                // fallback in case video fails to load
+                // fallback
                 video.addEventListener('error', () => {
                     console.error(`Error loading video for ${face}`);
                     faceTextures[face] = new THREE.MeshBasicMaterial({ color: 0xff0000 });
                     checkComplete();
                 });
 
-                // Start loading
+
                 video.load();
             } else {
                 // regular image texture loading
@@ -255,6 +251,7 @@ function loadTextures() {
                 loader.load(path, (texture) => {
                     faceTextures[face] = texture;
                     checkComplete();
+                    //generic fallback
                 }, undefined, (error) => {
                     console.error(`Error loading texture for ${face}:`, error);
                     faceTextures[face] = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -321,8 +318,9 @@ function createRubiksCube() {
 
     scene.add(cubeGroup);
 }
+//ts important for ow it looks
 function createFaceMaterial(face, x, y, z, materialIndex) {
-    // Check if this face is on the outside of the cube
+    // check if this face is on the outside of the cube
     const isOutside = (
         (face === 'right' && x === dimensions - 1) ||
         (face === 'left' && x === 0) ||
@@ -333,62 +331,62 @@ function createFaceMaterial(face, x, y, z, materialIndex) {
     );
 
     if (!isOutside) {
-        // Inside faces are black
+        // Imake the inside faces black because they look cool
         return new THREE.MeshBasicMaterial({ color: 0x111111 });
     }
 
-    // Calculate UV coordinates based on position
+    // calculate UV coordinates based on position
     // i am not having a time
     let uMin, uMax, vMin, vMax;
 
-
+    //ts hard
     if (face === 'right') { // +X face
         // Z maps to U, Y maps to V (flip Y to keep top-to-bottom orientation)
         uMin = z / dimensions;
         uMax = (z + 1) / dimensions;
-        vMin = 1 - (y + 1) / dimensions; // Flip Y to maintain top-down orientation
+        vMin = 1 - (y + 1) / dimensions; // flip Y to maintain top-down orientation
         vMax = 1 - y / dimensions;
     }
     else if (face === 'left') { // -X face
         // Z maps to U (flipped), Y maps to V (flipped)
-        uMin = 1 - (z + 1) / dimensions; // Flip Z to maintain front-to-back
+        uMin = 1 - (z + 1) / dimensions; // flip Z to maintain front-to-back
         uMax = 1 - z / dimensions;
-        vMin = 1 - (y + 1) / dimensions; // Flip Y to maintain top-down orientation
+        vMin = 1 - (y + 1) / dimensions; // flip y for top down rientation
         vMax = 1 - y / dimensions;
     }
     else if (face === 'top') { // +Y face
         // X maps to U, Z maps to V
         uMin = x / dimensions;
         uMax = (x + 1) / dimensions;
-        vMin = 1 - (z + 1) / dimensions; // Flip Z for proper orientation
+        vMin = 1 - (z + 1) / dimensions; // flip z for proper orintaito
         vMax = 1 - z / dimensions;
     }
     else if (face === 'bottom') { // -Y face
         // X maps to U, Z maps to V (flipped)
         uMin = x / dimensions;
         uMax = (x + 1) / dimensions;
-        vMin = z / dimensions; // Don't flip Z for proper orientation on bottom
+        vMin = z / dimensions; // DONT flip z?? todo: these flips might not make sense need to fix
         vMax = (z + 1) / dimensions;
     }
     else if (face === 'front') { // +Z face
         // X maps to U, Y maps to V (flipped)
         uMin = x / dimensions;
         uMax = (x + 1) / dimensions;
-        vMin = 1 - (y + 1) / dimensions; // Flip Y for proper top-down orientation
+        vMin = 1 - (y + 1) / dimensions; // flip Y for proper top-down orientation
         vMax = 1 - y / dimensions;
     }
     else { // back face (-Z)
         // X maps to U (flipped), Y maps to V (flipped)
-        uMin = 1 - (x + 1) / dimensions; // Flip X for proper left-right orientation
+        uMin = 1 - (x + 1) / dimensions; // lip X for proper left-right orientation
         uMax = 1 - x / dimensions;
-        vMin = 1 - (y + 1) / dimensions; // Flip Y for proper top-down orientation
+        vMin = 1 - (y + 1) / dimensions; // flip Y for proper top-down orientation
         vMax = 1 - y / dimensions;
     }
 
-    // Get the texture for this face
+    // get textures for thse 
     const texture = faceTextures[face];
 
-    // If it's already a material (fallback case), return it
+    // if it's already a material (fallback case), return it
     if (texture instanceof THREE.Material) {
         return texture;
     }
@@ -466,12 +464,12 @@ function onMouseDown(event) {
         const intersectedCube = intersects[0].object;
         clickVector = intersectedCube.rubikPosition.clone();
 
-        // Determine which face was clicked
+        // this is for dermining which face is licked
         const faceIndex = intersects[0].faceIndex;
         const normalMatrix = new THREE.Matrix3().getNormalMatrix(intersectedCube.matrixWorld);
         const normal = intersects[0].face.normal.clone().applyMatrix3(normalMatrix).normalize();
 
-        // Determine which global axis this face normal is closest to
+        // determine which global axis this face normal is closest to
         const absX = Math.abs(normal.x);
         const absY = Math.abs(normal.y);
         const absZ = Math.abs(normal.z);
@@ -487,14 +485,14 @@ function onMouseDown(event) {
         lastCube = intersectedCube;
     }
 }
-// Mouse move handler
+// this is mouse move handlere
 function onMouseMove(event) {
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 }
 
-// Mouse up handler
+// on mosue up handler
 function onMouseUp(event) {
     if (isMoving || !clickVector || !clickFace || !lastCube) {
         clickVector = null;
@@ -517,8 +515,8 @@ function onMouseUp(event) {
         const endCube = intersects[0].object;
         const dragVector = endCube.rubikPosition.clone().sub(clickVector);
 
-        // If drag is too small, don't rotate
-        if (dragVector.length() < totalSize * 0.5) {
+        // just dont rotate if the drag too small-ok i mdade smaller
+        if (dragVector.length() < totalSize * 0.1) {
             clickVector = null;
             clickFace = null;
             controls.enabled = true;
@@ -596,7 +594,7 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth / 2, window.innerHeight);
 }
 
-// Add this to ensure proper initial sizing
+
 //window.addEventListener('load', onWindowResize);
 // we dont even use keyboard
 function onKeyDown(event) {
@@ -651,12 +649,12 @@ function onKeyDown(event) {
 
 const moveCompleteEvent = new Event('moveComplete');
 
-// Setup a move with a cube, position, axis, and direction
+// setup a move with a cube, position, axis, and direction
 function pushMove(cube, vector, axis, direction) {
     moveQueue.push({ cube: cube, vector: vector, axis: axis, direction: direction });
 }
 
-// Start the next move in the queue
+// start the next move in th equeue with this
 function startNextMove() {
     if (isMoving) return;
 
@@ -682,7 +680,7 @@ function startNextMove() {
             const worldQuat = new THREE.Quaternion();
             cube.getWorldQuaternion(worldQuat);
 
-            // Attach to pivot
+            // attach to pivott
             scene.remove(cube);
             pivot.attach(cube);
         });
@@ -765,6 +763,7 @@ function moveComplete() {
     }
 }
 
+//this was hard but this part is for snapping to face, when it doesnt have htis and we rotate cube, the cubelets will like overlap with each other so we need snapping
 // function to snap cube face relatively because we are rotating the entire cube as well
 function snapCubeToGrid(cube) {
     const pos = cube.position;
