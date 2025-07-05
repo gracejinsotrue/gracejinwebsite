@@ -42,7 +42,7 @@
             opacity: 0;
             z-index: 100;
             pointer-events: none;
-            transition: opacity 0.8s ease-in-out;
+            transition: opacity 5s ease-in-out;
         }
 
         .scene-fade-overlay.fading {
@@ -549,7 +549,7 @@ def greet_python(name):
         // === GAME CONFIGURATION ===
         const GameConfig = {
             fadeTransitions: true, // Set to false to disable scene fading
-            fadeDuration: 800,     // Fade duration in milliseconds
+            fadeDuration: 3000,     // Fade duration in milliseconds
             autoAdvanceDelay: 3000 // Auto-advance delay (if enabled)
         };
 
@@ -585,7 +585,21 @@ def greet_python(name):
                     neutral: "images/c_talk.png",
                     happy: "images/c_blush.png"
                 }
+            },
+            windows: {
+                name: "Windoe",
+                description: "Good Operating Sysem",
+                emoji: "⚔️",
+                moods: {
+                    neutral: "images/windows_normal.png",
+                    smile: "images/windows_smile.png",
+                    blushing: "images/windows_blushing.png",
+                    talking1: "images/windows_bend_talk.png"
+                    
+                }
             }
+
+
         };
 
         // === STORY STRUCTURE ===
@@ -600,10 +614,20 @@ def greet_python(name):
                         useFade: true,
                         dialogue: [
                             {
-                                speaker: "java",
-                                text: "Welcome to the Programming Academy! I'm Java, and I'll be your guide through this romantic coding adventure.",
+                                speaker: "???",
+                                text: "..hey. HEY. Wake up! are you with us?",
                                 characters: [
-                                    { id: "java", mood: "neutral", side: "left" }
+                                    { id: "windows", mood: "talking1", side: "left" }
+                                ],
+                                actions: [] // Optional: mood changes, scene transitions, etc.
+                            },
+                            //TODO: panning animation or smt
+
+                                                        {
+                                speaker: "???",
+                                text:  "GOOD MORNING!! our cutie intern is finally awake! How are you feeling!",
+                                characters: [
+                                    { id: "windows", mood: "smile", side: "static" }
                                 ],
                                 actions: [] // Optional: mood changes, scene transitions, etc.
                             },
@@ -701,6 +725,29 @@ def greet_python(name):
             currentScene: 0,
             currentDialogue: 0
         };
+         // TODO: SAVE GAME STATE SO REFRESING DOESNT JUST START ON PAGE 1
+        function saveGameState() {
+            try {
+                localStorage.setItem('handsome-programming-game-state', JSON.stringify(gameState));
+            } catch (e) {
+                console.log('LocalStorage not available - state will not persist');
+            }
+        }
+
+        // TODO: LOAD GAME STATE  
+        function loadGameState() {
+            try {
+                const saved = localStorage.getItem('handsome-programming-game-state');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    gameState = { ...gameState, ...parsed };
+                    return true;
+                }
+            } catch (e) {
+                console.log('Could not load saved state');
+            }
+            return false;
+        }
 
         // === CORE FUNCTIONS ===
 
