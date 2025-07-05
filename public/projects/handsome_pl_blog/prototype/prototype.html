@@ -153,6 +153,12 @@
             transform: translateY(0);
         }
 
+        .character.static {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+
         .character-sprite {
             width: 100%;
             height: 100%;
@@ -353,12 +359,25 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            float: right;
             transition: background 0.3s ease;
         }
 
         .next-button:hover {
             background: #ff8a94;
+        }
+
+        .back-button {
+            background: #667eea;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
         }
 
         /* Code sandbox styles */
@@ -499,7 +518,10 @@
                 <div class="text-content" id="text-content">
                     Welcome to the Programming Academy!
                 </div>
-                <button class="next-button" onclick="nextDialogue()">Next</button>
+                <div style="display: flex; justify-content: flex-end; align-items: center; min-height: 40px;">
+                    <button class="back-button" id="back-button" onclick="previousDialogue()" style="display: none; margin-right: auto;">Back</button>
+                    <button class="next-button" onclick="console.log('Next button clicked!'); nextDialogue()">Next</button>
+                </div>
             </div>
         </div>
     </div>
@@ -520,7 +542,10 @@
                     <div class="text-content" id="text-content-coding">
                         Ready for a coding challenge?
                     </div>
-                    <button class="next-button" onclick="nextCodingDialogue()">Next</button>
+                    <div style="display: flex; justify-content: flex-end; align-items: center; min-height: 40px;">
+                        <button class="back-button" id="back-button-coding" onclick="previousCodingDialogue()" style="display: none; margin-right: auto;">Back</button>
+                        <button class="next-button" onclick="console.log('Coding next button clicked!'); nextCodingDialogue()">Next</button>
+                    </div>
                 </div>
             </div>
 
@@ -597,7 +622,16 @@ def greet_python(name):
                     talking1: "images/windows_bend_talk.png"
                     
                 }
-            }
+            },
+             you: {
+                name: "You",
+                emoji: "🧍",
+                moods: {
+ 
+                    
+                }
+            },
+
 
 
         };
@@ -619,24 +653,34 @@ def greet_python(name):
                                 characters: [
                                     { id: "windows", mood: "talking1", side: "left" }
                                 ],
-                                actions: [] // Optional: mood changes, scene transitions, etc.
+                                actions: [],
+                                showBack: false
                             },
-                            //TODO: panning animation or smt
-
                                                         {
+                            speaker: "You",
+                                text: "Huh...? One moment I was at my desk at Am*zon, and suddenly I'm here...where am I?",
+                                characters: [
+                                    { id: "you", mood: "talking1", side: "left" }
+                                ],
+                                actions: [],
+                                showBack: true
+                            },
+                            {
                                 speaker: "???",
                                 text:  "GOOD MORNING!! our cutie intern is finally awake! How are you feeling!",
                                 characters: [
                                     { id: "windows", mood: "smile", side: "static" }
                                 ],
-                                actions: [] // Optional: mood changes, scene transitions, etc.
+                                actions: [],
+                                showBack: true // Allow going back from here
                             },
                             {
                                 speaker: "java", 
                                 text: "Are you ready to meet some of the most handsome languages in the digital world?",
                                 characters: [
                                     { id: "java", mood: "happy", side: "left" }
-                                ]
+                                ],
+                                showBack: true
                             },
                             {
                                 speaker: "java",
@@ -645,7 +689,8 @@ def greet_python(name):
                                     { id: "java", mood: "neutral", side: "left" },
                                     { id: "python", mood: "neutral", side: "right" },
                                     { id: "c", mood: "neutral", side: "center" }
-                                ]
+                                ],
+                                showBack: true
                             }
                         ]
                     },
@@ -658,14 +703,16 @@ def greet_python(name):
                                 text: "Greetings! I'm Python. I believe in clean, readable code and elegant solutions.",
                                 characters: [
                                     { id: "python", mood: "happy", side: "center" }
-                                ]
+                                ],
+                                showBack: true
                             },
                             {
                                 speaker: "python",
                                 text: "Some say I'm the most approachable language... would you like to find out? 💕",
                                 characters: [
                                     { id: "python", mood: "blushing", side: "center" }
-                                ]
+                                ],
+                                showBack: true
                             }
                         ]
                     },
@@ -678,14 +725,16 @@ def greet_python(name):
                                 text: "I am C. I may seem intimidating at first, but I offer power and performance like no other.",
                                 characters: [
                                     { id: "c", mood: "neutral", side: "center" }
-                                ]
+                                ],
+                                showBack: true
                             },
                             {
                                 speaker: "c",
                                 text: "Are you brave enough to handle my complexity?",
                                 characters: [
                                     { id: "c", mood: "happy", side: "center" }
-                                ]
+                                ],
+                                showBack: true
                             }
                         ]
                     }
@@ -703,14 +752,16 @@ def greet_python(name):
                                 text: "Hello there! I'm Python, and I have a special challenge for you. Show me you can handle my elegant syntax! 💕",
                                 characters: [
                                     { id: "python", mood: "happy", side: "center" }
-                                ]
+                                ],
+                                showBack: false // First dialogue in coding mode
                             },
                             {
                                 speaker: "python",
                                 text: "I love how you think! Your approach to problem-solving is quite... attractive. Ready for the next challenge?",
                                 characters: [
                                     { id: "python", mood: "blushing", side: "center" }
-                                ]
+                                ],
+                                showBack: true
                             }
                         ]
                     }
@@ -725,27 +776,42 @@ def greet_python(name):
             currentScene: 0,
             currentDialogue: 0
         };
-         // TODO: SAVE GAME STATE SO REFRESING DOESNT JUST START ON PAGE 1
+
+        // Save game state using URL parameters (works in artifacts)
         function saveGameState() {
-            try {
-                localStorage.setItem('handsome-programming-game-state', JSON.stringify(gameState));
-            } catch (e) {
-                console.log('LocalStorage not available - state will not persist');
-            }
+            console.log('Saving game state:', gameState);
+            const params = new URLSearchParams();
+            params.set('story', gameState.currentStory || '');
+            params.set('scene', gameState.currentScene.toString());
+            params.set('dialogue', gameState.currentDialogue.toString());
+            params.set('screen', gameState.currentScreen);
+            
+            const newUrl = window.location.pathname + '?' + params.toString();
+            console.log('New URL:', newUrl);
+            window.history.replaceState({}, '', newUrl);
         }
 
-        // TODO: LOAD GAME STATE  
+        // Load game state from URL parameters
         function loadGameState() {
-            try {
-                const saved = localStorage.getItem('handsome-programming-game-state');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    gameState = { ...gameState, ...parsed };
-                    return true;
-                }
-            } catch (e) {
-                console.log('Could not load saved state');
+            const params = new URLSearchParams(window.location.search);
+            console.log('Loading from URL params:', params.toString());
+            
+            const story = params.get('story');
+            const scene = params.get('scene');
+            const dialogue = params.get('dialogue');
+            const screen = params.get('screen');
+            
+            console.log('Parsed values:', { story, scene, dialogue, screen });
+            
+            if (story && story !== '') {
+                gameState.currentStory = story;
+                gameState.currentScene = parseInt(scene || '0');
+                gameState.currentDialogue = parseInt(dialogue || '0');
+                gameState.currentScreen = screen || 'vn-screen';
+                console.log('Game state loaded:', gameState);
+                return true;
             }
+            console.log('No saved state found');
             return false;
         }
 
@@ -778,6 +844,7 @@ def greet_python(name):
                 });
                 document.getElementById(screenId).classList.add('active');
                 gameState.currentScreen = screenId;
+                saveGameState(); // Save state when changing screens
 
                 // Initialize screen-specific content
                 if (screenId === 'vn-screen' && gameState.currentStory) {
@@ -799,6 +866,7 @@ def greet_python(name):
             gameState.currentStory = storyName;
             gameState.currentScene = sceneIndex;
             gameState.currentDialogue = 0;
+            saveGameState();
 
             const story = Stories[storyName];
             const scene = story.scenes[sceneIndex];
@@ -817,6 +885,15 @@ def greet_python(name):
             // Update text
             document.getElementById('speaker-name').textContent = dialogue.speaker;
             document.getElementById('text-content').textContent = dialogue.text;
+
+            // Show/hide back button based on dialogue settings
+            const backButton = document.getElementById('back-button');
+            if (dialogue.showBack !== undefined) {
+                backButton.style.display = dialogue.showBack ? 'block' : 'none';
+            } else {
+                // Default: show back button if not the first dialogue
+                backButton.style.display = gameState.currentDialogue > 0 ? 'block' : 'none';
+            }
 
             // Update background if specified
             if (scene.background) {
@@ -868,44 +945,77 @@ def greet_python(name):
                 charElement.setAttribute('data-character', charData.id);
                 charElement.setAttribute('data-mood', charData.mood);
 
-                // Create fallback first
-                charElement.innerHTML = `
-                    <div class="character-fallback">
-                        <div class="character-emoji">${char.emoji}</div>
-                        <div class="character-name">${char.name}</div>
-                        <div>${char.description}</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8;">(${charData.mood})</div>
-                    </div>
-                `;
+                // Add static class for static characters to remove all animations
+                if (charData.side === 'static') {
+                    charElement.classList.add('static');
+                }
+
+                // For static characters, preload the image to avoid placeholder flash
+                if (charData.side === 'static' && char.moods && char.moods[charData.mood]) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Image loaded successfully, create element with image
+                        charElement.innerHTML = `
+                            <img src="${char.moods[charData.mood]}" alt="${char.name} (${charData.mood})" class="character-sprite">
+                        `;
+                        // No need to set opacity or add visible class for static characters
+                    };
+                    img.onerror = function() {
+                        // Image failed to load, use fallback
+                        charElement.innerHTML = `
+                            <div class="character-fallback">
+                                <div class="character-emoji">${char.emoji}</div>
+                            </div>
+                        `;
+                        // No need to set opacity or add visible class for static characters
+                    };
+                    // Start loading the image
+                    img.src = char.moods[charData.mood];
+                    
+                } else {
+                    // Non-static characters - create fallback first
+                    charElement.innerHTML = `
+                        <div class="character-fallback">
+                            <div class="character-emoji">${char.emoji}</div>
+                        </div>
+                    `;
+                }
 
                 container.appendChild(charElement);
 
-                // Apply slide animation
-                const slideDirection = charData.side === 'center' ? (index % 2 === 0 ? 'left' : 'right') : 
-                                      charData.side === 'left' ? 'left' : 'right';
+                // Apply animations only for non-static characters
+                if (charData.side !== 'static') {
+                    // Slide animation
+                    const slideDirection = charData.side === 'center' ? (index % 2 === 0 ? 'left' : 'right') : 
+                                          charData.side === 'left' ? 'left' : 'right';
 
-                setTimeout(() => {
-                    charElement.classList.add(`slide-in-${slideDirection}`);
                     setTimeout(() => {
-                        charElement.classList.add('visible');
-                        charElement.classList.remove(`slide-in-${slideDirection}`);
-                    }, 600);
-                }, index * 200);
+                        charElement.classList.add(`slide-in-${slideDirection}`);
+                        setTimeout(() => {
+                            charElement.classList.add('visible');
+                            charElement.classList.remove(`slide-in-${slideDirection}`);
+                        }, 600);
+                    }, index * 200);
 
-                // Load mood image
-                if (char.moods && char.moods[charData.mood]) {
-                    const img = new Image();
-                    img.onload = function() {
+                    // Load mood image for non-static characters (after animation starts)
+                    if (char.moods && char.moods[charData.mood]) {
+                        const img = new Image();
+                        img.onload = function() {
+                            charElement.innerHTML = `
+                                <img src="${char.moods[charData.mood]}" alt="${char.name} (${charData.mood})" class="character-sprite">
+                            `;
+                        };
+                        img.src = char.moods[charData.mood];
+                    }
+                } else {
+                    // Static characters with no image - show fallback immediately
+                    if (!char.moods || !char.moods[charData.mood]) {
                         charElement.innerHTML = `
-                            <img src="${char.moods[charData.mood]}" alt="${char.name} (${charData.mood})" class="character-sprite">
-                            <div class="character-info">
-                                <div class="character-name">${char.name}</div>
-                                <div>${char.description}</div>
-                                <div style="font-size: 0.8rem; opacity: 0.8;">(${charData.mood})</div>
+                            <div class="character-fallback">
+                                <div class="character-emoji">${char.emoji}</div>
                             </div>
                         `;
-                    };
-                    img.src = char.moods[charData.mood];
+                    }
                 }
             });
         }
@@ -934,20 +1044,12 @@ def greet_python(name):
                     img.onload = function() {
                         charElement.innerHTML = `
                             <img src="${char.moods[newMood]}" alt="${char.name} (${newMood})" class="character-sprite">
-                            <div class="character-info">
-                                <div class="character-name">${char.name}</div>
-                                <div>${char.description}</div>
-                                <div style="font-size: 0.8rem; opacity: 0.8;">(${newMood})</div>
-                            </div>
                         `;
                     };
                     img.onerror = function() {
                         charElement.innerHTML = `
                             <div class="character-fallback">
                                 <div class="character-emoji">${char.emoji}</div>
-                                <div class="character-name">${char.name}</div>
-                                <div>${char.description}</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8;">(${newMood})</div>
                             </div>
                         `;
                     };
@@ -958,15 +1060,19 @@ def greet_python(name):
 
         // Dialogue advancement
         function nextDialogue() {
+            console.log('nextDialogue() called, current state:', gameState);
             const story = Stories[gameState.currentStory];
             const scene = story.scenes[gameState.currentScene];
             
             gameState.currentDialogue++;
+            console.log('About to save state after dialogue increment');
+            saveGameState(); // Save state when advancing dialogue
             
             if (gameState.currentDialogue >= scene.dialogue.length) {
                 // Move to next scene or end story
                 gameState.currentScene++;
                 gameState.currentDialogue = 0;
+                saveGameState(); // Save state when advancing scene
                 
                 if (gameState.currentScene >= story.scenes.length) {
                     // Story finished - could transition to coding or back to menu
@@ -975,6 +1081,7 @@ def greet_python(name):
                         gameState.currentStory = 'coding';
                         gameState.currentScene = 0;
                         gameState.currentDialogue = 0;
+                        saveGameState();
                     } else {
                         showScreen('home-screen', true);
                     }
@@ -998,6 +1105,7 @@ def greet_python(name):
             gameState.currentStory = 'coding';
             gameState.currentScene = 0;
             gameState.currentDialogue = 0;
+            saveGameState();
             displayCodingDialogue();
         }
 
@@ -1010,6 +1118,15 @@ def greet_python(name):
 
             document.getElementById('speaker-name-coding').textContent = dialogue.speaker;
             document.getElementById('text-content-coding').textContent = dialogue.text;
+            
+            // Show/hide back button for coding screen
+            const backButton = document.getElementById('back-button-coding');
+            if (dialogue.showBack !== undefined) {
+                backButton.style.display = dialogue.showBack ? 'block' : 'none';
+            } else {
+                backButton.style.display = gameState.currentDialogue > 0 ? 'block' : 'none';
+            }
+            
             displayCharacters(dialogue.characters, 'characters-coding');
         }
 
@@ -1018,12 +1135,43 @@ def greet_python(name):
             const scene = story.scenes[gameState.currentScene];
             
             gameState.currentDialogue++;
+            saveGameState();
             
             if (gameState.currentDialogue >= scene.dialogue.length) {
                 gameState.currentDialogue = 0; // Loop in coding mode
+                saveGameState();
             }
             
             displayCodingDialogue();
+        }
+
+        // Back button functionality
+        function previousDialogue() {
+            console.log('previousDialogue() called, current state:', gameState);
+            
+            if (gameState.currentDialogue > 0) {
+                gameState.currentDialogue--;
+                saveGameState();
+                displayCurrentDialogue();
+            } else if (gameState.currentScene > 0) {
+                // Go to previous scene's last dialogue
+                gameState.currentScene--;
+                const story = Stories[gameState.currentStory];
+                const scene = story.scenes[gameState.currentScene];
+                gameState.currentDialogue = scene.dialogue.length - 1;
+                saveGameState();
+                displayCurrentDialogue();
+            }
+        }
+
+        function previousCodingDialogue() {
+            console.log('previousCodingDialogue() called, current state:', gameState);
+            
+            if (gameState.currentDialogue > 0) {
+                gameState.currentDialogue--;
+                saveGameState();
+                displayCodingDialogue();
+            }
         }
 
         // Settings management
@@ -1130,9 +1278,38 @@ def greet_python(name):
         // === INITIALIZATION ===
         window.onload = function() {
             console.log('Game starting...');
+            console.log('Current URL:', window.location.href);
+            console.log('URL search params:', window.location.search);
             console.log('Available Stories:', Object.keys(Stories));
             console.log('Available Characters:', Object.keys(Characters));
-            showScreen('home-screen');
+            
+            // Try to load saved state and restore game position
+            const hasState = loadGameState();
+            console.log('Has saved state:', hasState);
+            
+            if (hasState && gameState.currentStory) {
+                console.log('Restoring to:', gameState);
+                
+                // Properly restore the screen and content
+                if (gameState.currentScreen === 'vn-screen') {
+                    document.querySelectorAll('.screen').forEach(screen => {
+                        screen.classList.remove('active');
+                    });
+                    document.getElementById('vn-screen').classList.add('active');
+                    displayCurrentDialogue();
+                } else if (gameState.currentScreen === 'coding-screen') {
+                    document.querySelectorAll('.screen').forEach(screen => {
+                        screen.classList.remove('active');
+                    });
+                    document.getElementById('coding-screen').classList.add('active');
+                    displayCodingDialogue();
+                } else {
+                    showScreen(gameState.currentScreen, false);
+                }
+            } else {
+                console.log('No state to restore, showing home screen');
+                showScreen('home-screen');
+            }
         };
 
         // === EXAMPLES OF HOW TO ADD CONTENT ===
