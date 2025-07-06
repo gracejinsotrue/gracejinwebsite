@@ -342,7 +342,7 @@
 
         .speaker-name {
             font-weight: bold;
-            color: #ff9a9e;
+            color: #ff6deb;
             margin-bottom: 10px;
         }
 
@@ -550,15 +550,27 @@
             </div>
 
             <div class="code-side">
-                <div class="code-header">Python Challenge: First Date</div>
+                <div class="code-header">Javascript Challenge: Say Hi to Her!</div>
                 <div class="challenge-info" id="challenge-info">
-                    Write a function called 'greet_python' that takes a name as input and returns "Hello [name], nice to meet you!"
+                    prtend this paort works"
                 </div>
                 <div class="code-container">
                     <textarea class="code-input" id="code-input" placeholder="# Write your code here...
-def greet_python(name):
-    # Your code here
-    pass"></textarea>
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function(root) {
+    
+};"></textarea>
                     <div class="code-controls">
                         <button class="code-button" onclick="runCode()">Run Code</button>
                         <button class="code-button" onclick="checkSolution()">Check Solution</button>
@@ -584,6 +596,7 @@ def greet_python(name):
                 name: "The Janitor",
                 description: "Robust and Responsible",
                 emoji: "⚡",
+                color: "#f39c12",
                 moods: {
                     neutral: "images/java_normal.png",
                     happy: "images/java_blush.png",
@@ -595,32 +608,57 @@ def greet_python(name):
                 name: "Peethon", 
                 description: "Elegant & Readable",
                 emoji: "🐍",
+                color: "#017791",
                 moods: {
                     neutral: "images/python_normal.png",
-                    happy: "images/python_normal2.png",
-                    upset: "images/python_mad.png",
-                    blushing: "images/python_blush.png"
+                    talking: "images/python_talk.png",
+                    judging: "images/python_think.png"
+                    
                 }
             },
             c: {
                 name: "Cee",
                 description: "Reliable & Fast",
                 emoji: "⚔️",
+                color: "#e74c3c",
                 moods: {
                     neutral: "images/c_talk.png",
                     happy: "images/c_blush.png"
+                }
+            },
+            javascript: {
+                name: "JayJay",
+                description: "frtend momenetm",
+                color: "#c49d00",
+                moods:{
+                    
+                    neutral: "images/js_normal.png",
+                    cute: "images/js_cute.png",
+                    annoyed: "images/js_annoyed.png",
+                    blush: "images/js_blush.png"
                 }
             },
             windows: {
                 name: "Windoe",
                 description: "Good Operating Sysem",
                 emoji: "⚔️",
+                color: "#1778ff",
                 moods: {
                     neutral: "images/windows_normal.png",
                     smile: "images/windows_smile.png",
-                    blushing: "images/windows_blushing.png",
+                    blushing: "images/windows_blush.png",
                     talking1: "images/windows_bend_talk.png"
                     
+                }
+            },
+            
+            linux: {
+                name: "L*nux",
+                description: "Good Operating Sysem",
+                color: "#7a4b00",
+                moods:{
+                    neutral: "images/linux_normal.png",
+                    annoyed: "images/linux_annoyed.png"
                 }
             },
              you: {
@@ -656,7 +694,7 @@ def greet_python(name):
                                 actions: [],
                                 showBack: false
                             },
-                                                        {
+                            {
                             speaker: "You",
                                 text: "Huh...? One moment I was at my desk at Am*zon, and suddenly I'm here...where am I?",
                                 characters: [
@@ -675,69 +713,123 @@ def greet_python(name):
                                 showBack: true // Allow going back from here
                             },
                             {
-                                speaker: "java", 
-                                text: "Are you ready to meet some of the most handsome languages in the digital world?",
+                            speaker: "You",
+                                text: "Eh...? ",
                                 characters: [
-                                    { id: "java", mood: "happy", side: "left" }
+                                    { id: "you", mood: "talking1", side: "static" }
+                                ],
+                                actions: [],
+                                showBack: true
+                            },
+                            
+                            {
+                                speaker: "???", 
+                                text: "Awake, and not a moment too soon, heheheh...",
+                                characters: [
+                                    { id: "python", mood: "neutral", side: "left" },
+                                     { id: "windows", mood: "smile", side: "static" }
+                                ],
+                                showBack: true
+                            },
+                                                        {
+                                speaker: "???", 
+                                text: "You look like you are about to faint. Make sure you are back on your feet, i think some of our senior engineers want to talk to you today...including us!",
+                                characters: [
+                                    { id: "python", mood: "neutral", side: "static" },
+                                     { id: "windows", mood: "neutral", side: "static" }
+                                ],
+                                showBack: true
+                            },
+                                                        {
+                            speaker: "You",
+                                text: "Hahaha...why do you look familar...? ",
+                                characters: [
+                                    { id: "you", mood: "talking1", side: "static" }
+                                ],
+                                actions: [],
+                                showBack: true
+                            },
+                            {
+                                speaker: "???", 
+                                text: "Hm. No idea what you’re talking about. I’ve never seen you before in my life, kiddo.",
+                                characters: [
+                                    { id: "python", mood: "judging", side: "static" },
+                                     { id: "windows", mood: "neutral", side: "static" }
                                 ],
                                 showBack: true
                             },
                             {
-                                speaker: "java",
-                                text: "Let me introduce you to some of my friends. Each of us has our own unique personality and strengths.",
+                                speaker: "You",
+                                text: "Not a person, but your outfit and its colors...It reminds me of a certain programming langugage logo. What was it...? Uh, Peethon or something? ",
                                 characters: [
-                                    { id: "java", mood: "neutral", side: "left" },
-                                    { id: "python", mood: "neutral", side: "right" },
-                                    { id: "c", mood: "neutral", side: "center" }
+                                    { id: "you", mood: "talking1", side: "static" }
+                                ],
+                                actions: [],
+                                showBack: true
+                            },
+                                                        {
+                                speaker: "Peethon", 
+                                text: "Ah, yeah, that's me! Nice to meet ya. You sound kinda stupid though, better not have JayJay or L*nux catching you lacking. ",
+                                characters: [
+                                    { id: "python", mood: "judging", side: "static" },
+                                     { id: "windows", mood: "neutral", side: "static" }
                                 ],
                                 showBack: true
-                            }
+                            },
+                            //rn javascrip hair gets cut off wjen there are 3 elemtns. this is also going to be a problem when resizing screen, not just for js but for everyone esle
+                            {
+                                speaker: "???",
+                                text: "*Enters* Ugh, which one of you lower life forms called my name? Windoe, was it you again?",
+                                characters: [
+                                    { id: "linux", mood: "annoyed", side: "left" },
+                                    // { id: "windows", mood: "neutral", side: "static" },
+   
+                                    { id: "javascript", mood: "neutral", side: "right" }
+                                    
+                                ],
+                                showBack: true
+                            },
+
+                                         {
+                                speaker: "Windoe",
+                                text: " O-oh, we were just talking about you sir! Think nothing of it!",
+                                characters: [
+                                    { id: "linux", mood: "annoyed", side: "static" },
+                                    { id: "windows", mood: "blushing", side: "right" },
+                                    // { id: "javascript", mood: "neutral", side: "static" }
+                                    
+                                ],
+                                showBack: true
+                            },
+
+        {
+                                speaker: "You",
+                                text: " Huh, what was that about. Almost seems to me that she likes him...? ",
+                                characters: [
+                                    { id: "you", mood: "talking1", side: "static" }
+                                ],
+                                actions: [],
+                                showBack: true
+                            },
+                                                        //rn javascrip hair gets cut off wjen there are 3 elemtns. this is also going to be a problem when resizing screen, not just for js but for everyone esle
+                            {
+                                speaker: "???",
+                                text: "Oh cutie, you’re so adorable for noticing that~ I like someone who has a good eye, y'know!.",
+                                characters: [
+                                     { id: "javascript", mood: "cute", side: "right" },
+                                    { id: "linux", mood: "annoyed", side: "left" },
+                                    // { id: "windows", mood: "neutral", side: "static" },
+                                    
+                                ],
+                                showBack: true
+                            },
+
                         ]
+                        
                     },
-                    {
-                        id: "meet_python",
-                        useFade: true,
-                        dialogue: [
-                            {
-                                speaker: "python",
-                                text: "Greetings! I'm Python. I believe in clean, readable code and elegant solutions.",
-                                characters: [
-                                    { id: "python", mood: "happy", side: "center" }
-                                ],
-                                showBack: true
-                            },
-                            {
-                                speaker: "python",
-                                text: "Some say I'm the most approachable language... would you like to find out? 💕",
-                                characters: [
-                                    { id: "python", mood: "blushing", side: "center" }
-                                ],
-                                showBack: true
-                            }
-                        ]
-                    },
-                    {
-                        id: "meet_c", 
-                        useFade: false, // Example of no fade
-                        dialogue: [
-                            {
-                                speaker: "c",
-                                text: "I am C. I may seem intimidating at first, but I offer power and performance like no other.",
-                                characters: [
-                                    { id: "c", mood: "neutral", side: "center" }
-                                ],
-                                showBack: true
-                            },
-                            {
-                                speaker: "c",
-                                text: "Are you brave enough to handle my complexity?",
-                                characters: [
-                                    { id: "c", mood: "happy", side: "center" }
-                                ],
-                                showBack: true
-                            }
-                        ]
-                    }
+                    
+        
+
                 ]
             },
             coding: {
@@ -745,21 +837,21 @@ def greet_python(name):
                 background: null,
                 scenes: [
                     {
-                        id: "python_challenge",
+                        id: "javascript_challenge",
                         dialogue: [
                             {
-                                speaker: "python",
-                                text: "Hello there! I'm Python, and I have a special challenge for you. Show me you can handle my elegant syntax! 💕",
+                                speaker: "JayJay",
+                                text: "Quick! Show me how much you adore my elegant and fleeexibility by greeting me in my language💕",
                                 characters: [
-                                    { id: "python", mood: "happy", side: "center" }
+                                    { id: "javascript", mood: "cute", side: "center" }
                                 ],
-                                showBack: false // First dialogue in coding mode
+                                showBack: false // First dialogue in coding mode, we are NOT going bck
                             },
                             {
-                                speaker: "python",
+                                speaker: "JayJay",
                                 text: "I love how you think! Your approach to problem-solving is quite... attractive. Ready for the next challenge?",
                                 characters: [
-                                    { id: "python", mood: "blushing", side: "center" }
+                                    { id: "javascript", mood: "blush", side: "center" }
                                 ],
                                 showBack: true
                             }
@@ -777,7 +869,7 @@ def greet_python(name):
             currentDialogue: 0
         };
 
-        // Save game state using URL parameters (works in artifacts)
+        // for now, save game state using URL parameters 
         function saveGameState() {
             console.log('Saving game state:', gameState);
             const params = new URLSearchParams();
@@ -791,7 +883,7 @@ def greet_python(name):
             window.history.replaceState({}, '', newUrl);
         }
 
-        // Load game state from URL parameters
+        // load game state from URL parameters
         function loadGameState() {
             const params = new URLSearchParams(window.location.search);
             console.log('Loading from URL params:', params.toString());
@@ -874,8 +966,7 @@ def greet_python(name):
             showScreen('vn-screen', scene.useFade);
         }
 
-        // Display current dialogue
-        function displayCurrentDialogue() {
+         function displayCurrentDialogue() {
             const story = Stories[gameState.currentStory];
             const scene = story.scenes[gameState.currentScene];
             const dialogue = scene.dialogue[gameState.currentDialogue];
@@ -883,7 +974,21 @@ def greet_python(name):
             if (!dialogue) return;
 
             // Update text
-            document.getElementById('speaker-name').textContent = dialogue.speaker;
+            const speakerElement = document.getElementById('speaker-name');
+            speakerElement.textContent = dialogue.speaker;
+            
+            // Set speaker color based on character ID, not speaker name
+            if (dialogue.characters && dialogue.characters.length > 0) {
+                const mainCharacter = Characters[dialogue.characters[0].id];
+                if (mainCharacter && mainCharacter.color) {
+                    speakerElement.style.color = mainCharacter.color;
+                } else {
+                    speakerElement.style.color = '#ff9a9e'; // Default color
+                }
+            } else {
+                speakerElement.style.color = '#ff9a9e'; // Default color
+            }
+            
             document.getElementById('text-content').textContent = dialogue.text;
 
             // Show/hide back button based on dialogue settings
@@ -1190,18 +1295,16 @@ def greet_python(name):
                 description: "Write a function called 'greet_python' that takes a name as input and returns 'Hello [name], nice to meet you!'",
                 solution: function(code) {
                     try {
-                        if (code.includes('def greet_python') &&
-                            code.includes('return') &&
-                            code.includes('Hello') &&
-                            code.includes('nice to meet you')) {
+                        if (code.includes('this shit work') &&
+                            code.includes('please')) {
                             return { 
                                 success: true, 
-                                message: "Perfect! Python is impressed with your elegant solution! 💖" 
+                                message: "Perfect! JayJay is impressed with your elegant solution! 💖" 
                             };
                         } else {
                             return { 
                                 success: false, 
-                                message: "Hmm, that's not quite right. Make sure you define 'greet_python' and return the correct greeting!" 
+                                message: "Hmm, that's not quite right. Make sure you define GET GOOD WIHGIAWHG' and return the correct greeting!" 
                             };
                         }
                     } catch (error) {
@@ -1231,21 +1334,33 @@ def greet_python(name):
             output.innerHTML = `<div class="${result.success ? 'success' : 'error'}">${result.message}</div>`;
 
             if (result.success) {
-                changeCharacterMood('python', 'happy', 'characters-coding');
+                changeCharacterMood('javascript', 'happy', 'characters-coding');
                 setTimeout(() => {
                     document.getElementById('text-content-coding').textContent =
                         "Wonderful! Your code is as beautiful as your mind. I think this could be the start of something special... 💕";
                 }, 1000);
             } else {
-                changeCharacterMood('python', 'upset', 'characters-coding');
+                changeCharacterMood('javascript', 'annoyed', 'characters-coding');
             }
         }
 
         function clearCode() {
             document.getElementById('code-input').value = `# Write your code here...
-def greet_python(name):
-    # Your code here
-    pass`;
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function(root) {
+    
+};`;
             document.getElementById('code-output').textContent = "Code cleared! Ready for a fresh start! 💖";
         }
 
