@@ -36,7 +36,47 @@ const shaderThumbnails = {
                 gl_FragColor = vec4(finalColor, 1.0);
             }
         `
+    },
+    'shader-canvas-2': {
+        fragment: `
+    precision mediump float;
+        uniform vec2 iResolution;
+        uniform float iTime;
+        
+        // blue palette function
+        vec3 bluePalette(float t) {
+            vec3 a = vec3(0.2, 0.4, 0.8);
+            vec3 b = vec3(0.3, 0.5, 0.7);
+            vec3 c = vec3(0.8, 1.0, 1.2);
+            vec3 d = vec3(0.1, 0.3, 0.6);
+            return a + b * cos(6.28318 * (c * t + d));
+        }
+        
+        void main() {
+            vec2 fragCoord = gl_FragCoord.xy;
+            vec2 uv = (fragCoord * 2.0 - iResolution.xy) / iResolution.y; //fit to screen
+            vec2 uv0 = uv;
+            vec3 finalColor = vec3(0.0);
+            
+            // Create flowing blue waves
+            for (float i = 0.0; i < 2.0; i++) {
+                uv = fract(uv * 0.5) - 0.5;
+                float d = length(uv) * exp(-length(uv0));
+                vec3 col = bluePalette(length(uv0) + i * 0.3 + iTime * 0.3);
+                d = sin(d * 6.0 + iTime + i) / 6.0;
+                d = abs(d);
+                d = pow(0.02 / d, 1.0);
+                finalColor += col * d;
+            }
+            
+            // add some blue background gradient
+            finalColor += vec3(0.05, 0.1, 0.3) * (length(uv0));
+            
+            gl_FragColor = vec4(finalColor, 1.0);
+        }
+    `
     }
+
 };
 
 const shaderVertexSource = `
