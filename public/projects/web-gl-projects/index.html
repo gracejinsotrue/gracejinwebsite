@@ -72,9 +72,29 @@
             box-shadow: 0 10px 30px rgba(175, 107, 177, 0.3);
         }
 
+        #shaderCanvas.pixelated {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
         .controls {
             color: white;
             margin: 20px;
+        }
+
+        .shader-selector {
+            margin: 20px 0;
+        }
+
+        .shader-selector button {
+            margin: 0 10px;
+        }
+
+        .shader-selector button.active {
+            background: #ce64ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(175, 107, 177, 0.4);
         }
 
         button {
@@ -94,6 +114,43 @@
             background: #ce64ff;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(175, 107, 177, 0.4);
+        }
+
+        .slider-container {
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .slider-container label {
+            min-width: 120px;
+            text-align: right;
+        }
+
+        input[type="range"] {
+            width: 200px;
+            margin: 0 10px;
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: left;
+        }
+
+        .earth-controls {
+            display: none;
+        }
+
+        .earth-controls.active {
+            display: block;
+        }
+
+        #shaderCanvas.pixelated {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
         }
 
         .info {
@@ -154,6 +211,16 @@
                 padding: 10px 20px;
                 font-size: 0.9rem;
             }
+
+            .slider-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .slider-container label {
+                min-width: auto;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -165,28 +232,49 @@
     </div>
 
     <div id="container">
-        <h1>Grace Jin's WebGL Shaders</h1>
+        <h1>Grace Jin's OpenGL/WebGL Shader Projects</h1>
+
+        <div class="shader-selector">
+            <button onclick="switchShader('earth')" id="earthBtn" class="active">Pixel Earth</button>
+            <button onclick="switchShader('fractal')" id="fractalBtn">Fractal Waves</button>
+        </div>
+
         <canvas id="shaderCanvas" width="800" height="600"></canvas>
 
         <div class="controls">
             <button onclick="toggleAnimation()">Toggle Animation</button>
             <button onclick="resetTime()">Reset Time</button>
+
+            <div class="earth-controls active" id="earthControls">
+                <div class="slider-container">
+                    <label>Pixel Size:</label>
+                    <input type="range" id="pixelSize" min="1" max="20" value="8" oninput="updatePixelSize(this.value)">
+                    <span class="slider-value" id="pixelValue">8</span>
+                </div>
+
+                <div class="slider-container">
+                    <label>Brightness:</label>
+                    <input type="range" id="brightness" min="0.5" max="2.0" step="0.1" value="1.3"
+                        oninput="updateBrightness(this.value)">
+                    <span class="slider-value" id="brightnessValue">1.3</span>
+                </div>
+            </div>
         </div>
 
         <div class="info">
-            <h3>How it works:</h3>
-            <p>I took apart various shader tutorials to write my own shader! This fractal pattern uses a palette
-                function to create the colorful, animated waves. </p>
-            <p>Built with WebGL and GLSL shaders - my hobby to explore the intersection between math and art!
-            </p>
+            <h3 id="infoTitle">Pixel Art Earth:</h3>
+            <p id="infoText">A procedurally generated pixel art draw with maths, devlog will be up</p>
         </div>
     </div>
 
     <script>
-        let canvas, gl, program, startTime, animationId;
+        let canvas, gl, fractalProgram, earthProgram, startTime, animationId;
         let isAnimating = true;
+        let currentShader = 'earth';
+        let pixelSize = 8.0;
+        let brightness = 1.3;
 
-        // vertex shader, standard for full screen quad
+        // fractal shader sources
         const vertexShaderSource = `
             attribute vec4 a_position;
             void main() {
@@ -194,7 +282,6 @@
             }
         `;
 
-        // fragment shader 
         const fragmentShaderSource = `
             precision mediump float;
             uniform vec2 iResolution;
@@ -227,6 +314,215 @@
                 }
                 
                 gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        // earth shader sources
+        const earthFragmentShaderSource = `
+            precision mediump float;
+            uniform vec2 u_resolution;
+            uniform float u_time;
+            uniform float u_pixelSize;
+            uniform float u_brightness;
+            
+            // 3D hash function for noise
+            float hash3D(vec3 p) {
+                return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453);
+            }
+            
+            // 3D noise function - works directly on sphere coordinates
+            float noise3D(vec3 p) {
+                vec3 i = floor(p);
+                vec3 f = fract(p);
+                
+                // 8 corners of the 3D grid cell
+                float a = hash3D(i);
+                float b = hash3D(i + vec3(1.0, 0.0, 0.0));
+                float c = hash3D(i + vec3(0.0, 1.0, 0.0));
+                float d = hash3D(i + vec3(1.0, 1.0, 0.0));
+                float e = hash3D(i + vec3(0.0, 0.0, 1.0));
+                float f1 = hash3D(i + vec3(1.0, 0.0, 1.0));
+                float g = hash3D(i + vec3(0.0, 1.0, 1.0));
+                float h = hash3D(i + vec3(1.0, 1.0, 1.0));
+                
+                // HOW DO YOU DO THIS INTRE;OLTAION SHIT
+                vec3 u = f * f * (3.0 - 2.0 * f);
+                
+                // MOR EINTERPOLATION, WHY DOES IT LOOK OVERLAY
+                return mix(
+                    mix(mix(a, b, u.x), mix(c, d, u.x), u.y),
+                    mix(mix(e, f1, u.x), mix(g, h, u.x), u.y),
+                    u.z
+                );
+            }
+            
+            // 3D fractal noise
+            float fbm3D(vec3 p) {
+                float value = 0.0;
+                float amplitude = 0.5;
+                float frequency = 1.0;
+                
+                // add multiple octaves of noise
+                for (int i = 0; i < 4; i++) {
+                    value += amplitude * noise3D(p * frequency);
+                    amplitude *= 0.5;
+                    frequency *= 2.0;
+                }
+                
+                return value;
+            }
+            
+            // this is the cool stuff it pixelates stuf
+            vec2 pixelate(vec2 coord, float pixelSize) {
+                return floor(coord / pixelSize) * pixelSize;
+            }
+            
+            vec3 getEarthColor(vec2 uv) {
+                // cloud radii, plant radii, cloud > planet so it resides on top of it
+                float planetRadius = 0.45;
+                float cloudRadius = 0.52;
+                
+                // calculate distance from center
+                float dist = length(uv);
+                
+                // Space background for everything outside cloud layer
+                if (dist > cloudRadius) {
+                    return vec3(0.1, 0.1, 0.2);
+                }
+                
+                // Initialize final color
+                vec3 finalColor = vec3(0.1, 0.1, 0.2);
+                
+                // === PLANET LAYER ===
+                if (dist <= planetRadius) {
+                    float x = uv.x;
+                    float y = uv.y;
+                    float z = sqrt(planetRadius * planetRadius - x * x - y * y);
+                    
+                    // y axis rotatio
+                    float rotationSpeed = 0.3;
+                    float angle = u_time * rotationSpeed;
+                    
+                    float cosAngle = cos(angle);
+                    float sinAngle = sin(angle);
+                    
+                    // rotatio based on the matrix translaion for roating across y
+                    float rotatedX = x * cosAngle + z * sinAngle;
+                    float rotatedZ = -x * sinAngle + z * cosAngle;
+                    float rotatedY = y;
+                    
+                    vec3 spherePos = vec3(rotatedX, rotatedY, rotatedZ);
+                    
+                    // generate terrain using 3D fractal noise
+                    float elevation = fbm3D(spherePos * 4.0);
+                    
+                    // add large-scale continental features
+                    float continents = fbm3D(spherePos * 2.0);
+                    elevation = mix(elevation, continents * 0.8, 0.6);
+                    
+                    float seaLevel = 0.4;
+                    bool isLand = elevation > seaLevel;
+                    
+                    // color palette
+                    vec3 planetColor;
+                    if (isLand) {
+                        float landHeight = (elevation - seaLevel) / (1.0 - seaLevel);
+                        
+                        if (landHeight < 0.2) {
+                            planetColor = mix(vec3(0.4, 0.9, 0.3), vec3(0.5, 1.0, 0.4), landHeight * 5.0);
+                        } else if (landHeight < 0.6) {
+                            planetColor = mix(vec3(0.5, 1.0, 0.4), vec3(0.9, 0.7, 0.4), (landHeight - 0.2) * 2.5);
+                        } else {
+                            planetColor = mix(vec3(0.9, 0.7, 0.4), vec3(1.0, 1.0, 1.0), (landHeight - 0.6) * 2.5);
+                        }
+                    } else {
+                        float waterDepth = (seaLevel - elevation) / seaLevel;
+                        
+                        if (waterDepth < 0.3) {
+                            planetColor = mix(vec3(0.6, 0.9, 1.0), vec3(0.4, 0.8, 1.0), waterDepth * 3.33);
+                        } else {
+                            planetColor = mix(vec3(0.4, 0.8, 1.0), vec3(0.2, 0.6, 0.9), (waterDepth - 0.3) * 1.43);
+                        }
+                    }
+                    
+                    // lighting (TODO: FIX IT LOOKS SO GULY)
+                    float planetLighting = (rotatedZ + planetRadius) / (2.0 * planetRadius);
+                    planetLighting = planetLighting * 0.5 + 0.5;
+                    
+                    planetColor *= planetLighting;
+                    
+                    // edge fade
+                    float planetEdgeFade = 1.0 - pow(dist / planetRadius, 2.0);
+                    planetColor *= planetEdgeFade;
+                    
+                    finalColor = planetColor;
+                }
+                
+                // === CLOUD LAYER ===
+                //TODO: CLOUD FIX
+                float cloudX = uv.x;
+                float cloudY = uv.y;
+                float cloudZ = sqrt(cloudRadius * cloudRadius - cloudX * cloudX - cloudY * cloudY);
+                
+                // Apply rotation to clouds
+                float cloudRotationSpeed = 0.4;
+                float cloudAngle = u_time * cloudRotationSpeed;
+
+                float cloudDrift = u_time * 0.25;
+                
+                float cloudCosAngle = cos(cloudAngle);
+                float cloudSinAngle = sin(cloudAngle);
+                
+                // Apply rotation based on transformation matrix )(need tow rite this out)
+                float rotatedCloudX = cloudX * cloudCosAngle + cloudZ * cloudSinAngle;
+                float rotatedCloudZ = -cloudX * cloudSinAngle + cloudZ * cloudCosAngle;
+                float rotatedCloudY = cloudY;
+                
+        
+                vec3 cloudSpherePos = vec3(rotatedCloudX, rotatedCloudY, rotatedCloudZ);
+                
+                //time-based drift
+                vec3 driftOffset = vec3(cloudDrift, 0.0, 0.0);
+                
+                // generate cloud density using 3D prlin noise
+                float cloudDensity = fbm3D((cloudSpherePos + driftOffset) * 3.5);
+                cloudDensity += fbm3D((cloudSpherePos + driftOffset) * 10.0) * 0.3;
+
+                float cloudThreshold = 0.4;
+                float cloudAlpha = 0.0;
+                
+                if (cloudDensity > cloudThreshold) {
+                    cloudAlpha = (cloudDensity - cloudThreshold) / (1.0 - cloudThreshold);
+                    cloudAlpha = pow(cloudAlpha, 1.5) * 0.8;
+                }
+                
+                // cloud lighting
+                float cloudLighting = (rotatedCloudZ + cloudRadius) / (2.0 * cloudRadius);
+                cloudLighting = cloudLighting * 0.4 + 0.6;
+                
+                vec3 cloudColor = vec3(1.0, 1.0, 1.0) * cloudLighting;
+                
+                // Blend clouds over planet/space
+                finalColor = mix(finalColor, cloudColor, cloudAlpha);
+                
+                return finalColor;
+            }
+            
+            void main() {
+                // Apply pixelation effect to the whol eting
+                vec2 pixelCoord = pixelate(gl_FragCoord.xy, u_pixelSize);
+                
+                // Normalize coordinates
+                vec2 uv = (pixelCoord * 2.0 - u_resolution) / min(u_resolution.x, u_resolution.y);
+                
+                // Get the color for this pixel
+                vec3 color = getEarthColor(uv);
+                
+                // Apply brightness multiplier
+                color *= u_brightness;
+                color = min(color, vec3(1.0));
+                
+                gl_FragColor = vec4(color, 1.0);
             }
         `;
 
@@ -268,14 +564,22 @@
                 return false;
             }
 
-            // Create shaders
+            // create fractal program
             const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-            const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+            const fractalFragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+            fractalProgram = createProgram(gl, vertexShader, fractalFragmentShader);
 
-            // Create program
-            program = createProgram(gl, vertexShader, fragmentShader);
+            // create earth program
+            const earthFragmentShader = createShader(gl, gl.FRAGMENT_SHADER, earthFragmentShaderSource);
+            earthProgram = createProgram(gl, vertexShader, earthFragmentShader);
 
-            // Create full-screen quad
+            // setup quad geometry
+            setupQuad(gl);
+
+            return true;
+        }
+
+        function setupQuad(gl) {
             const positions = new Float32Array([
                 -1, -1,
                 1, -1,
@@ -287,18 +591,29 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 
-            const positionLocation = gl.getAttribLocation(program, 'a_position');
-            gl.enableVertexAttribArray(positionLocation);
-            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-            // Set viewport
             gl.viewport(0, 0, canvas.width, canvas.height);
+        }
 
-            // Start animation
-            startTime = Date.now();
-            render();
+        function switchShader(shaderType) {
+            currentShader = shaderType;
 
-            return true;
+            // update button states
+            document.getElementById('fractalBtn').classList.toggle('active', shaderType === 'fractal');
+            document.getElementById('earthBtn').classList.toggle('active', shaderType === 'earth');
+
+            // toggle pixelated rendering for Earth (default on)
+            canvas.classList.toggle('pixelated', shaderType === 'earth');
+
+            // show/hide earth controls
+            document.getElementById('earthControls').classList.toggle('active', shaderType === 'earth');
+
+            // update info text
+            const infoTitle = document.getElementById('infoTitle');
+            const infoText = document.getElementById('infoText');
+
+
+
+            resetTime();
         }
 
         function render() {
@@ -306,17 +621,38 @@
 
             const currentTime = (Date.now() - startTime) / 1000.0;
 
-            gl.useProgram(program);
+            if (currentShader === 'fractal' && fractalProgram) {
+                gl.useProgram(fractalProgram);
 
-            // Set uniforms
-            const iTimeLocation = gl.getUniformLocation(program, 'iTime');
-            const iResolutionLocation = gl.getUniformLocation(program, 'iResolution');
+                // Set up attributes
+                const positionLocation = gl.getAttribLocation(fractalProgram, 'a_position');
+                gl.enableVertexAttribArray(positionLocation);
+                gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-            gl.uniform1f(iTimeLocation, currentTime);
-            gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
+                const iTimeLocation = gl.getUniformLocation(fractalProgram, 'iTime');
+                const iResolutionLocation = gl.getUniformLocation(fractalProgram, 'iResolution');
+                gl.uniform1f(iTimeLocation, currentTime);
+                gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            } else if (currentShader === 'earth' && earthProgram) {
+                gl.useProgram(earthProgram);
 
-            // Draw
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                // Set up attributes
+                const positionLocation = gl.getAttribLocation(earthProgram, 'a_position');
+                gl.enableVertexAttribArray(positionLocation);
+                gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+                const uTimeLocation = gl.getUniformLocation(earthProgram, 'u_time');
+                const uResolutionLocation = gl.getUniformLocation(earthProgram, 'u_resolution');
+                const uPixelSizeLocation = gl.getUniformLocation(earthProgram, 'u_pixelSize');
+                const uBrightnessLocation = gl.getUniformLocation(earthProgram, 'u_brightness');
+
+                gl.uniform1f(uTimeLocation, currentTime);
+                gl.uniform2f(uResolutionLocation, canvas.width, canvas.height);
+                gl.uniform1f(uPixelSizeLocation, pixelSize);
+                gl.uniform1f(uBrightnessLocation, brightness);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            }
 
             animationId = requestAnimationFrame(render);
         }
@@ -334,17 +670,30 @@
             startTime = Date.now();
         }
 
+        function updatePixelSize(value) {
+            pixelSize = parseFloat(value);
+            document.getElementById('pixelValue').textContent = value;
+        }
+
+        function updateBrightness(value) {
+            brightness = parseFloat(value);
+            document.getElementById('brightnessValue').textContent = value;
+        }
+
         // Initialize when page loads
         window.onload = function () {
             if (initWebGL()) {
-                console.log('WebGL initialized successfully!');
+                // Set initial state for Earth shader
+                canvas.classList.add('pixelated');
+                startTime = Date.now();
+                render();
+                console.log('WebGL shaders initialized successfully!');
             }
         };
 
         // Handle window resize
         window.addEventListener('resize', function () {
             if (canvas && gl) {
-                // Update canvas size
                 const rect = canvas.getBoundingClientRect();
                 canvas.width = rect.width;
                 canvas.height = rect.height;
