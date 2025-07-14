@@ -49,6 +49,75 @@
 
 }
 
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(3, 0, 2, 0.884);
+    padding: 0.9375rem 0;
+    text-align: center;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+nav a {
+    margin: 0 0.9375rem;
+    color: #af6bb1;
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    /* Prevents text wrapping */
+    display: inline-block;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive navbar for smaller screens */
+@media (max-width: 768px) {
+    nav {
+        padding: 0.75rem 0.5rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* For very small screens, make navbar scrollable */
+@media (max-width: 576px) {
+    nav {
+        padding: 0.75rem 0.25rem;
+        text-align: left;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    nav a {
+        margin: 0 0.4rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Demo content */
+body {
+    margin: 0;
+    background-color: rgb(12, 12, 12);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 60px;
+}
+
+.demo-content {
+    padding: 2rem;
+    text-align: center;
+}
+
 .about-content-wrapper {
     display: flex;
     align-items: flex-start;
