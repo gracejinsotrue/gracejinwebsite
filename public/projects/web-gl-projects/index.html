@@ -233,6 +233,7 @@
 
     <div id="container">
         <h1>Grace Jin's OpenGL/WebGL Shader Projects</h1>
+        <h3>I like coding, I like drawing, I like math. I will make these now and then.</h3>
 
         <div class="shader-selector">
             <button onclick="switchShader('earth')" id="earthBtn" class="active">Pixel Earth</button>
@@ -260,11 +261,12 @@
                 </div>
             </div>
         </div>
-
+        <!--bro what is wrong with this html i rmeove this and nothing dwrites, but i write someting below and it overwrites this blurb.-->
         <div class="info">
-            <h3 id="infoTitle">Pixel Art Earth:</h3>
-            <p id="infoText">A procedurally generated pixel art draw with maths, devlog will be up</p>
+            <h3 id="infoTitle">Procedurally Drawn Earth:</h3>
+            <p id="infoText">A procedurally generated pixel art drawn with maths, devlog will be up</p>
         </div>
+
     </div>
 
     <script>
@@ -611,7 +613,13 @@
             const infoTitle = document.getElementById('infoTitle');
             const infoText = document.getElementById('infoText');
 
-
+            if (shaderType === 'earth') {
+                infoTitle.textContent = 'Pixel Art Earth:';
+                infoText.textContent = 'A procedurally generated pixel art drawn with maths, devlog will be up';
+            } else {
+                infoTitle.textContent = 'Fractal Waves:';
+                infoText.textContent = 'I took apart various shader tutorials to write my own shader! These patterns are all generated with basic math, devlog will be up';
+            }
 
             resetTime();
         }
