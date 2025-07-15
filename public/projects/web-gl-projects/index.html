@@ -249,15 +249,15 @@
             <div class="earth-controls active" id="earthControls">
                 <div class="slider-container">
                     <label>Pixel Size:</label>
-                    <input type="range" id="pixelSize" min="1" max="20" value="8" oninput="updatePixelSize(this.value)">
-                    <span class="slider-value" id="pixelValue">8</span>
+                    <input type="range" id="pixelSize" min="4" max="16" value="8" oninput="updatePixelSize(this.value)">
+                    <span class="slider-value" id="pixelValue">6</span>
                 </div>
 
                 <div class="slider-container">
                     <label>Brightness:</label>
-                    <input type="range" id="brightness" min="0.5" max="2.0" step="0.1" value="1.3"
+                    <input type="range" id="brightness" min="0.5" max="1.5" step="0.1" value="1.0"
                         oninput="updateBrightness(this.value)">
-                    <span class="slider-value" id="brightnessValue">1.3</span>
+                    <span class="slider-value" id="brightnessValue">0.8</span>
                 </div>
             </div>
         </div>
@@ -274,7 +274,7 @@
         let isAnimating = true;
         let currentShader = 'earth';
         let pixelSize = 8.0;
-        let brightness = 1.3;
+        let brightness = 1;
 
         // fractal shader sources
         const vertexShaderSource = `
@@ -381,19 +381,19 @@
             
             vec3 getEarthColor(vec2 uv) {
                 // cloud radii, plant radii, cloud > planet so it resides on top of it
-                float planetRadius = 0.45;
-                float cloudRadius = 0.52;
+                float planetRadius = 0.8;
+                float cloudRadius = 0.9;
                 
                 // calculate distance from center
                 float dist = length(uv);
                 
                 // Space background for everything outside cloud layer
                 if (dist > cloudRadius) {
-                    return vec3(0.1, 0.1, 0.2);
+                    return vec3(0.0, 0.0, 0.0);
                 }
                 
                 // Initialize final color
-                vec3 finalColor = vec3(0.1, 0.1, 0.2);
+                vec3 finalColor = vec3(0.0, 0.0, 0.0);
                 
                 // === PLANET LAYER ===
                 if (dist <= planetRadius) {
@@ -429,28 +429,30 @@
                     vec3 planetColor;
                     if (isLand) {
                         float landHeight = (elevation - seaLevel) / (1.0 - seaLevel);
-                        
-                        if (landHeight < 0.2) {
-                            planetColor = mix(vec3(0.4, 0.9, 0.3), vec3(0.5, 1.0, 0.4), landHeight * 5.0);
-                        } else if (landHeight < 0.6) {
-                            planetColor = mix(vec3(0.5, 1.0, 0.4), vec3(0.9, 0.7, 0.4), (landHeight - 0.2) * 2.5);
-                        } else {
-                            planetColor = mix(vec3(0.9, 0.7, 0.4), vec3(1.0, 1.0, 1.0), (landHeight - 0.6) * 2.5);
-                        }
+
+                    if (landHeight < 0.2) {
+                        planetColor = mix(vec3(0.6, 0.9, 0.5), vec3(0.7, 0.95, 0.6), landHeight * 5.0);
+                    } else if (landHeight < 0.6) { //mid elvatio
+                        planetColor = mix(vec3(0.7, 0.95, 0.6), vec3(0.9, 0.8, 0.6), (landHeight - 0.2) * 2.5);
+                    } else {
+                        planetColor = mix(vec3(0.9, 0.8, 0.6), vec3(0.95, 0.9, 0.9), (landHeight - 0.6) * 2.5);
+                    }
+
                     } else {
                         float waterDepth = (seaLevel - elevation) / seaLevel;
-                        
-                        if (waterDepth < 0.3) {
-                            planetColor = mix(vec3(0.6, 0.9, 1.0), vec3(0.4, 0.8, 1.0), waterDepth * 3.33);
-                        } else {
-                            planetColor = mix(vec3(0.4, 0.8, 1.0), vec3(0.2, 0.6, 0.9), (waterDepth - 0.3) * 1.43);
-                        }
+                    if (waterDepth < 0.3) {
+            
+                        planetColor = mix(vec3(0.7, 0.95, 1.0), vec3(0.5, 0.9, 1.0), waterDepth * 3.33);
+                    } else {
+                    
+                        planetColor = mix(vec3(0.5, 0.9, 1.0), vec3(0.4, 0.8, 0.95), (waterDepth - 0.3) * 1.43);
+                    }
                     }
                     
                     // lighting (TODO: FIX IT LOOKS SO GULY)
-                    float planetLighting = (rotatedZ + planetRadius) / (2.0 * planetRadius);
-                    planetLighting = planetLighting * 0.5 + 0.5;
-                    
+
+                    vec3 lightDir = normalize(vec3(0.7, 0.7, 1.0));  // Top-right-forward
+                    float planetLighting = dot(normalize(vec3(rotatedX, rotatedY, rotatedZ)), lightDir) * 0.5 + 1.2;
                     planetColor *= planetLighting;
                     
                     // edge fade
@@ -475,7 +477,7 @@
                 float cloudCosAngle = cos(cloudAngle);
                 float cloudSinAngle = sin(cloudAngle);
                 
-                // Apply rotation based on transformation matrix )(need tow rite this out)
+                // Apply rotation based on transformation matrix )(need to write this out)
                 float rotatedCloudX = cloudX * cloudCosAngle + cloudZ * cloudSinAngle;
                 float rotatedCloudZ = -cloudX * cloudSinAngle + cloudZ * cloudCosAngle;
                 float rotatedCloudY = cloudY;
@@ -490,22 +492,19 @@
                 float cloudDensity = fbm3D((cloudSpherePos + driftOffset) * 3.5);
                 cloudDensity += fbm3D((cloudSpherePos + driftOffset) * 10.0) * 0.3;
 
-                float cloudThreshold = 0.4;
-                float cloudAlpha = 0.0;
-                
-                if (cloudDensity > cloudThreshold) {
-                    cloudAlpha = (cloudDensity - cloudThreshold) / (1.0 - cloudThreshold);
-                    cloudAlpha = pow(cloudAlpha, 1.5) * 0.8;
-                }
-                
                 // cloud lighting
-                float cloudLighting = (rotatedCloudZ + cloudRadius) / (2.0 * cloudRadius);
+                vec3 lightDir = normalize(vec3(0.7, 0.7, 1.0));
+                float cloudLighting = dot(normalize(vec3(rotatedCloudX, rotatedCloudY, rotatedCloudZ)), lightDir) * 0.4 + 0.6;
                 cloudLighting = cloudLighting * 0.4 + 0.6;
                 
                 vec3 cloudColor = vec3(1.0, 1.0, 1.0) * cloudLighting;
                 
-                // Blend clouds over planet/space
-                finalColor = mix(finalColor, cloudColor, cloudAlpha);
+                float cloudThreshold = 0.65;
+
+                if (cloudDensity > cloudThreshold) {
+                    
+                    finalColor = cloudColor;
+                }
                 
                 return finalColor;
             }
@@ -514,7 +513,7 @@
                 // Apply pixelation effect to the whol eting
                 vec2 pixelCoord = pixelate(gl_FragCoord.xy, u_pixelSize);
                 
-                // Normalize coordinates
+                //  gotta normalize everything with the good ol *2 - u resolution
                 vec2 uv = (pixelCoord * 2.0 - u_resolution) / min(u_resolution.x, u_resolution.y);
                 
                 // Get the color for this pixel
