@@ -153,6 +153,16 @@
             image-rendering: crisp-edges;
         }
 
+        .info a {
+            color: #ce64ff;
+
+            text-decoration: none;
+        }
+
+        .info a:hover {
+            text-decoration: underline;
+        }
+
         .info {
             color: #ccc;
             font-size: 1rem;
@@ -241,9 +251,9 @@
         </div>
 
         <canvas id="shaderCanvas" width="800" height="600"></canvas>
-
+        <!--actual relvant stuf-->
         <div class="controls">
-            <button onclick="toggleAnimation()">Toggle Animation</button>
+            <button onclick="toggleAnimation()">Pause</button>
             <button onclick="resetTime()">Reset Time</button>
 
             <div class="earth-controls active" id="earthControls">
@@ -263,8 +273,8 @@
         </div>
         <!--bro what is wrong with this html i rmeove this and nothing dwrites, but i write someting below and it overwrites this blurb.-->
         <div class="info">
-            <h3 id="infoTitle">Procedurally Drawn Earth:</h3>
-            <p id="infoText">A procedurally generated pixel art drawn with maths, devlog will be up</p>
+            <h3 id="infoTitle"></h3>
+            <p id="infoText"></p>
         </div>
 
     </div>
@@ -431,7 +441,7 @@
                         float landHeight = (elevation - seaLevel) / (1.0 - seaLevel);
 
                     if (landHeight < 0.2) {
-                        planetColor = mix(vec3(0.6, 0.9, 0.5), vec3(0.7, 0.95, 0.6), landHeight * 5.0);
+                        planetColor = mix(vec3(0.6, 0.9, 0.5), vec3(0.7, 0.95, 1.0), landHeight * 5.0);
                     } else if (landHeight < 0.6) { //mid elvatio
                         planetColor = mix(vec3(0.7, 0.95, 0.6), vec3(0.9, 0.8, 0.6), (landHeight - 0.2) * 2.5);
                     } else {
@@ -493,9 +503,9 @@
                 cloudDensity += fbm3D((cloudSpherePos + driftOffset) * 10.0) * 0.3;
 
                 // cloud lighting
-                vec3 lightDir = normalize(vec3(0.7, 0.7, 1.0));
+                vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));
                 float cloudLighting = dot(normalize(vec3(rotatedCloudX, rotatedCloudY, rotatedCloudZ)), lightDir) * 0.4 + 0.6;
-                cloudLighting = cloudLighting * 0.4 + 0.6;
+                cloudLighting = cloudLighting * 0.5 + 0.6;
                 
                 vec3 cloudColor = vec3(1.0, 1.0, 1.0) * cloudLighting;
                 
@@ -561,16 +571,16 @@
             gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
 
             if (!gl) {
-                alert('WebGL not supported');
+                alert('WebGL not supported on this browser, please enable WebGL.');
                 return false;
             }
 
-            // create fractal program
+            // for fractal
             const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
             const fractalFragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
             fractalProgram = createProgram(gl, vertexShader, fractalFragmentShader);
 
-            // create earth program
+            // for earth
             const earthFragmentShader = createShader(gl, gl.FRAGMENT_SHADER, earthFragmentShaderSource);
             earthProgram = createProgram(gl, vertexShader, earthFragmentShader);
 
@@ -595,33 +605,36 @@
             gl.viewport(0, 0, canvas.width, canvas.height);
         }
 
-        function switchShader(shaderType) {
-            currentShader = shaderType;
+        function switchShader(type) {
+            currentShader = type;
 
-            // update button states
-            document.getElementById('fractalBtn').classList.toggle('active', shaderType === 'fractal');
-            document.getElementById('earthBtn').classList.toggle('active', shaderType === 'earth');
+            // …button toggles, canvas classes, etc…
 
-            // toggle pixelated rendering for Earth (default on)
-            canvas.classList.toggle('pixelated', shaderType === 'earth');
+            const info = {
+                earth: {
+                    title: 'Pixel‑Art Earth:',
+                    html: `A procedurally generated pixel globe—continents, oceans, clouds, lighting, pixel effect—are all results of Fractal Brownian Motion, cheap dot products + trig, and some other basic maths. I used no image textures, just math! 
+            <br>
+            <a href="https://www.gracejin.dev/projects/grace-self-learns-computer-graphics/ " style="color:#af6bb1"target="_blank" rel="noopener noreferrer">
+              Here is the full devlog ↗
+            </a>`
+                },
+                fractal: {
+                    title: 'Fractal Waves:',
+                    html: `Toggle Animation Reset Time
+Fractal Waves:
+I took apart various shader tutorials to write my own shader! These patterns are all generated with basic math, devlog will be up.`
+                }
+            };
 
-            // show/hide earth controls
-            document.getElementById('earthControls').classList.toggle('active', shaderType === 'earth');
 
-            // update info text
-            const infoTitle = document.getElementById('infoTitle');
-            const infoText = document.getElementById('infoText');
+            infoTitle.textContent = info[type].title;
+            infoText.innerHTML = info[type].html;    //ijects link now
 
-            if (shaderType === 'earth') {
-                infoTitle.textContent = 'Pixel Art Earth:';
-                infoText.textContent = 'A procedurally generated pixel art drawn with maths, devlog will be up';
-            } else {
-                infoTitle.textContent = 'Fractal Waves:';
-                infoText.textContent = 'I took apart various shader tutorials to write my own shader! These patterns are all generated with basic math, devlog will be up';
-            }
 
             resetTime();
         }
+
 
         function render() {
             if (!isAnimating) return;
@@ -690,7 +703,7 @@
         // Initialize when page loads
         window.onload = function () {
             if (initWebGL()) {
-                // Set initial state for Earth shader
+                // set initial state for Earth shader
                 canvas.classList.add('pixelated');
                 startTime = Date.now();
                 render();
@@ -698,7 +711,7 @@
             }
         };
 
-        // Handle window resize
+        // handle window resize
         window.addEventListener('resize', function () {
             if (canvas && gl) {
                 const rect = canvas.getBoundingClientRect();
@@ -707,6 +720,14 @@
                 gl.viewport(0, 0, canvas.width, canvas.height);
             }
         });
+        window.onload = () => {
+            if (initWebGL()) {
+                switchShader('earth');
+                startTime = Date.now();
+                render();
+            }
+        };
+
     </script>
 </body>
 
