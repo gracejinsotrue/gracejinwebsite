@@ -301,10 +301,70 @@
         <h3>Jump to Entry:</h3>
 
         <ul>
+            <li><a href="#july-15-2025">📅 July 15, 2025 Chappell Roan Good Luck Babe Ahh Globe Drawn With Maths</a>
+            </li>
             <li><a href="#july-9-2025">📅 July 9, 2025 (OLDEST)- And so it begins...</a>
             </li>
 
         </ul>
+    </div>
+    <div class="dev-entry" id="july-15=2025">
+        <div class="entry-date">📅 July 15, 2025</div>
+        <h3 class="entry-title">Chappell Roan Good Luck Babe Ahh Globe Drawn With Maths</h3>
+        <div class="entry-content">
+
+            <p><a href="https://www.gracejin.dev/projects/web-gl-projects/index.html" style="color:#af6bb1">This is the
+                    project in question</a></p>
+
+
+            <p> High Level: This shader draws a textured sphere plus another slightly larger and goofier textured
+                sphere. Everything drawn here comes from maths. I was learning from <a
+                    href="https://www.youtube.com/shorts/7g5Cj_1XPkM" style="color: #af6bb1">this video</a> and
+                translated his basic instructions to shader code. For my level of expertise, it is still a bit of a
+                challenge.
+
+            </p>
+            <p> Also, this is the joke:</p>
+            <div class="image-container">
+                <img src="images/earth4.png" alt="starting off strong" class="dev-image img-medium">
+                <div class="image-caption"> guys i swear it was funny in my head
+                </div>
+            </div>
+            <p> STEP 1: Draw a circle, normalize the coordinates to [-1,1]. We then calculate distance from the circle
+                and with the cool step function, we create a hard edge where points outside the radius is colored black.
+            </p>
+            <div class="image-container">
+                <img src="images/earth1.png" alt="starting off strong" class="dev-image ">
+                <div class="image-caption">
+                </div>
+            </div>
+            <p> STEP 2: Convert the pixel locations to 3d locations on the sphere using the general distance formula,
+                and
+                start rotating with <a
+                    href="https://robotics.stackexchange.com/questions/10702/rotation-matrix-sign-convention-confusion"
+                    style="color:#af6bb1"> a rotation matrix about y</a>
+            </p>
+
+            <div class="image-container">
+                <img src="images/earth2.png" alt="starting off strong" class="dev-image ">
+                <div class="image-caption">
+                </div>
+            </div>
+            <p> STEP 3: Toss in some
+                <a href="https://thebookofshaders.com/13/" style="color:#af6bb1">Fractal Brownian
+                    Motion</a> which is just summing up waves to simulate a terrain. Map some colors to the various
+                heights it simulates:
+            </p>
+
+            <div class="image-container">
+                <img src="images/earth3.png" alt="starting off strong" class="dev-image ">
+                <div class="image-caption"> I should get a VSCode Extension for shader languages...
+                </div>
+            </div>
+
+
+
+        </div>
     </div>
     <div class="dev-entry" id="july-9-2025">
         <div class="entry-date">📅 July 9, 2025</div>
