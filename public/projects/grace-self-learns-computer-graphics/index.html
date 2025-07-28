@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grace's Dev Log: Handsome Programming Languages</title>
+    <title>Grace's Dev Log: Computer Graphics</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
 
     <style>
         body {
-            font-family: 'Courier New', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -58,11 +58,35 @@
             border-radius: 5px;
         }
 
+        /* Ray Tracer specific styling */
+        .raytracer-entry {
+            border-left: 3px solid #ff69b4;
+            background: #2a1f2a;
+            position: relative;
+        }
+
+        .raytracer-entry::before {
+            content: "RAY TRACER";
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #ff69b4;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
         .entry-date {
             color: #af6bb1;
             font-weight: bold;
             margin-bottom: 10px;
             font-size: 0.9rem;
+        }
+
+        .raytracer-entry .entry-date {
+            color: #ff69b4;
         }
 
         .entry-title {
@@ -110,20 +134,15 @@
         .image-row {
             display: flex;
             flex-wrap: wrap;
-
-
         }
 
         .image-row .image-container {
             margin: 2px 10px;
-            /* top/bottom margin, left/right margin */
         }
 
         .image-row .dev-image {
             max-width: 350px;
-
             float: none;
-
         }
 
         .dev-image {
@@ -152,68 +171,6 @@
         .code-block pre {
             margin: 0;
             color: #fff;
-        }
-
-        .img-small {
-            max-width: 300px;
-        }
-
-        .img-medium {
-            max-width: 500px;
-        }
-
-        .img-large {
-            max-width: 100%;
-        }
-
-        .img-tiny {
-            max-width: 200px;
-        }
-
-        .img-wide {
-            max-width: 100%;
-            max-height: 300px;
-            object-fit: cover;
-        }
-
-        .img-float-left {
-            float: left;
-            margin: 0 20px 20px 0;
-            max-width: 350px;
-        }
-
-        .img-float-left-tiny {
-            float: left;
-            margin: 0 20px 20px 0;
-            max-width: 225px;
-        }
-
-        .img-float-right {
-            float: right;
-            margin: 0 0 20px 20px;
-            max-width: 300px;
-        }
-
-        .caption-left {
-            text-align: left;
-        }
-
-        .caption-right {
-            text-align: right;
-        }
-
-        .caption-center {
-            text-align: center;
-        }
-
-        .clearfix::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .clear-float {
-            clear: both;
         }
 
         /* Table of Contents Styling */
@@ -252,6 +209,41 @@
             text-decoration: underline;
         }
 
+        /* Ray Tracer TOC Section */
+        .toc-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        .toc-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .toc-section-title {
+            color: #ff69b4;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+
+        .toc-section ul {
+            margin-left: 10px;
+        }
+
+        .toc-raytracer-link {
+            color: #ffb3ef !important;
+        }
+
+        .toc-raytracer-link:hover {
+            color: #ff6bf8 !important;
+        }
+
         .back-to-top {
             text-align: right;
             margin-top: 20px;
@@ -267,175 +259,211 @@
             text-decoration: underline;
         }
 
-        /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
     </style>
 </head>
 
-<body>
-    <div class="back-links">
-        <a href="../">← Back to Fun Projects</a>
-        <a href="/">← Back to Main Site</a>
+<div class="back-links">
+    <a href="../">← Back to Fun Projects</a>
+    <a href="/">← Back to Main Site</a>
+</div>
+
+<div class="project-header" id="top">
+    <h1 class="project-title">DEVLOG: Grace Self-Learns Computer Graphics.</h1>
+    <p class="project-subtitle">I've always liked computer graphics on a high-level, it is about time to dive deeper
+        into it.</p>
+    <span class="status-badge">Work in Progress</span>
+</div>
+
+<div class="tech-stack">
+    <h3>Tech Stack</h3>
+    <ul>
+        <li><strong>A running list of what I've used so far! C++, Vulkan, OpenGL, CUDA...</strong> oh boy...</li>
+    </ul>
+</div>
+
+<!-- Table of Contents with Ray Tracer Grouping -->
+<div class="toc">
+    <h3>Jump to Entry:</h3>
+
+    <div class="toc-section">
+        <div class="toc-section-title">Ray Tracer Series</div>
+        <ul>
+            <li><a href="#july-28-2025" class="toc-raytracer-link">📅 July 27, 2025 - Motivations and Inspirations for
+                    Coding My First
+                    Raytracer (Spoiler: it's because of Yaoi)</a></li>
+        </ul>
     </div>
 
-    <div class="project-header" id="top">
-        <h1 class="project-title">DEVLOG: Grace Self-Learns Computer Graphics.</h1>
+    <div class="toc-section">
+        <ul>
+            <li><a href="#july-15-2025">📅 July 15, 2025 - Chappell Roan Good Luck Babe Ahh Globe Drawn With Maths</a>
+            </li>
+            <li><a href="#july-9-2025">📅 July 9, 2025 - And so it begins...</a></li>
+        </ul>
+    </div>
+</div>
 
-        <p class="project-subtitle">AND THIS IS SO COOL!!! I HAVEN'T LOVED SOMETHING IN THE CS FIELD SO MUCH BEFORE!!
+<!-- Ray Tracer Entry Example -->
+<div class="dev-entry raytracer-entry" id="july-27-2025">
+    <div class="entry-date">📅 July 27, 2025</div>
+    <h3 class="entry-title">Motivations and Inspirations for
+        Coding My First
+        Raytracer (Spoiler: it's because of Yaoi)</h3>
+    <div class="entry-content">
+        <p>Recently I've been into computer graphics, right?</p>
+        <div class="image-container">
+            <img src="images/raytracing/insta1.png" alt=" First ray tracer render" class="dev-image">
+            <div class="image-caption">my schizo instagram story post might also sum it up</div>
+        </div>
+
+        <div class="back-to-top">
+            <a href="#top">↑ Back to Top</a>
+        </div>
+        <!-- <div class="code-block">
+            <pre>bool hit_sphere(const point3& center, double radius, const ray& r) {
+    vec3 oc = r.origin() - center;
+    double a = dot(r.direction(), r.direction());
+    double b = 2.0 * dot(oc, r.direction());
+    double c = dot(oc, oc) - radius*radius;
+    double discriminant = b*b - 4*a*c;
+    return (discriminant >= 0);
+}</pre>
+        </div> -->
+    </div>
+</div>
+
+
+<div class="dev-entry" id="july-15=2025">
+    <div class="entry-date">📅 July 15, 2025</div>
+    <h3 class="entry-title">Chappell Roan Good Luck Babe Ahh Globe Drawn With Maths</h3>
+    <div class="entry-content">
+
+        <p><a href="https://www.gracejin.dev/projects/grace-self-learns-computer-graphics/#july-15-2025"
+                style="color:#af6bb1">This is the
+                project in question</a></p>
+
+
+        <p> High Level: This shader draws a textured sphere plus another slightly larger and goofier textured
+            sphere. Everything drawn here comes from maths. I was learning from <a
+                href="https://www.youtube.com/shorts/7g5Cj_1XPkM" style="color: #af6bb1">this video</a> and
+            translated his basic instructions to shader code. For my level of expertise, it is still a bit of a
+            challenge.
+
         </p>
-        <span class="status-badge">Work in Progress</span>
-    </div>
-
-    <div class="tech-stack">
-        <h3>Tech Stack</h3>
-        <ul>
-            <li><strong>Visual Studio, C++, OpenGL...</strong> oh boy...</li>
-
-        </ul>
-    </div>
-
-    <!-- Table of Contents -->
-    <div class="toc">
-        <h3>Jump to Entry:</h3>
-
-        <ul>
-            <li><a href="#july-15-2025">📅 July 15, 2025 Chappell Roan Good Luck Babe Ahh Globe Drawn With Maths</a>
-            </li>
-            <li><a href="#july-9-2025">📅 July 9, 2025 (OLDEST)- And so it begins...</a>
-            </li>
-
-        </ul>
-    </div>
-    <div class="dev-entry" id="july-15=2025">
-        <div class="entry-date">📅 July 15, 2025</div>
-        <h3 class="entry-title">Chappell Roan Good Luck Babe Ahh Globe Drawn With Maths</h3>
-        <div class="entry-content">
-
-            <p><a href="https://www.gracejin.dev/projects/grace-self-learns-computer-graphics/#july-15-2025"
-                    style="color:#af6bb1">This is the
-                    project in question</a></p>
-
-
-            <p> High Level: This shader draws a textured sphere plus another slightly larger and goofier textured
-                sphere. Everything drawn here comes from maths. I was learning from <a
-                    href="https://www.youtube.com/shorts/7g5Cj_1XPkM" style="color: #af6bb1">this video</a> and
-                translated his basic instructions to shader code. For my level of expertise, it is still a bit of a
-                challenge.
-
-            </p>
-            <p> Also, this is the joke:</p>
-            <div class="image-container">
-                <img src="images/earth4.png" alt="starting off strong" class="dev-image img-medium">
-                <div class="image-caption"> guys i swear it was funny in my head
-                </div>
+        <p> Also, this is the joke:</p>
+        <div class="image-container">
+            <img src="images/earth4.png" alt="starting off strong" class="dev-image img-small">
+            <div class="image-caption"> guys i swear it was funny in my head
             </div>
-            <p> STEP 1: Draw a circle, normalize the coordinates to [-1,1]. We then calculate distance from the circle
-                and with the cool step function, we create a hard edge where points outside the radius is colored black.
-            </p>
-            <div class="image-container">
-                <img src="images/earth1.png" alt="starting off strong" class="dev-image ">
-                <div class="image-caption">
-                </div>
-            </div>
-            <p> STEP 2: Convert the pixel locations to 3d locations on the sphere using the general distance formula,
-                and
-                start rotating with <a
-                    href="https://robotics.stackexchange.com/questions/10702/rotation-matrix-sign-convention-confusion"
-                    style="color:#af6bb1"> a rotation matrix about y</a>
-            </p>
-
-            <div class="image-container">
-                <img src="images/earth2.png" alt="starting off strong" class="dev-image ">
-                <div class="image-caption">
-                </div>
-            </div>
-            <p> STEP 3: Toss in some
-                <a href="https://thebookofshaders.com/13/" style="color:#af6bb1">Fractal Brownian
-                    Motion</a> which is just summing up waves to simulate a terrain. Map some colors to the various
-                heights it simulates:
-            </p>
-
-            <div class="image-container">
-                <img src="images/earth3.png" alt="starting off strong" class="dev-image ">
-                <div class="image-caption"> I should get a VSCode Extension for shader languages...
-                </div>
-            </div>
-
-
-
         </div>
+        <p> STEP 1: Draw a circle, normalize the coordinates to [-1,1]. We then calculate distance from the circle
+            and with the cool step function, we create a hard edge where points outside the radius is colored black.
+        </p>
+        <div class="image-container">
+            <img src="images/earth1.png" alt="starting off strong" class="dev-image ">
+            <div class="image-caption">
+            </div>
+        </div>
+        <p> STEP 2: Convert the pixel locations to 3d locations on the sphere using the general distance formula,
+            and
+            start rotating with <a
+                href="https://robotics.stackexchange.com/questions/10702/rotation-matrix-sign-convention-confusion"
+                style="color:#af6bb1"> a rotation matrix about y</a>
+        </p>
+
+        <div class="image-container">
+            <img src="images/earth2.png" alt="starting off strong" class="dev-image ">
+            <div class="image-caption">
+            </div>
+        </div>
+        <p> STEP 3: Toss in some
+            <a href="https://thebookofshaders.com/13/" style="color:#af6bb1">Fractal Brownian
+                Motion</a> which is just summing up waves to simulate a terrain. Map some colors to the various
+            heights it simulates:
+        </p>
+
+        <div class="image-container">
+            <img src="images/earth3.png" alt="starting off strong" class="dev-image ">
+            <div class="image-caption"> I should get a VSCode Extension for shader languages...
+            </div>
+        </div>
+
+
+
     </div>
-    <div class="dev-entry" id="july-9-2025">
-        <div class="entry-date">📅 July 9, 2025</div>
-        <h3 class="entry-title">And so it begins...</h3>
-        <div class="entry-content">
-            <p> The story behind all this is that I have been wondering how I could combine my art skills with
-                programming. One of the engineers at my current internship at Cepton suggested I learn computer
-                graphics/graphics programming, especially on a lower level of abstraction. It still requires an artistic
-                eye, after all. And, I was already using Rust
-                and WGSL (web gpu shader langauge or something) for my job and I liked it a lot. I also took an
-                introductory computer graphics class in my first semester at college and loved it. I already really like
-                Three.JS projects for the web. Maybe now is my
-                calling to dive in deep.
+</div>
+<div class="dev-entry" id="july-9-2025">
+    <div class="entry-date">📅 July 9, 2025</div>
+    <h3 class="entry-title">And so it begins...</h3>
+    <div class="entry-content">
+        <p> The story behind all this is that I have been wondering how I could combine my art skills with
+            programming. One of the engineers at my current internship at Cepton suggested I learn computer
+            graphics/graphics programming, especially on a lower level of abstraction. It still requires an artistic
+            eye, after all. And, I was already using Rust
+            and WGSL (web gpu shader langauge or something) for my job and I liked it a lot. I also took an
+            introductory computer graphics class in my first semester at college and loved it. I already really like
+            Three.JS projects for the web. Maybe now is my
+            calling to dive in deep.
 
-            </p>
-            <p>Understanding graphics needs math and low-level knowledge to truly understand. And so out of fear ngl, I
-                said, "I'm not good at low-level!" But the aforementioned engineer said, "i think you're more than
-                capable enough to be suitable
-                for whatever you enjoy doing" and "also bro you’ll be good at low level don’t sweat it"
-                (thanks Jacob Bokor!) He also suggested I check out <a href="https://www.youtube.com/@Acerola_t"
-                    style="color: #af6bb1">Acerola</a>, a graphics programmer who is insane in his field. He does seem
-                very knowledgeble and introduced me to a subset of software engineering that I never considered as a
-                skill I could hone (like, I never thought about being capable of it) or profession.
-            </p>
-            <div class="image-container">
-                <img src="images/video1.png" alt="starting off strong" class="dev-image ">
-                <div class="image-caption">From Acerola's "What is a Graphics Programmer?" video. He mad funny and
-                    explained the field very well. I do maxx out on math and comp sci! I thought I could give this a
-                    shot!
-                </div>
+        </p>
+        <p>Understanding graphics needs math and low-level knowledge to truly understand. And so out of fear ngl, I
+            said, "I'm not good at low-level!" But the aforementioned engineer said, "i think you're more than
+            capable enough to be suitable
+            for whatever you enjoy doing" and "also bro you’ll be good at low level don’t sweat it"
+            (thanks Jacob Bokor!) He also suggested I check out <a href="https://www.youtube.com/@Acerola_t"
+                style="color: #af6bb1">Acerola</a>, a graphics programmer who is insane in his field. He does seem
+            very knowledgeble and introduced me to a subset of software engineering that I never considered as a
+            skill I could hone (like, I never thought about being capable of it) or profession.
+        </p>
+        <div class="image-container">
+            <img src="images/video1.png" alt="starting off strong" class="dev-image ">
+            <div class="image-caption">From Acerola's "What is a Graphics Programmer?" video. He mad funny and
+                explained the field very well. I do maxx out on math and comp sci! I thought I could give this a
+                shot!
             </div>
+        </div>
 
 
-            <p> As this is the case, I will try it out. This is day 1, maybe on day anyone who is reading this (hi me!)
-                in the future will think "wow, this is inspiring, this is thoughtful." I barely know C, C++ right now.
-                I've only taken an intro to computer graphics class--more like the math behind it and how color is
-                optimized to display on a screen-- and touched on Computer Organization and OS relatively lightly. Uh to
-                defend myself I am just a sophomore right now. As this is the case, I have a long way to self-learn, to
-                dive deeper, to take Systems Engineering,
-                Comp Arch and OS this fall and spring. But, most of the learning must be driven by myself, I am the only
-                one responsible for how deep I dive. </p>
-            <p>I hope that people, myself included,
-                can see that consistent effort within a short amount of time can lead to great learning and great
-                results. Or, if I eventually threw in the rug (god forbid) and
-                gave up, I don't think anything is for naught. I will have gotten a lot better at low-level and writing
-                to GPU and stuff. But I hope I like this.</p>
-            <p>The plan is to start by speedrunning most of OpenGL's tutorials, learnopengl.com. Though it is outdated
-                and overshadowed by the much better WebGL, this is still a solid starting point because graphics
-                pipeline stages are identical, shader programming should be similar, and the matrix math specifically
-                will be identical no matter the language. I will laern Vulkan after! I just don't want to spend a
-                thousand years drawing a triangle to the screen just yet. Give me a week.</p>
-            <div class="image-container">
-                <img src="images/notes1.png" alt="starting off strong" class="dev-image ">
-                <div class="image-caption">most readable notes #1 in the world tbh. based off learnopengl.com, it is a
-                    really good resource!
-                </div>
+        <p> As this is the case, I will try it out. This is day 1, maybe on day anyone who is reading this (hi me!)
+            in the future will think "wow, this is inspiring, this is thoughtful." I barely know C, C++ right now.
+            I've only taken an intro to computer graphics class--more like the math behind it and how color is
+            optimized to display on a screen-- and touched on Computer Organization and OS relatively lightly. Uh to
+            defend myself I am just a sophomore right now. As this is the case, I have a long way to self-learn, to
+            dive deeper, to take Systems Engineering,
+            Comp Arch and OS this fall and spring. But, most of the learning must be driven by myself, I am the only
+            one responsible for how deep I dive. </p>
+        <p>I hope that people, myself included,
+            can see that consistent effort within a short amount of time can lead to great learning and great
+            results. Or, if I eventually threw in the rug (god forbid) and
+            gave up, I don't think anything is for naught. I will have gotten a lot better at low-level and writing
+            to GPU and stuff. But I hope I like this.</p>
+        <p>The plan is to start by speedrunning most of OpenGL's tutorials, learnopengl.com. Though it is outdated
+            and overshadowed by the much better WebGL, this is still a solid starting point because graphics
+            pipeline stages are identical, shader programming should be similar, and the matrix math specifically
+            will be identical no matter the language. I will laern Vulkan after! I just don't want to spend a
+            thousand years drawing a triangle to the screen just yet. Give me a week.</p>
+        <div class="image-container">
+            <img src="images/notes1.png" alt="starting off strong" class="dev-image ">
+            <div class="image-caption">most readable notes #1 in the world tbh. based off learnopengl.com, it is a
+                really good resource!
             </div>
+        </div>
 
-            <div class="image-container">
-                <img src="images/textbook1.png" alt="awesome textbook" class="dev-image ">
-                <div class="image-caption">Great textbook! I love free and open source stuffs!
-                </div>
+        <div class="image-container">
+            <img src="images/textbook1.png" alt="awesome textbook" class="dev-image ">
+            <div class="image-caption">Great textbook! I love free and open source stuffs!
             </div>
         </div>
     </div>
+</div>
 
 
 
 
-    <!-- 
+<!-- 
     <div class="dev-entry" id="date-id">
         <div class="entry-date">📅 [DATE]</div>
         <h3 class="entry-title">[ENTRY TITLE]</h3>
