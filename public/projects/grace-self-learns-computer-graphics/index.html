@@ -272,7 +272,8 @@
 
 <div class="project-header" id="top">
     <h1 class="project-title">DEVLOG: Grace Self-Learns Computer Graphics.</h1>
-    <p class="project-subtitle">I've always liked computer graphics on a high-level, it is about time to dive deeper
+    <p class="project-subtitle">As an artist and software person, I've always been drawn to computer graphics on a
+        high-level, it is about time to dive deeper
         into it.</p>
     <span class="status-badge">Work in Progress</span>
 </div>
@@ -280,7 +281,7 @@
 <div class="tech-stack">
     <h3>Tech Stack</h3>
     <ul>
-        <li><strong>A running list of what I've used so far! C++, Vulkan, OpenGL, CUDA...</strong> oh boy...</li>
+        <li> A running list of what I've used so far! <strong>C++, Vulkan, OpenGL, CUDA...</strong> oh boy...</li>
     </ul>
 </div>
 
@@ -291,9 +292,14 @@
     <div class="toc-section">
         <div class="toc-section-title">Ray Tracer Series</div>
         <ul>
-            <li><a href="#july-28-2025" class="toc-raytracer-link">📅 July 27, 2025 - Motivations and Inspirations for
-                    Coding My First
-                    Raytracer (Spoiler: it's because of Yaoi)</a></li>
+
+            <li><a href="#july-27-2025-t" class="toc-raytracer-link">📅 July 27, 2025 - Coding My First Ray Tracer
+                    - Technicals</a></li>
+            <li><a href="#july-27-2025" class="toc-raytracer-link">📅 July 27, 2025 - Coding My First Ray Tracer -
+                    Motivations and Inspiration
+                    (Spoiler: It's Because I'm A Weeb)</a></li>
+            <li><strong><a href="https://github.com/gracejinsotrue/Ray-Tracer" style="color:#af6bb1"> GITHUB CODE
+                        LINK</a></strong></li>
         </ul>
     </div>
 
@@ -306,32 +312,126 @@
     </div>
 </div>
 
-<!-- Ray Tracer Entry Example -->
+
+<!-- Ray Tracer Entries -->
+<div class="dev-entry raytracer-entry" id="july-27-2025-t">
+    <div class="entry-date">📅 July 27, 2025</div>
+    <h3 class="entry-title">Coding My First Ray Tracer
+        - Technicals</h3>
+    <div class="entry-content">
+        <p> <strong>TL;DR: </strong>I love how some 2d hand-drawn anime music videos mix in rendered 3D
+            backgrounds/objects, so I’m making
+            my own ray tracer to learn more about graphics and create cool renders for my projects. Just for fun,
+            you know? <strong>The end goal is to have a decent, slightly optimized ray tracer with a GUI and camera
+                system so I can load in
+                3d models and
+                render them. </strong> You can read about my (highkey funny) full motivation <a href="#july-27-2025"
+                style="color:#af6bb1">here </a>
+        </p>
+        <p> <strong>Coding it Up:</strong> Anyways, technical part. One of the best resources out there is <a
+                href="https://raytracing.github.io/books/RayTracingInOneWeekend.html" style="color:#af6bb1">Ray Tracing
+                in One Weekend</a>, which I am just wrapping up learning. I closely followed the book initially, and
+            took notes of the important concepts. Which is like, everything because it's quite the dense book lol. Case
+            in point:</p>
+        <div class="image-container">
+            <img src="images/raytracing/notes1.png" alt=" First ray tracer render" class="dev-image">
+            <div class="image-caption"> schizo notes from learning</div>
+        </div>
+    </div>
+    <div class="back-to-top">
+        <a href="#top">↑ Back to Top</a>
+    </div>
+    <p> I'll mention the notable parts here:</p>
+    <p><strong>First Image:</strong> We need to write the renderer to image somehow, and the most straightfoward is to
+        write it out as a PPM stored in RGB format. If your IDE cannot visualize it as an image, this is my favorite
+        site to use: <a href="https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html" style="color:#af6bb1">PPM
+            image viewer. </a> Note that the code is written to standard output stream, so we use the redirection >
+        operator to write it to an image file. Personally I use <strong>++ -o main main.cpp</strong> to build the
+        program and <strong>.\main.exe > image.ppm </strong> to run the program. </p>
+    <div class="code-block">
+        <pre>#include <iostream>
+
+int main() {
+
+    // Image
+
+    int image_width = 256;
+    int image_height = 256;
+
+    // Render
+
+    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+
+    for (int j = 0; j < image_height; j++) {
+        std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+        for (int i = 0; i < image_width; i++) {
+            auto r = double(i) / (image_width-1);
+            auto g = double(j) / (image_height-1);
+            auto b = 0.0;
+
+            int ir = int(255.999 * r);
+            int ig = int(255.999 * g);
+            int ib = int(255.999 * b);
+
+            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+        }
+    }
+    std::clog << "\rDone.                 \n";
+}</pre>
+    </div>
+
+    <p>It'll output an image here.</p>
+    <div class="image-container">
+        <img src="images/raytracing/render1.png" alt="first ppm image render!" class="dev-image">
+        <div class="image-caption"> first ppm image render of 256px x 256px!</div>
+    </div>
+    <p> more writeup to come...let my wrist rest...</p>
+</div>
+
 <div class="dev-entry raytracer-entry" id="july-27-2025">
     <div class="entry-date">📅 July 27, 2025</div>
-    <h3 class="entry-title">Motivations and Inspirations for
-        Coding My First
-        Raytracer (Spoiler: it's because of Yaoi)</h3>
+    <h3 class="entry-title">Coding My First Ray Tracer -
+        Motivations and Inspiration
+        (Spoiler: It's Because I'm A Weeb)</h3>
     <div class="entry-content">
-        <p>Recently I've been into computer graphics, right?</p>
+        <p> <strong>TL;DR: </strong>I love how some 2d hand-drawn anime music videos mix in rendered 3D
+            backgrounds/objects, so I’m making
+            my own ray tracer to learn more about graphics and create cool renders for my projects. Just for fun,
+            you know? <strong>The end goal is to have a decent, (at least) slightly optimized ray tracer with a GUI and
+                camera
+                system so I can load in
+                3d models and
+                render them. </strong>
+        </p> <!--add example here -->
+        <p><strong>Long Story for the Cool People:</strong> Recently I've been into computer graphics, right? So, I've
+            been looking into other cool projects to do so I can learn more. Then,
+            <a href="https://youtu.be/Gaty6ins4Ps?si=05CIeRYKkC3cF8qq" style="color:#af6bb1">
+                Twisted Wonderland's
+                Diasomnia Dorm's
+                Music Video</a> dropped and bam, inspiration! (girl bye imagine you're a victorian child starving to
+            death and
+            the last thing you read is this string of words.) In general, I have always liked
+            how anime/vocaloid/jpop MV's frequently just have 3D rendered backgrounds/objects overlaid/underlaid over
+            the hand-drawn 2d art.
+        </p>
+        <p>Basically, I like how they illuminated these columns LOL and I was wondering how
+            I'd recreate this effect with a ray tracer </p>
         <div class="image-container">
-            <img src="images/raytracing/insta1.png" alt=" First ray tracer render" class="dev-image">
-            <div class="image-caption">my schizo instagram story post might also sum it up</div>
+            <img src="images/raytracing/meme2.png" alt="music video inspiration" class="dev-image">
+        </div>
+        <div class="image-container">
+            <img src="images/raytracing/meme3.png" alt="music video inspiration" class="dev-image">
         </div>
 
-        <div class="back-to-top">
-            <a href="#top">↑ Back to Top</a>
+        <p>My schizo instagram story might also sum up my thought process:</p>
+        <div class="image-container">
+            <img src="images/raytracing/insta1.png" alt=" First ray tracer render" class="dev-image">
         </div>
-        <!-- <div class="code-block">
-            <pre>bool hit_sphere(const point3& center, double radius, const ray& r) {
-    vec3 oc = r.origin() - center;
-    double a = dot(r.direction(), r.direction());
-    double b = 2.0 * dot(oc, r.direction());
-    double c = dot(oc, oc) - radius*radius;
-    double discriminant = b*b - 4*a*c;
-    return (discriminant >= 0);
-}</pre>
-        </div> -->
+        <p>I think the use case will turn out pretty funny, I want to render objects and make my own version of like,
+            shitty MS paint remakes of anime openings, in the most convoluted way. It's like me growing the grain and
+            making
+            the yeast so I can make a loaf of bread </p>
+
     </div>
 </div>
 
