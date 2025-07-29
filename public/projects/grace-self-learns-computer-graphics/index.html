@@ -273,8 +273,8 @@
 <div class="project-header" id="top">
     <h1 class="project-title">DEVLOG: Grace Self-Learns Computer Graphics.</h1>
     <p class="project-subtitle">As an artist and software person, I've always been drawn to computer graphics on a
-        high-level, it is about time to dive deeper
-        into it.</p>
+        high-level. To me, it is about time to dive deeper
+        into it!</p>
     <span class="status-badge">Work in Progress</span>
 </div>
 
@@ -292,6 +292,11 @@
     <div class="toc-section">
         <div class="toc-section-title">Ray Tracer Series</div>
         <ul>
+            <li><a href="#july-29-2025" class="toc-raytracer-link">📅 July 29, 2025 - Migrating My Implementation to
+                    CUDA! </a></li>
+            <li><a href="#july-28-2025" class="toc-raytracer-link">📅 July 28, 2025 - Attempt at Optimizing the Ray
+                    Tracer (BVH and
+                    Multithreading)</a></li>
 
             <li><a href="#july-27-2025-t" class="toc-raytracer-link">📅 July 27, 2025 - Coding My First Ray Tracer
                     - Technicals</a></li>
@@ -314,6 +319,122 @@
 
 
 <!-- Ray Tracer Entries -->
+<div class="dev-entry raytracer-entry" id="july-29-2025">
+    <div class="entry-date">📅 July 29, 2025</div>
+    <h3 class="entry-title">Migrating My Implementation to CUDA</h3>
+    <p>Smart engineers have already done the hard work of speeding up the ray tracing process lmao. Even with my
+        unoptimized C++ raytracer right now, I can just use CUDA and it'll be over 10x faster. I will be referencing <a
+            href="https://developer.nvidia.com/blog/accelerated-ray-tracing-cuda/" style="color:#af6bb1"> Accelerated
+            Ray Tracing Using CUDA</a> today. This man absolutely glazes the Ray Tracing in One Weekend fundamentals and
+        rightfully so. I am glad I started with that first so I can jump right in.</p>
+    </h3>
+</div>
+</div>
+<div class="dev-entry raytracer-entry" id="july-28-2025">
+    <div class="entry-date">📅 July 28, 2025</div>
+    <h3 class="entry-title">Attempt at Optimizing the Ray
+        Tracer (BVH and
+        Multithreading)</h3>
+    <p> If I don't my raytracer to immediately fry my laptop when rendering objects with more vertices, I need to make
+        some optimizations! I focused on implementing the Bounding Volume Hierarchy (BVH) algorithm from <a
+            href="https://raytracing.github.io/books/RayTracingTheNextWeek.html" style="color:#af6bb1">Ray Tracing the
+            Next
+            Week</a> and multithreading
+        and
+        first. I also do want my program to be faster on average, I will use CUDA after this! But for now:</p>
+    <p><strong>Bounding Volume Hierarchy <a href="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy"
+                style="color:#af6bb1">wikipedia article on this neat thing</a>: </strong> In short, this algorithm is a
+        glorified binary
+        tree.
+        In long, it is a binary tree acceleration structure that dramatically speeds up ray-object intersection tests.
+        Instead of testing every object in the scene, BVH organizes objects in a tree where each node has an
+        axis-aligned
+        bounding box (a simple rectangular box aligned with the coordinate axes that completely encloses an object, if a
+        ray misses a bounding box, it misses everything inside),
+        and the leaf nodes will contain 1-2 objects of actual geometry. TL;DR, objects close in space are grouped
+        together, if a ray misses a box the whole subtree is skipped, and we always choose the longest axis to split on.
+    <p>This BVH optimization reduces ray-intersection tests from O(n) to O(logn)
+        This is my basic algorithm:</p>
+    <div class="code-block">
+        <pre>
+    bvh_node(std::vector<shared_ptr<hittable>> &objects, size_t start, size_t end)
+    {
+    // 1. calculate bounding box for all objects in range using AABB
+    bbox = aabb();
+    for (size_t i = start; i < end; i++) {
+        bbox = aabb::surrounding_box(bbox, get_bounding_box_static(objects[i]));
+    }
+    
+    // 2. shoose split axis (longest dimension)
+    int axis = bbox.longest_axis();
+    
+    // 3. Handle the base cases for if we have a single object or two objects
+    if (object_span == 1) {
+        left = right = objects[start];  
+    }
+    else if (object_span == 2) {
+        left = objects[start];          
+        right = objects[start + 1];
+    }
+    else {
+        // 4. If more than 2 objects, we sort objects along chosen axis
+        std::sort(objects.begin() + start, objects.begin() + end,
+                  [axis](const shared_ptr<hittable> &a, const shared_ptr<hittable> &b) {
+                      return get_bounding_box_static(a).axis_interval(axis).min 
+                             get_bounding_box_static(b).axis_interval(axis).min;
+                  });
+        
+        // 5. we split in middle and recurse amongst the tree
+        auto mid = start + object_span / 2;
+        left = make_shared<bvh_node>(objects, start, mid);
+        right = make_shared<bvh_node>(objects, mid, end);
+    }
+}
+        </pre>
+    </div>
+    </p>
+    <p> <strong>MultiThreading:</strong> (I will give this one my best shot. I take OS and Systems Programming in the
+        fall, this is what I only know right now.) Anyways, unoptimized ray tracing is considered "embarrassingly
+        parallel" - each pixel can be computed independently, so we can optimize via a multithreading approach. I divide
+        the image we are going to render into horizontal strips and assign each thread to a different CPU thread. Each
+        thread will render its
+        assigned row by doing the same old ray tracer behavior as always--shoot rays through pixels and calculate
+        colors--and we
+        write the results to SEPARATE parts of a SHARED image buffer. I use an atomic counter to track thread progress,
+        and just mutex for ensuring on thread writes progress at a time to the console. Once all threads finishes their
+        strips, the main
+        thread finally combines all the results and outputs the final image.
+    </p>
+    <p> I first
+        import this to my camera.h class:</p>
+    <div class="code-block">
+        <pre>
+#include <thread>        // for std::thread
+#include <vector>        // for std::vector<std::thread>
+#include <mutex>         // for std::mutex, std::lock_guard
+#include <atomic>        // for std::atomic<int>
+        </pre>
+    </div>
+    <p>We query the hardware for vailable CPU cores and create a static thread pool. </p>
+    <div class="code-block">
+        <pre>unsigned int num_threads = std::thread::hardware_concurrency();</pre>
+    </div>
+    <p> We divide the image into horizontal strips where each thread is responsible for a contingous block.</p>
+    </p>
+    <div class="code-block">
+        <pre>
+//something like this!
+int rows_per_thread = image_height / num_threads;
+for (unsigned int t = 0; t < num_threads; t++) {
+    int start_row = t * rows_per_thread;
+    int end_row = (t == num_threads - 1) ? image_height : (t + 1) * rows_per_thread;
+    threads.emplace_back(render_chunk, start_row, end_row);
+}</pre>
+    </div>
+    <p>I also wrote each thread to distinct memory locations in the image buffer. The main threaad will block until all
+        worker threads complete.</p>
+    <div class="entry-content"></div>
+</div>
 <div class="dev-entry raytracer-entry" id="july-27-2025-t">
     <div class="entry-date">📅 July 27, 2025</div>
     <h3 class="entry-title">Coding My First Ray Tracer
@@ -328,6 +449,10 @@
                 render them. </strong> You can read about my (highkey funny) full motivation <a href="#july-27-2025"
                 style="color:#af6bb1">here </a>
         </p>
+        <p> Here's what it looks at as of this entry:</p>
+        <div class="image-container">
+            <img src="images/raytracing/renderfinal1.png" alt=" the ray tracer render as of 7/28" class="dev-image">
+        </div>
         <p> <strong>Coding it Up:</strong> Anyways, technical part. One of the best resources out there is <a
                 href="https://raytracing.github.io/books/RayTracingInOneWeekend.html" style="color:#af6bb1">Ray Tracing
                 in One Weekend</a>, which I am just wrapping up learning. I closely followed the book initially, and
