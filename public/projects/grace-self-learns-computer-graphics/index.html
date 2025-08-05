@@ -65,12 +65,31 @@
             position: relative;
         }
 
+        .graphics-entry {
+            border-left: 3px solid #d569ff;
+            background: #2a1f2a;
+            position: relative;
+        }
+
         .raytracer-entry::before {
             content: "RAY TRACER";
             position: absolute;
             top: -10px;
             right: 15px;
             background: #ff69b4;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .graphics-entry::before {
+            content: "GRAPHICS RASTERIZER";
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #d569ff;
             color: white;
             padding: 4px 8px;
             border-radius: 10px;
@@ -87,6 +106,10 @@
 
         .raytracer-entry .entry-date {
             color: #ff69b4;
+        }
+
+        .graphics-entry .entry-date {
+            color: #d569ff;
         }
 
         .entry-title {
@@ -231,6 +254,15 @@
             align-items: center;
         }
 
+        .toc-section-title2 {
+            color: #b769ff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
 
         .toc-section ul {
             margin-left: 10px;
@@ -242,6 +274,15 @@
 
         .toc-raytracer-link:hover {
             color: #ff6bf8 !important;
+        }
+
+
+        .toc-graphics-engine-link {
+            color: #c98fff !important;
+        }
+
+        .toc-graphics-engine-link:hover {
+            color: #936bff !important;
         }
 
         .back-to-top {
@@ -290,6 +331,17 @@
     <h3>Jump to Entry:</h3>
 
     <div class="toc-section">
+        <div class="toc-section-title2">Graphics Rasterizer Series</div>
+        <ul>
+            <li><a href="#august-8-2025" class="toc-graphics-engine-link">📅 August 5, 2025 - Reverse Engineering OpenGL
+                    by
+                    Building my Own Graphics Renderer from Scratch</a></li>
+            <li><strong><a href="https://github.com/gracejinsotrue/renderer" style="color:#af6bb1"> GITHUB CODE
+                        LINK</a></strong></li>
+
+    </div>
+
+    <div class="toc-section">
         <div class="toc-section-title">Ray Tracer Series</div>
         <ul>
             <li><a href="#july-29-2025" class="toc-raytracer-link">📅 July 29, 2025 - Migrating My Implementation to
@@ -316,7 +368,17 @@
         </ul>
     </div>
 </div>
-
+<!--graphics engine-->
+<div class="dev-entry graphics-entry" id="august-8-2025">
+    <div class="entry-date">📅 August 8, 2025</div>
+    <h3 class="entry-title">Reverse Engineering OpenGL
+        by
+        Building my Own Graphics Renderer from Scratch</h3>
+    <p>I wanted to learn more deeply how OpenGL works by writing a simplified clone and suffering through the learning
+        process. With no third-party libraries, I am trying to get an image like this one (insert image after i figure
+        out how to render stuff):
+        </h3>
+</div>
 
 <!-- Ray Tracer Entries -->
 <div class="dev-entry raytracer-entry" id="july-29-2025">
