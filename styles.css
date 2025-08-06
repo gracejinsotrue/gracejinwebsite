@@ -77,7 +77,6 @@ nav a:hover {
 
 .intro-text {
     margin-top: 2rem;
-
     font-size: 1.1rem;
 }
 
@@ -149,21 +148,6 @@ sub {
 
 #lang-blog-thumb {
     background-image: url('public/images/html2.png');
-
-}
-
-/* ensure thumbnails maintain aspect ratio on mobile */
-@media (max-width: 768px) {
-    .shader-thumbnail {
-        height: 180px;
-        background-size: cover;
-        background-position: center;
-    }
-
-    .image-thumbnail {
-        background-size: cover;
-        background-position: center;
-    }
 }
 
 .shader-canvas {
@@ -436,6 +420,7 @@ sub {
     }
 }
 
+/* Mobile  thumbnails */
 @media (max-width: 768px) {
     html {
         font-size: 16px;
@@ -473,14 +458,27 @@ sub {
         max-width: 90%;
     }
 
-    /* Mobile responsive for shader thumbnails */
+    /* mobile business*/
     .shader-preview-container {
         flex-direction: column;
         gap: 15px;
     }
 
     .shader-thumbnail {
-        height: 180px;
+        height: 350px !important;
+
+    }
+
+    .image-thumbnail {
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: rgba(12, 12, 12, 0.8);
+    }
+
+    /* Keep shader canvas thumbnails with cover */
+    .shader-thumbnail:not(.image-thumbnail) .shader-canvas {
+        background-size: cover;
     }
 }
 
@@ -513,10 +511,42 @@ sub {
     .left-content {
         padding: 4rem 1rem 1rem 1rem;
     }
+
+    .shader-thumbnail {
+        height: 320px !important;
+    }
+
+    .image-thumbnail {
+        background-size: cover;
+        background-position: center 30%;
+    }
+
+    #graphics-log-thumb {
+        background-position: center 20%;
+    }
+
+    #lang-blog-thumb {
+        background-position: center 40%;
+    }
 }
 
 @media (min-width: 1200px) {
     html {
         font-size: 20px;
+    }
+}
+
+/*boy i love css*/
+@media (max-width: 768px) {
+    .shader-thumbnail {
+        height: 220px !important;
+        min-height: 220px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .shader-thumbnail {
+        height: 150px !important;
+        min-height: 150px !important;
     }
 }
