@@ -50,6 +50,20 @@
             font-style: italic;
         }
 
+        /* Hero thumbnail styling */
+        .hero-thumbnail {
+            margin: 30px 0 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
         .dev-entry {
             border-left: 3px solid #af6bb1;
             margin: 30px 0;
@@ -263,7 +277,6 @@
             align-items: center;
         }
 
-
         .toc-section ul {
             margin-left: 10px;
         }
@@ -275,7 +288,6 @@
         .toc-raytracer-link:hover {
             color: #ff6bf8 !important;
         }
-
 
         .toc-graphics-engine-link {
             color: #c98fff !important;
@@ -306,25 +318,37 @@
     </style>
 </head>
 
-<div class="back-links">
-    <a href="../">← Back to Fun Projects</a>
-    <a href="/">← Back to Main Site</a>
-</div>
+<body>
+    <div class="back-links">
+        <a href="../">← Back to Fun Projects</a>
+        <a href="/">← Back to Main Site</a>
+    </div>
 
-<div class="project-header" id="top">
-    <h1 class="project-title">DEVLOG: Grace Self-Learns Computer Graphics.</h1>
-    <p class="project-subtitle">As an artist and software person, I've always been drawn to computer graphics on a
-        high-level. To me, it is about time to dive deeper
-        into it!</p>
-    <span class="status-badge">Work in Progress</span>
-</div>
+    <div class="project-header" id="top">
+        <h1 class="project-title">DEVLOG: Grace Self-Learns Computer Graphics.</h1>
+        <p class="project-subtitle">As an artist and software person, I've always been drawn to computer graphics on a
+            high-level. To me, it is about time to dive deeper
+            into it!</p>
+        <span class="status-badge">Work in Progress</span>
+    </div>
 
-<div class="tech-stack">
-    <h3>Tech Stack</h3>
-    <ul>
-        <li> A running list of what I've used so far! <strong>C++, Vulkan, OpenGL, CUDA...</strong> oh boy...</li>
-    </ul>
-</div>
+    <!-- Hero Thumbnail Section -->
+    <div class="hero-thumbnail">
+        <img src="images/raytracing/renderfinal1.png"
+            alt="Preview of Grace's computer graphics projects including ray tracing and rasterization"
+            class="hero-image">
+    </div>
+
+    <div class="tech-stack">
+        <h3>Tech Stack</h3>
+        <ul>
+            <li> A running list of what I've used so far! <strong>C++, Vulkan, OpenGL, CUDA...</strong> oh boy...</li>
+        </ul>
+    </div>
+
+</body>
+
+</html>
 
 <!-- Table of Contents with Ray Tracer Grouping -->
 <div class="toc">

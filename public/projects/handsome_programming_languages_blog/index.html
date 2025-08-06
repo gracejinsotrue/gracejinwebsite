@@ -50,6 +50,30 @@
             font-style: italic;
         }
 
+        /* Hero thumbnail styling */
+        .hero-thumbnail {
+            margin: 30px 0 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+
+
+        .hero-caption {
+            color: #af6bb1;
+            font-style: italic;
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
         .dev-entry {
             border-left: 3px solid #af6bb1;
             margin: 30px 0;
@@ -110,20 +134,15 @@
         .image-row {
             display: flex;
             flex-wrap: wrap;
-
-
         }
 
         .image-row .image-container {
             margin: 2px 10px;
-            /* top/bottom margin, left/right margin */
         }
 
         .image-row .dev-image {
             max-width: 350px;
-
             float: none;
-
         }
 
         .dev-image {
@@ -286,6 +305,12 @@
         <span class="status-badge">Work in Progress</span>
     </div>
 
+    <!-- Hero Thumbnail Section -->
+    <div class="hero-thumbnail">
+        <img src="images/gameui1.png" alt="Preview of the Handsome Programming Languages visual novel prototype"
+            class="hero-image">
+    </div>
+
     <div class="tech-stack">
         <h3>Tech Stack</h3>
         <ul>
@@ -300,7 +325,6 @@
                         up
                         with me as i develop it here!</a></strong>
             </li>
-
         </ul>
     </div>
 
