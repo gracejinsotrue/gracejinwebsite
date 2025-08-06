@@ -120,7 +120,7 @@ sub {
 
 .shader-thumbnail {
     flex: 1;
-    height: 200px;
+    height: 250px;
     position: relative;
     border-radius: 8px;
     overflow: hidden;
@@ -133,6 +133,37 @@ sub {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(175, 107, 177, 0.3);
     border-color: #af6bb1;
+}
+
+/* Image thumbnail specific styles */
+.image-thumbnail {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* TODO: HOME DEV LOG THUMBNAILS*/
+#graphics-log-thumb {
+    background-image: url('public/images/html.png');
+}
+
+#lang-blog-thumb {
+    background-image: url('public/images/html2.png');
+
+}
+
+/* ensure thumbnails maintain aspect ratio on mobile */
+@media (max-width: 768px) {
+    .shader-thumbnail {
+        height: 180px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .image-thumbnail {
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 .shader-canvas {
