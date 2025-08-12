@@ -305,6 +305,14 @@ sub {
     background-image: url('/images/zoodini.png');
 }
 
+#cuda-ray-tracer .project-bar-bg {
+    background-image: url('/images/raytracer1.png');
+}
+
+#graphics-rasterizer .project-bar-bg {
+    background-image: url('/images/rasterizer.png');
+}
+
 #NeuroScent .project-bar-bg {
     background-image: url('/images/neuroscent.png');
 }
