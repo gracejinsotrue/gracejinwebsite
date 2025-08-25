@@ -16,8 +16,8 @@ let floatSpeed;
 let floatRotationSpeed;
 
 const dimensions = 3;
-const cubeSize = 0.9;
-const spacing = 0.1;
+const cubeSize = 1.1;
+const spacing = 0.15;
 const totalSize = cubeSize + spacing;
 
 let raycaster, mouse;
@@ -29,9 +29,9 @@ let rotationAngle = 0;
 const rotationSpeed = 0.1;
 const HALF_PI = Math.PI / 2;
 
-// Add variables for better scroll handling
 let isHoveringCanvas = false;
 let canvasContainer;
+let isMobile = false;
 
 const faceTextures = {
     right: null,  // +X 
@@ -45,12 +45,17 @@ const faceTextures = {
 function init() {
     if (!document.getElementById('home')) return;
 
+    // check if mobile and wait for layout to be set up
+    checkMobileLayout();
+
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / 2 / window.innerHeight, 0.1, 1000);
-    camera.position.z = 6;
-    camera.position.x = -6;
-    camera.position.y = 4;
+    // Adjust camera settings based on mobile
+    const aspect = isMobile ? window.innerWidth / 300 : window.innerWidth / 2 / window.innerHeight;
+    camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
+    camera.position.z = isMobile ? 8 : 10;
+    camera.position.x = isMobile ? -4 : -4;
+    camera.position.y = isMobile ? 3 : 4;
     camera.lookAt(scene.position);
 
     floatTime = 0;
@@ -58,22 +63,16 @@ function init() {
     floatSpeed = 0.08;
     floatRotationSpeed = 0.008;
 
+    const rendererWidth = isMobile ? window.innerWidth : window.innerWidth / 2;
+    const rendererHeight = isMobile ? 300 : window.innerHeight;
+
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth / 2, window.innerHeight);
+    renderer.setSize(rendererWidth, rendererHeight);
     renderer.setClearColor(0x000000, 0);
     renderer.shadowMap.enabled = true;
 
-    canvasContainer = document.createElement('div');
-    canvasContainer.id = 'canvas-container';
-    canvasContainer.style.position = 'fixed';
-    canvasContainer.style.left = '0%';
-    canvasContainer.style.top = '-50px';
-    canvasContainer.style.width = '30%';
-    canvasContainer.style.height = '20vh';
-    canvasContainer.style.zIndex = '1';
-    canvasContainer.style.pointerEvents = 'auto';
-    document.getElementById('home').appendChild(canvasContainer);
-    canvasContainer.appendChild(renderer.domElement);
+    // set up canvas container based on mobile/desktop
+    setupCanvasContainer();
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
     scene.add(ambientLight);
@@ -82,16 +81,18 @@ function init() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.enablePan = false;
-    // Start with controls disabled
-    controls.enabled = false;
+    // start with controls disabled on desktop, enabled on mobile
+    controls.enabled = isMobile;
 
     raycaster = new THREE.Raycaster();
     mouse = new THREE.Vector2();
 
     pivot = new THREE.Object3D();
 
-    // Add hover detection for the canvas container
-    setupHoverDetection();
+    // for desktop only
+    if (!isMobile) {
+        setupHoverDetection();
+    }
 
     // load textures and build cube
     loadTextures().then(() => {
@@ -103,7 +104,42 @@ function init() {
     });
 }
 
+function checkMobileLayout() {
+    isMobile = window.innerWidth <= 768;
+}
+
+function setupCanvasContainer() {
+    if (isMobile) {
+        // find the mobile container that should already exist
+        const mobileContainer = document.getElementById('mobile-cube-container');
+        canvasContainer = document.createElement('div');
+        canvasContainer.id = 'canvas-container';
+        canvasContainer.classList.add('mobile');
+
+        if (mobileContainer) {
+            mobileContainer.appendChild(canvasContainer);
+        }
+    } else {
+        // desktop setup is just a positiond container
+        canvasContainer = document.createElement('div');
+        canvasContainer.id = 'canvas-container';
+        canvasContainer.style.position = 'fixed';
+        canvasContainer.style.left = '0%';
+        canvasContainer.style.top = '-50px';
+        canvasContainer.style.width = '30%';
+        canvasContainer.style.height = '20vh';
+        canvasContainer.style.zIndex = '1';
+        canvasContainer.style.pointerEvents = 'auto';
+        document.getElementById('home').appendChild(canvasContainer);
+    }
+
+    canvasContainer.appendChild(renderer.domElement);
+}
+
 function setupHoverDetection() {
+    // only set up hover detection for desktop
+    if (isMobile) return;
+
     // Mouse enter: enable controls and cube interaction
     canvasContainer.addEventListener('mouseenter', () => {
         isHoveringCanvas = true;
@@ -111,13 +147,13 @@ function setupHoverDetection() {
         canvasContainer.style.cursor = 'grab';
     });
 
-    // Mouse leave: disable controls to allow normal page scrolling
+    // mouse leave: disable controls to allow normal page scrolling
     canvasContainer.addEventListener('mouseleave', () => {
         isHoveringCanvas = false;
         controls.enabled = false;
         canvasContainer.style.cursor = 'default';
 
-        // Clean up any ongoing interactions
+        // clean up any ongoing interactions
         if (clickVector && clickFace && lastCube) {
             clickVector = null;
             clickFace = null;
@@ -125,7 +161,7 @@ function setupHoverDetection() {
         }
     });
 
-    // Prevent wheel events from bubbling up when not hovering
+    // prevent wheel events from bubbling up when not hovering
     canvasContainer.addEventListener('wheel', (event) => {
         if (!isHoveringCanvas) {
             event.stopPropagation();
@@ -142,6 +178,25 @@ function setupEventListeners() {
     window.addEventListener('resize', onWindowResize);
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('shuffleComplete', onShuffleComplete);
+}
+
+function onWindowResize() {
+    checkMobileLayout();
+
+    const newWidth = isMobile ? window.innerWidth : window.innerWidth / 2;
+    const newHeight = isMobile ? 300 : window.innerHeight;
+
+    camera.aspect = newWidth / newHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(newWidth, newHeight);
+
+    // reposition camera for both mobile/desktop
+    if (isMobile) {
+        camera.position.set(-4, 3, 8);
+    } else {
+        camera.position.set(-6, 4, 6);
+    }
+    camera.lookAt(scene.position);
 }
 
 function shuffleCube(moves = 7) {
@@ -412,8 +467,8 @@ function nearlyEqual(a, b, d = 0.001) {
 }
 
 function onMouseDown(event) {
-    // Only allow interaction when hovering over canvas
-    if (isMoving || !isHoveringCanvas) return;
+    // allow interaction on mobile or when hovering on desktop
+    if (isMoving || (!isMobile && !isHoveringCanvas)) return;
 
     event.preventDefault();
 
@@ -453,7 +508,7 @@ function onMouseDown(event) {
 }
 
 function onMouseMove(event) {
-    if (!isHoveringCanvas) return;
+    if (!isMobile && !isHoveringCanvas) return;
 
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -461,13 +516,13 @@ function onMouseMove(event) {
 }
 
 function onMouseUp(event) {
-    if (isMoving || !clickVector || !clickFace || !lastCube || !isHoveringCanvas) {
+    if (isMoving || !clickVector || !clickFace || !lastCube || (!isMobile && !isHoveringCanvas)) {
         clickVector = null;
         clickFace = null;
         lastCube = null;
-        if (isHoveringCanvas) {
+        if (isMobile || isHoveringCanvas) {
             controls.enabled = true;
-            canvasContainer.style.cursor = 'grab';
+            canvasContainer.style.cursor = isMobile ? 'default' : 'grab';
         }
         return;
     }
@@ -490,7 +545,7 @@ function onMouseUp(event) {
             clickFace = null;
             lastCube = null;
             controls.enabled = true;
-            canvasContainer.style.cursor = 'grab';
+            canvasContainer.style.cursor = isMobile ? 'default' : 'grab';
             return;
         }
 
@@ -530,7 +585,7 @@ function onMouseUp(event) {
     clickFace = null;
     lastCube = null;
     controls.enabled = true;
-    canvasContainer.style.cursor = 'grab';
+    canvasContainer.style.cursor = isMobile ? 'default' : 'grab';
 }
 
 function onMouseOut(event) {
@@ -551,12 +606,6 @@ function principalComponent(v) {
         max = Math.abs(v.z);
     }
     return maxAxis;
-}
-
-function onWindowResize() {
-    camera.aspect = window.innerWidth / 2 / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth / 2, window.innerHeight);
 }
 
 function onKeyDown(event) {
@@ -692,26 +741,6 @@ function snapCubeToGrid(cube) {
     cube.quaternion.setFromEuler(rot);
 }
 
-function rotateFace(axis, positionValue, direction) {
-    if (isMoving) return;
-
-    const cubeOnFace = allCubes.find(cube => {
-        if (axis === 'x') {
-            return Math.abs(cube.rubikPosition.x - positionValue) < 0.5;
-        } else if (axis === 'y') {
-            return Math.abs(cube.rubikPosition.y - positionValue) < 0.5;
-        } else if (axis === 'z') {
-            return Math.abs(cube.rubikPosition.z - positionValue) < 0.5;
-        }
-    });
-
-    if (cubeOnFace) {
-        clickVector = cubeOnFace.rubikPosition.clone();
-        pushMove(cubeOnFace, clickVector, axis, direction);
-        startNextMove();
-    }
-}
-
 function animate() {
     requestAnimationFrame(animate);
 
@@ -805,9 +834,9 @@ function solve() {
     startNextMove();
 }
 
-// Hide canvas when past first page
+// Hide canvas when past first page (desktop only)
 window.addEventListener('scroll', function () {
-    if (!document.getElementById('canvas-container')) return;
+    if (!document.getElementById('canvas-container') || isMobile) return;
 
     const homeHeight = document.getElementById('home').offsetHeight;
     const scrollY = window.scrollY;
@@ -819,6 +848,7 @@ window.addEventListener('scroll', function () {
     }
 });
 
+// initialize when home section exists
 if (document.getElementById('home')) {
     init();
 }
