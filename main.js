@@ -59,7 +59,7 @@ function init() {
     camera.lookAt(scene.position);
 
     floatTime = 0;
-    floatAmplitude = 0.1;
+    floatAmplitude = 0.3;
     floatSpeed = 0.08;
     floatRotationSpeed = 0.008;
 
