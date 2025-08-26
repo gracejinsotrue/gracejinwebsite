@@ -1,18 +1,14 @@
 .about-section {
     padding: 5rem 0;
-
     overflow: hidden;
     background-color: rgb(12, 12, 12);
-
     color: #333;
-
 }
 
 .about-container {
     max-width: 80rem;
     margin: 0 auto;
     padding: 0 3rem;
-
 }
 
 /* Override body styles only within about page sections */
@@ -20,14 +16,11 @@
     margin-bottom: 0.65rem;
     font-weight: 700;
     font-size: 1.75rem;
-
 }
 
 .about-section h2 {
     font-size: 2.5rem;
-    /*  */
     margin-bottom: 2.5rem;
-    /*  */
     display: flex;
     align-items: center;
     font-weight: 700;
@@ -35,7 +28,6 @@
 
 .about-section h3 {
     font-size: 2rem;
-    /*  */
     margin-bottom: 0;
     font-weight: 700;
 }
@@ -43,10 +35,7 @@
 /* Hero Section with interactive portrait */
 #about-hero {
     padding: 5rem 0 0;
-    /*this somehow determines distance from navbar*/
-    /*  */
     background-color: rgb(255, 255, 255);
-
 }
 
 nav {
@@ -67,41 +56,11 @@ nav a {
     text-decoration: none;
     font-weight: 500;
     white-space: nowrap;
-    /* Prevents text wrapping */
     display: inline-block;
 }
 
 nav a:hover {
     text-decoration: underline;
-}
-
-/* Responsive navbar for smaller screens */
-@media (max-width: 768px) {
-    nav {
-        padding: 0.75rem 0.5rem;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    nav a {
-        margin: 0 0.5rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* For very small screens, make navbar scrollable */
-@media (max-width: 576px) {
-    nav {
-        padding: 0.75rem 0.25rem;
-        text-align: left;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    nav a {
-        margin: 0 0.4rem;
-        font-size: 0.85rem;
-    }
 }
 
 /* Demo content */
@@ -122,13 +81,11 @@ body {
     display: flex;
     align-items: flex-start;
     gap: 2.5rem;
-    /*  */
 }
 
 .about-text-side {
     flex: 1;
     font-size: 1.15rem;
-    /*  */
 }
 
 .about-image-side {
@@ -138,10 +95,8 @@ body {
 
 .about-intro {
     font-size: 1.57rem;
-    /*  */
     font-weight: 500;
     margin-bottom: 1rem;
-    /*  */
     color: #333;
 }
 
@@ -149,18 +104,12 @@ a {
     color: inherit;
 }
 
-
 #interactive-portrait {
     position: relative;
     height: 35rem;
-    /*  */
     width: 100%;
-    /*  */
-    /* max-width: 42.75rem; */
-    /*  */
     overflow: hidden;
     margin-top: 3rem;
-    /*  */
     margin-bottom: 1rem;
 }
 
@@ -194,26 +143,21 @@ a {
 
 .about-skill-column h3 {
     font-size: 2.38rem;
-    /*  */
     margin-bottom: 1.33rem;
-    /*  */
 }
 
 /* Card Grid Sections */
 .flower {
     font-size: 2.6rem;
-    /*  */
     margin-left: 0.65rem;
-    /*  */
 }
 
 #on-campus,
 #off-campus {
-    /* background-image: url("images/bg3.png"); */
     background-color: rgb(12, 12, 12);
     padding: 1.4rem 5.5rem;
-
     color: white;
+    text-align: center;
 }
 
 #on-campus h2,
@@ -223,7 +167,6 @@ a {
 #on-campus h3,
 #off-campus h3 {
     color: white;
-    /* Override to ensure white text on dark backgrounds */
 }
 
 .about-card-grid {
@@ -231,14 +174,6 @@ a {
     grid-template-columns: repeat(3, 1fr);
     gap: 2.75rem;
 }
-
-/* .about-card {
-    background-image: url("images/homebg2.png");
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-} */
 
 .about-card:hover {
     transform: translateY(-5px);
@@ -275,41 +210,6 @@ a {
     font-size: 1.25rem;
     color: #ccc;
 }
-
-/* Responsive Design */
-@media (max-width: 62rem) {
-
-    /* 992px / 16 = 62rem */
-    .about-content-wrapper {
-        flex-direction: column;
-    }
-
-    .about-image-side {
-        margin-top: 1.4rem;
-    }
-
-    .about-card-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 48rem) {
-
-    /* 768px / 16 = 48rem */
-    .about-card-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .about-skills-wrapper {
-        flex-direction: column;
-        gap: 1.4rem;
-    }
-}
-
-/* Font override for About page
-.about-section {
-    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-} */
 
 .about-footer {
     background: linear-gradient(rgb(12, 12, 12), rgb(105, 39, 102));
@@ -357,26 +257,6 @@ a {
     text-decoration: underline;
 }
 
-.about-footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.about-footer-greeting {
-    flex: 1;
-}
-
-.about-footer-greeting h2 {
-    color: white;
-    font-size: 2.75rem;
-    margin-bottom: 0.7rem;
-}
-
-.about-footer-greeting p {
-    color: #ccc;
-}
-
 .about-footer-links {
     flex: 1;
     display: flex;
@@ -393,4 +273,256 @@ a {
     color: white;
     font-size: 1.65rem;
     letter-spacing: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 62rem) {
+    .about-content-wrapper {
+        flex-direction: column;
+    }
+
+    .about-image-side {
+        margin-top: 1.4rem;
+    }
+
+    .about-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 48rem) {
+    .about-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-skills-wrapper {
+        flex-direction: column;
+        gap: 1.4rem;
+    }
+}
+
+/* mobile navbar fixes - allow wrapping and proper alignment */
+@media (max-width: 768px) {
+    nav {
+        padding: 0.75rem 0.5rem;
+        white-space: normal;
+        height: auto;
+        min-height: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        line-height: 1.2;
+    }
+
+    nav a {
+        margin: 0.25rem 0.5rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    body {
+        padding-top: 80px;
+    }
+
+    /* mobile portrait positioning - show portrait under skills list */
+    .about-content-wrapper {
+        flex-direction: column;
+    }
+
+    .about-text-side {
+        order: 1;
+    }
+
+    .about-image-side {
+        order: 2;
+        margin-top: 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #interactive-portrait {
+        height: 25rem;
+        width: 80%;
+        max-width: 350px;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    nav {
+        padding: 0.75rem 0.25rem;
+        gap: 0.25rem;
+        min-height: 70px;
+    }
+
+    nav a {
+        margin: 0.2rem 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    body {
+        padding-top: 90px;
+    }
+
+    /* Smaller portrait on small mobile */
+    #interactive-portrait {
+        height: 20rem;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    #on-campus,
+    #off-campus {
+        padding: 1.4rem 0.5rem;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .about-container {
+        padding: 0 0.5rem;
+        margin: 0 auto;
+    }
+}
+
+/* Mobile footer fixes for about page */
+@media (max-width: 768px) {
+    .about-footer {
+        padding: 1.5rem 1rem;
+    }
+
+
+    .text-separator span {
+        display: none;
+    }
+
+    .text-separator::after {
+        content: "--- • ୨ ✦ ୧ • CONTACT • ୨ ✦ ୧ • ---";
+        display: block;
+        text-align: center;
+    }
+
+    .about-footer-content {
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+    }
+
+    .about-footer-greeting {
+        text-align: center;
+        width: 100%;
+    }
+
+    .about-footer-greeting h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .about-footer-greeting p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .about-footer-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 2rem;
+        flex-wrap: nowrap;
+    }
+
+    .about-footer-section {
+        flex: 1;
+        text-align: center;
+    }
+
+    .about-footer h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        text-align: center;
+    }
+
+    .about-footer a {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+        display: block;
+    }
+
+    .text-separator {
+        font-size: 1.2rem;
+        letter-spacing: 0.1rem;
+        margin: 1rem 0 1.5rem 0;
+        padding: 0 0.5rem;
+        box-sizing: border-box;
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-footer {
+        padding: 1rem 0.75rem;
+    }
+
+    .about-footer-greeting h2 {
+        font-size: 1.4rem;
+    }
+
+    .about-footer-greeting p {
+        font-size: 0.9rem;
+    }
+
+    .about-footer-links {
+        gap: 1.5rem;
+    }
+
+    .about-footer h3 {
+        font-size: 0.9rem;
+    }
+
+    .about-footer a {
+        font-size: 0.8rem;
+    }
+
+    .text-separator {
+        font-size: 1rem;
+        letter-spacing: 0.05rem;
+        line-height: 1.3;
+        word-break: break-all;
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+    nav {
+        min-height: 80px;
+    }
+
+    body {
+        padding-top: 100px;
+    }
+
+    .about-footer-links {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .about-footer-section {
+        width: 100%;
+    }
+
+    .text-separator {
+        font-size: 0.9rem;
+        padding: 0 0.25rem;
+        text-align: center;
+    }
 }
