@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap');
 
+/* literally love this one liner*/
+html {
+    scroll-behavior: smooth;
+}
+
 /* CSS Reset and base styles */
 *,
 *::before,
