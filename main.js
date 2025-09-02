@@ -81,6 +81,11 @@ function init() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.enablePan = false;
+
+    // Add zoom limits
+    controls.minDistance = 10;  // Minimum zoom (closer)
+    controls.maxDistance = 50; // Maximum zoom (farther)
+
     // start with controls disabled on desktop, enabled on mobile
     controls.enabled = isMobile;
 
@@ -834,15 +839,20 @@ function solve() {
     startNextMove();
 }
 
-// Hide canvas when past first page (desktop only)
+// Updated scroll handler with earlier fade trigger
 window.addEventListener('scroll', function () {
     if (!document.getElementById('canvas-container') || isMobile) return;
 
     const homeHeight = document.getElementById('home').offsetHeight;
     const scrollY = window.scrollY;
 
-    if (scrollY > homeHeight - 300) {
-        document.getElementById('canvas-container').style.opacity = '0';
+    // start fading earlier - when user scrolls just 20% of home height
+    const fadeStartPoint = homeHeight * 0.05;
+    if (scrollY > fadeStartPoint) {
+        // calculate fade progress (0 to 1) over the remaining 80% of home height
+        const fadeProgress = Math.min((scrollY - fadeStartPoint) / (homeHeight * 0.6), 1);
+        const opacity = 1 - fadeProgress;
+        document.getElementById('canvas-container').style.opacity = opacity.toString();
     } else {
         document.getElementById('canvas-container').style.opacity = '1';
     }

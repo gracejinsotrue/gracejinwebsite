@@ -97,7 +97,7 @@ nav a:hover {
     padding: 5rem 2rem 2rem 2rem;
     box-sizing: border-box;
     margin-left: 45%;
-    max-width: 800px;
+    max-width: none;
 }
 
 .intro-text {
@@ -109,7 +109,7 @@ nav a:hover {
 h1 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 2.2rem;
+    font-size: 3rem;
     font-weight: 700;
 }
 
@@ -656,7 +656,7 @@ sub {
     }
 
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     h2 {
