@@ -243,7 +243,6 @@
     margin: 0.3125rem 0 0 0;
     font-size: clamp(0.8rem, 2.5vw, 0.95rem);
     color: #888;
-    text-transform: uppercase;
     letter-spacing: 1px;
     line-height: 1.3;
 }
