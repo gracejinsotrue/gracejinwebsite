@@ -50,12 +50,36 @@ function init() {
 
     scene = new THREE.Scene();
 
-    // Adjust camera settings based on mobile
-    const aspect = isMobile ? window.innerWidth / 300 : window.innerWidth / 2 / window.innerHeight;
-    camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-    camera.position.z = isMobile ? 8 : 10;
-    camera.position.x = isMobile ? -4 : -4;
-    camera.position.y = isMobile ? 3 : 4;
+    // Set initial camera position based on current screen size
+    let initialCameraX, initialCameraY, initialCameraZ, initialAspect;
+
+    if (isMobile) {
+        initialAspect = window.innerWidth / 300;
+        initialCameraX = -4;
+        initialCameraY = 3;
+        initialCameraZ = 8;
+    } else {
+        const containerWidth = window.innerWidth * 0.4;
+        initialAspect = containerWidth / window.innerHeight;
+
+        // Set initial position based on container width
+        if (containerWidth < 400) {
+            initialCameraX = -3;
+            initialCameraY = 3;
+            initialCameraZ = 14;
+        } else if (containerWidth < 600) {
+            initialCameraX = -3.5;
+            initialCameraY = 3.5;
+            initialCameraZ = 12;
+        } else {
+            initialCameraX = -4;
+            initialCameraY = 4;
+            initialCameraZ = 10;
+        }
+    }
+
+    camera = new THREE.PerspectiveCamera(45, initialAspect, 0.1, 1000);
+    camera.position.set(initialCameraX, initialCameraY, initialCameraZ);
     camera.lookAt(scene.position);
 
     floatTime = 0;
@@ -63,7 +87,7 @@ function init() {
     floatSpeed = 0.08;
     floatRotationSpeed = 0.008;
 
-    const rendererWidth = isMobile ? window.innerWidth : window.innerWidth / 2;
+    const rendererWidth = isMobile ? window.innerWidth : window.innerWidth * 0.4;
     const rendererHeight = isMobile ? 300 : window.innerHeight;
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -188,20 +212,34 @@ function setupEventListeners() {
 function onWindowResize() {
     checkMobileLayout();
 
-    const newWidth = isMobile ? window.innerWidth : window.innerWidth / 2;
-    const newHeight = isMobile ? 300 : window.innerHeight;
-
-    camera.aspect = newWidth / newHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(newWidth, newHeight);
-
-    // reposition camera for both mobile/desktop
     if (isMobile) {
+        const newWidth = window.innerWidth;
+        const newHeight = 300;
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
         camera.position.set(-4, 3, 8);
+        camera.lookAt(scene.position);
+        renderer.setSize(newWidth, newHeight);
     } else {
-        camera.position.set(-6, 4, 6);
+        // Get the actual container width (40% of window)
+        const containerWidth = window.innerWidth * 0.4;
+        const containerHeight = window.innerHeight;
+
+        camera.aspect = containerWidth / containerHeight;
+        camera.updateProjectionMatrix();
+
+        // Adjust camera distance based on container width to prevent clipping
+        if (containerWidth < 400) {
+            camera.position.set(-3, 3, 16); // was 14, moved further back
+        } else if (containerWidth < 600) {
+            camera.position.set(-3.5, 3.5, 14); // was 12, moved further back
+        } else {
+            camera.position.set(-4, 4, 10);
+        }
+
+        camera.lookAt(scene.position);
+        renderer.setSize(containerWidth, containerHeight);
     }
-    camera.lookAt(scene.position);
 }
 
 function shuffleCube(moves = 7) {
@@ -839,15 +877,14 @@ function solve() {
     startNextMove();
 }
 
-// Updated scroll handler with earlier fade trigger
 window.addEventListener('scroll', function () {
     if (!document.getElementById('canvas-container') || isMobile) return;
 
     const homeHeight = document.getElementById('home').offsetHeight;
     const scrollY = window.scrollY;
 
-    // start fading earlier - when user scrolls just 20% of home height
-    const fadeStartPoint = homeHeight * 0.05;
+    // start fading earlier - when user scrolls just like 5%  more of home height
+    const fadeStartPoint = homeHeight * 0.04;
     if (scrollY > fadeStartPoint) {
         // calculate fade progress (0 to 1) over the remaining 80% of home height
         const fadeProgress = Math.min((scrollY - fadeStartPoint) / (homeHeight * 0.6), 1);
