@@ -16,8 +16,8 @@ let floatSpeed;
 let floatRotationSpeed;
 
 const dimensions = 3;
-const cubeSize = 1.1;
-const spacing = 0.15;
+const cubeSize = 0.5;
+const spacing = 0.08;
 const totalSize = cubeSize + spacing;
 
 let raycaster, mouse;
@@ -50,31 +50,31 @@ function init() {
 
     scene = new THREE.Scene();
 
-    // Set initial camera position based on current screen size
+    // Set initial camera position based on current screen size - adjusted for smaller cube
     let initialCameraX, initialCameraY, initialCameraZ, initialAspect;
 
     if (isMobile) {
         initialAspect = window.innerWidth / 300;
-        initialCameraX = -4;
-        initialCameraY = 3;
-        initialCameraZ = 8;
+        initialCameraX = -2;
+        initialCameraY = 2;
+        initialCameraZ = 5;
     } else {
         const containerWidth = window.innerWidth * 0.4;
         initialAspect = containerWidth / window.innerHeight;
 
-        // Set initial position based on container width
+        // Set initial position based on container width - adjusted for much smaller cube
         if (containerWidth < 400) {
-            initialCameraX = -3;
-            initialCameraY = 3;
-            initialCameraZ = 14;
+            initialCameraX = -1.8;
+            initialCameraY = 1.8;
+            initialCameraZ = 8;
         } else if (containerWidth < 600) {
-            initialCameraX = -3.5;
-            initialCameraY = 3.5;
-            initialCameraZ = 12;
+            initialCameraX = -2;
+            initialCameraY = 2; // 
+            initialCameraZ = 7; //
         } else {
-            initialCameraX = -4;
-            initialCameraY = 4;
-            initialCameraZ = 10;
+            initialCameraX = -2.2; // 
+            initialCameraY = 2.2;
+            initialCameraZ = 6;
         }
     }
 
@@ -83,7 +83,7 @@ function init() {
     camera.lookAt(scene.position);
 
     floatTime = 0;
-    floatAmplitude = 0.3;
+    floatAmplitude = 0.15;
     floatSpeed = 0.08;
     floatRotationSpeed = 0.008;
 
@@ -106,9 +106,9 @@ function init() {
     controls.dampingFactor = 0.05;
     controls.enablePan = false;
 
-    // Add zoom limits
-    controls.minDistance = 10;  // Minimum zoom (closer)
-    controls.maxDistance = 50; // Maximum zoom (farther)
+    // Add zoom limits - adjusted for much smaller cube
+    controls.minDistance = 5;
+    controls.maxDistance = 25;
 
     // start with controls disabled on desktop, enabled on mobile
     controls.enabled = isMobile;
@@ -217,7 +217,7 @@ function onWindowResize() {
         const newHeight = 300;
         camera.aspect = newWidth / newHeight;
         camera.updateProjectionMatrix();
-        camera.position.set(-4, 3, 8);
+        camera.position.set(-2, 2, 5);
         camera.lookAt(scene.position);
         renderer.setSize(newWidth, newHeight);
     } else {
@@ -228,13 +228,13 @@ function onWindowResize() {
         camera.aspect = containerWidth / containerHeight;
         camera.updateProjectionMatrix();
 
-        // Adjust camera distance based on container width to prevent clipping
+
         if (containerWidth < 400) {
-            camera.position.set(-3, 3, 16); // was 14, moved further back
+            camera.position.set(-1.8, 1.8, 9);
         } else if (containerWidth < 600) {
-            camera.position.set(-3.5, 3.5, 14); // was 12, moved further back
+            camera.position.set(-2, 2, 8);
         } else {
-            camera.position.set(-4, 4, 10);
+            camera.position.set(-2.2, 2.2, 6);
         }
 
         camera.lookAt(scene.position);
