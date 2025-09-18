@@ -1,0 +1,92 @@
+body.custom-cursor-active {
+    cursor: none !important;
+}
+
+body.custom-cursor-active * {
+    cursor: none !important;
+}
+
+/* custom cursor element */
+.custom-cursor {
+    position: fixed;
+    width: 64px;
+    height: 64px;
+    background-image: url('/images/stickers/cursor.png');
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+}
+
+.custom-cursor.clicking {
+    transform: translate(-50%, -50%) scale(0.7);
+}
+
+.custom-cursor.hovering-interactive {
+    transform: translate(-50%, -50%) scale(1.3);
+}
+
+.sticker-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.cursor-sticker {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    animation: stickerSpawn 0.4s ease-out;
+}
+
+@keyframes stickerSpawn {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2) rotate(45deg);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+@keyframes stickerFadeOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-cursor {
+        display: none;
+    }
+
+    .cursor-sticker {
+        width: 40px;
+        height: 40px;
+    }
+}
