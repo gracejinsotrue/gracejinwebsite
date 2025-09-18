@@ -158,6 +158,11 @@ h3 {
     font-weight: 500;
 }
 
+.small-text {
+    font-size: 0.6rem;
+    font-weight: 300;
+}
+
 p {
     word-wrap: break-word;
     white-space: normal;

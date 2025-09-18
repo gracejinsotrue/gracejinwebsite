@@ -9,8 +9,8 @@ body.custom-cursor-active * {
 /* custom cursor element */
 .custom-cursor {
     position: fixed;
-    width: 64px;
-    height: 64px;
+    width: 16px;
+    height: 16px;
     background-image: url('/images/stickers/cursor.png');
 
     background-size: contain;
@@ -31,13 +31,15 @@ body.custom-cursor-active * {
 }
 
 .sticker-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 99;
+    /*nav bar is 100 lol*/
+    min-height: 100vh;
 }
 
 .cursor-sticker {
@@ -58,12 +60,12 @@ body.custom-cursor-active * {
     }
 
     60% {
-        transform: scale(1.2) rotate(45deg);
+        transform: scale(1.2) rotate(0deg);
         opacity: 0.9;
     }
 
     100% {
-        transform: scale(1) rotate(360deg);
+        transform: scale(1) rotate(0deg);
         opacity: 1;
     }
 }

@@ -4,7 +4,9 @@ const STICKER_CONFIG = {
     images: [
 
         'images/stickers/grace1.png',
-        'images/stickers/flower1.png'
+        'images/stickers/flower1.png',
+        'images/stickers/grace2.png',
+        'images/stickers/flower2.png'
     ],
     size: 150,
     maxStickers: 30,
@@ -106,16 +108,19 @@ function spawnSticker(x, y) {
     const randomImage = STICKER_CONFIG.images[Math.floor(Math.random() * STICKER_CONFIG.images.length)];
     sticker.style.backgroundImage = `url(${randomImage})`;
 
-    sticker.style.left = (x - STICKER_CONFIG.size / 2) + 'px';
-    sticker.style.top = (y - STICKER_CONFIG.size / 2) + 'px';
+    const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    sticker.style.left = (x + scrollX - STICKER_CONFIG.size / 2) + 'px';
+    sticker.style.top = (y + scrollY - STICKER_CONFIG.size / 2) + 'px';
 
     sticker.style.width = STICKER_CONFIG.size + 'px';
     sticker.style.height = STICKER_CONFIG.size + 'px';
 
 
-    const randomRotation = Math.random() * 2;
-    const randomScale = 0.8 + Math.random() * 0.4;
-    sticker.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
+    // const randomRotation = Math.random() * 2;
+    // const randomScale = 0.8 + Math.random() * 0.4;
+    // sticker.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
 
     stickerContainer.appendChild(sticker);
     stickerCount++;
