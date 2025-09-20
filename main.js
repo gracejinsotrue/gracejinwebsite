@@ -153,8 +153,8 @@ function setupCanvasContainer() {
         canvasContainer = document.createElement('div');
         canvasContainer.id = 'canvas-container';
         canvasContainer.style.position = 'fixed';
-        canvasContainer.style.left = '0%';
-        canvasContainer.style.top = '-50px';
+        canvasContainer.style.left = '3%';
+        canvasContainer.style.top = '-100px';
         canvasContainer.style.width = '30%';
         canvasContainer.style.height = '20vh';
         canvasContainer.style.zIndex = '1';

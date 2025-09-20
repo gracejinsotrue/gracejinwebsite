@@ -142,14 +142,14 @@ nav a:hover {
 h1 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 700;
 }
 
 h2 {
     word-wrap: break-word;
     white-space: normal;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
