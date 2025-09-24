@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap');
 
-
-
 /* literally love this one liner*/
 html {
     scroll-behavior: smooth;
@@ -302,7 +300,14 @@ sub {
     left: 0;
     width: 60%;
     height: calc(100% - 6.25rem);
-    background-color: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(90deg,
+            rgba(0, 0, 0, 0.85) 0%,
+            rgba(0, 0, 0, 0.75) 35%,
+            rgba(0, 0, 0, 0.6) 55%,
+            rgba(0, 0, 0, 0.35) 75%,
+            rgba(0, 0, 0, 0.15) 90%,
+            transparent 100%);
+    backdrop-filter: blur(1px);
     z-index: 2;
     transition: none;
 }
@@ -393,7 +398,11 @@ sub {
 }
 
 #graphics-rasterizer .project-bar-bg {
-    background-image: url('/images/rasterizer.png');
+    background-image: url('/images/raster.png');
+}
+
+#Shaders .project-bar-bg {
+    background-image: url('/images/shader.png');
 }
 
 #NeuroScent .project-bar-bg {
