@@ -9,8 +9,8 @@ body.custom-cursor-active * {
 /* custom cursor element */
 .custom-cursor {
     position: fixed;
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
     background-image: url('/images/stickers/cursor.png');
 
     background-size: contain;
@@ -44,8 +44,8 @@ body.custom-cursor-active * {
 
 .cursor-sticker {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: clamp(2.5rem, 8vw, 3.75rem);
+    height: clamp(2.5rem, 8vw, 3.75rem);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -88,7 +88,7 @@ body.custom-cursor-active * {
     }
 
     .cursor-sticker {
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }

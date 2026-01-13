@@ -527,7 +527,7 @@
                 <div class="text-content" id="text-content">
                     Welcome to the Programming Academy!
                 </div>
-                <div style="display: flex; justify-content: flex-end; align-items: center; min-height: 40px;">
+                <div style="display: flex; justify-content: flex-end; align-items: center; min-height: 2.5rem;">
                     <button class="back-button" id="back-button" onclick="previousDialogue()" style="display: none; margin-right: auto;">Back</button>
                     <button class="next-button" onclick="console.log('Next button clicked!'); nextDialogue()">Next</button>
                 </div>
@@ -551,7 +551,7 @@
                     <div class="text-content" id="text-content-coding">
                         Ready for a coding challenge?
                     </div>
-                    <div style="display: flex; justify-content: flex-end; align-items: center; min-height: 40px;">
+                    <div style="display: flex; justify-content: flex-end; align-items: center; min-height: 2.5rem;">
                         <button class="back-button" id="back-button-coding" onclick="previousCodingDialogue()" style="display: none; margin-right: auto;">Back</button>
                         <button class="next-button" onclick="console.log('Coding next button clicked!'); nextCodingDialogue()">Next</button>
                     </div>
@@ -1332,7 +1332,7 @@ var invertTree = function(root) {
 
             output.innerHTML = `<div style="color: #4caf50;">Code executed! Here's what would happen:</div>
                                <div>${code.replace(/\n/g, '<br>')}</div>
-                               <div style="margin-top: 10px; color: #ff9a9e;">Ready to check your solution?</div>`;
+                               <div style="margin-top: 0.625rem; color: #ff9a9e;">Ready to check your solution?</div>`;
         }
 
         function checkSolution() {
