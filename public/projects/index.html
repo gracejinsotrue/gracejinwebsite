@@ -102,7 +102,7 @@
 
         /* main content container */
         .main-content {
-            max-width: 800px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 6rem 2rem 2rem;
             position: relative;
@@ -134,18 +134,28 @@
         }
 
         .project-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             margin-bottom: 35px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #2a2a2a;
+        }
+
+        .project-pair-label {
+            grid-column: 1 / -1;
+            font-size: 0.9rem;
+            color: #af6bb1;
+            font-weight: 500;
+            margin-bottom: -15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .project-main {
             padding: 15px 20px 15px 40px;
             background: #252525;
             border-left: 4px solid #af6bb1;
-            border-top: 1px solid #333;
+            border: 1px solid #333;
+            border-radius: 8px;
             position: relative;
             display: flex;
             gap: 15px;
@@ -170,6 +180,8 @@
             padding: 20px;
             border-left: 4px solid #af6bb1;
             background: #2a2a2a;
+            border: 1px solid #333;
+            border-radius: 8px;
             position: relative;
             display: flex;
             gap: 15px;
