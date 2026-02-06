@@ -393,10 +393,6 @@ sub {
     background-image: url('/images/zoodini.png');
 }
 
-#python-ray-tracer .project-bar-bg {
-    background-image: url('/images/rendered.png');
-}
-
 #cuda-ray-tracer .project-bar-bg {
     background-image: url('/images/raytracer1.png');
 }

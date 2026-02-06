@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing a Hardware-Accelerated PBRT Engine</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background-color: rgb(12, 12, 12);
+            color: #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 200;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(3, 0, 2, 0.884);
+            padding: 0.9375rem 2rem;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex: 2;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        nav a {
+            color: #af6bb1;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+            background-color: rgba(175, 107, 177, 0.1);
+        }
+
+        main {
+            margin-top: 5rem;
+            padding: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            color: #af6bb1;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: #1a1a1a;
+            border-left: 3px solid #af6bb1;
+            border-radius: 5px;
+            margin: 2rem 0;
+        }
+
+        .coming-soon h2 {
+            color: #af6bb1;
+            font-size: 1.8rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/">← back</a>
+        </div>
+        <div class="nav-center">
+            <a href="/">home</a>
+            <a href="/about.html">about</a>
+            <a href="/gallery.html">gallery</a>
+        </div>
+        <div class="nav-right">
+        </div>
+    </nav>
+
+    <main>
+        <h1>Writing a Hardware-Accelerated PBRT Engine</h1>
+
+        <div class="coming-soon">
+            <h2>Coming Soon</h2>
+            <p>This page is currently under development. Check back later!</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Grace Jin. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
