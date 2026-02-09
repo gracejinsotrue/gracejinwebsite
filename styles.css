@@ -114,6 +114,10 @@ nav a:hover {
 }
 
 /* Home Section */
+# Make all hyperlinks purple a[href] {
+    color: purple !important;
+}
+
 #home {
     min-height: 65vh;
     width: 100%;
