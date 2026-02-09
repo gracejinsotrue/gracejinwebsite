@@ -269,9 +269,13 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
                 in its subtree. During ray tracing, if a ray misses a node's bounding box, the entire subtree is
                 skipped, which turns O(n) brute force search into something closer to O(logn). For the scene I rendered
                 with more than 500k triangles, this optimization determines the difference between minutes and seconds
-                (for the brute force version of my code, I ran it for 30+ minutes before rage quiting.) My basic
+                (for the brute force version of my code, I ran it for 30+ minutes before rage quiting.)
+
+                Here is a picture of BVH acceleration:
+                And, My basic
                 algorithm looks
                 like this:</p>
+            <img src="images/raytracing.png" alt="BVH Raytracing Example" style="max-width:100%;margin-bottom:1em;" />
             <div class="code-block">
                 <pre>buildBVH(triangles, bbox):
     if no triangles: return null
