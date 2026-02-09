@@ -89,6 +89,13 @@
             margin-bottom: 1rem;
         }
 
+        .project-subtitle {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
         p {
             color: #ccc;
             line-height: 1.8;
@@ -106,6 +113,88 @@
         .coming-soon h2 {
             color: #af6bb1;
             font-size: 1.8rem;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            background-color: #1a1a1a;
+            border-radius: 0.5rem;
+            border-left: 3px solid #af6bb1;
+        }
+
+        section h2 {
+            color: #af6bb1;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .toc {
+            background: #2a2a2a;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            border-left: 3px solid #af6bb1;
+        }
+
+        .toc h3 {
+            color: #af6bb1;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            list-style-type: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #af6bb1;
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        .back-to-top a {
+            color: #af6bb1;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-to-top a:hover {
+            text-decoration: underline;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         footer {
@@ -133,13 +222,128 @@
         </div>
     </nav>
 
-    <main>
+    <main id="top">
         <h1>Writing a Hardware-Accelerated PBRT Engine</h1>
+        <p class="project-subtitle">This entry documents the progress of writing a physically-accurate ray tracer step
+            by step. This starts from bsaic ray tracing optimizations (BVH acceleration structure with thread
+            paralliziation for the 67th time), to adding more cool features. This project is built off of a minimalistic
+            ray tracing library, but it is not enough for what we want to achieve! </p>
 
-        <div class="coming-soon">
-            <h2>Coming Soon</h2>
-            <p>This page is currently under development. Check back later!</p>
+        <div class="toc">
+            <h3>Jump to Entry:</h3>
+            <ul>
+                <li><a href="#entry-1">2/6/2026 - starting writing basic, CPU-bound ray tracer in C++</a></li>
+            </ul>
         </div>
+
+        <section id="entry-1">
+            <h2>2/6/2026: starting writing basic, CPU-bound ray tracer in C++.</h2>
+            <p> Question: how do we speed up rendering 500k+ triangles from taking 30+ minutes to take 2 seconds?</p>
+            <p>
+                We start with a very basic, unoptimized CPU bound codebase. The base code from this library currently
+                implements a brute force ray intersesctor algorithm, in short it traces a ray against all triangles and
+                stores the resulting information in an intersection struct.
+                This shit slow:
+            </p>
+
+            <div class="code-block">
+                <pre>/* Brute force search through all triangles */
+for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
+    float u, v, t;
+    if (m_mesh->rayIntersect(idx, ray, u, v, t)) {
+        /* An intersection was found! Can terminate
+           immediately if this is a shadow ray query */
+        if (shadowRay)
+            return true;
+        ray.maxt = its.t = t;
+        its.uv = Point2f(u, v);
+        its.mesh = m_mesh;
+        f = idx;
+        foundIntersection = true;
+    }
+}</pre>
+
+            </div>
+            <p> Let's do the low hanging fruit of implementing a Bounding Volumne Hiearchy, which organizes a scene's
+                triangles into a binary tree where each node stores an axis-aligned bounding box enclosing all geometry
+                in its subtree. During ray tracing, if a ray misses a node's bounding box, the entire subtree is
+                skipped, which turns O(n) brute force search into something closer to O(logn). For the scene I rendered
+                with more than 500k triangles, this optimization determines the difference between minutes and seconds
+                (for the brute force version of my code, I ran it for 30+ minutes before rage quiting.) My basic
+                algorithm looks
+                like this:</p>
+            <div class="code-block">
+                <pre>buildBVH(triangles, bbox):
+    if no triangles: return null
+    if triangles ≤ 10: return leaf(triangles)
+
+    // SAH binned split along longest axis
+    axis = longest axis of bbox
+    divide axis into 12 bins
+    for each triangle:
+        assign to bin based on centroid position
+
+    // evaluate all 11 candidate splits
+    bestCost = ∞
+    for each split plane between bins:
+        cost = surfaceArea(left) × count(left)
+             + surfaceArea(right) × count(right)
+        if cost < bestCost: record this split
+
+    // only split if it's cheaper than a leaf
+    if bestCost ≥ surfaceArea(bbox) × totalCount:
+        return leaf(triangles)
+
+    partition triangles at best split
+    return interior(
+        left  = buildBVH(leftTriangles, leftBBox),
+        right = buildBVH(rightTriangles, rightBBox)
+    )</pre>
+
+                <pre>rayTraverse(ray):
+    stack = [root]
+    while stack not empty:
+        node = stack.pop()
+        if ray misses node.bbox: skip
+        if node is leaf:
+            test ray against each triangle
+            if shadow ray and hit: return true
+        else:
+            stack.push(left child)
+            stack.push(right child)
+    return closest hit</pre>
+            </div>
+            <p> The construction of my BVH is top-down, at each node I use the Surface Area Heuristic to find a good
+                split. I bucket the triangle centroids into a few binds along the bounding box's longest axis, and I
+                evaluate the SAH cost C = S(A) * N_A + S(B) * N_B for each candidate split plane. The split that
+                minimizes the cost is chosen, My design for ray traversal uses an explicit stack rather than recursion,
+                which a fixed-size array of 64 entries (more than enough) to avoid any per-ray heap allocation:</p>
+            <div class="code-block">
+                <pre>
+uint32_t stack[64];
+int stackPtr = 0;
+stack[stackPtr++] = 0; // start at root
+
+while (stackPtr > 0) {
+    const BVHNode &node = m_nodes[stack[--stackPtr]];
+    if (!node.bbox.rayIntersect(ray))
+        continue;
+    if (node.isLeaf()) {
+        // test triangles in this leaf
+    } else {
+        stack[stackPtr++] = nodeIdx + 1;   // left child
+        stack[stackPtr++] = node.start;     // right child
+    }
+}
+
+                </pre>
+            </div>
+            <p> After I implemented this optimization, I ultimately shaved the brute-force render time from over half an
+                hour to about 2 seconds. This is 800x faster!</p>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
     </main>
 
     <footer>
