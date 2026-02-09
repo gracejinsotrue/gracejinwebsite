@@ -242,15 +242,28 @@
         <div class="toc">
             <h3>Jump to Entry:</h3>
             <ul>
+                <li><a href="#entry-1">2/9/2026 - Monte Carlo integration for photorealistic rendering stuff yay woo
+                        wahoo i love math</a></li>
+
                 <li><a href="#entry-1">2/8/2026 - We balling with C++ parallelization library</a></li>
 
                 <li><a href="#entry-1">2/6/2026 - starting writing basic, CPU-bound ray tracer in C++</a></li>
             </ul>
         </div>
         <section id="entry-1">
+            <h2>2/9/2026: Monte Carlo integration for photorealistic rendering stuff yay woo wahoo i love math</h2>
+            <p> yeah </p>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+        <section id="entry-1">
             <h2>2/8/2026: We balling with C++ parallelization library</h2>
-            <p> After implementing the basic BVH, one tends to figure out two things. One, BVH fast. Two, building the
-                BVH still takes a while. I profiled the time it takes to build the BVH on my machine:
+            <p> After implementing the basic BVH, one tends to figure out two things. One, BVH fast. Two, building
+                the
+                BVH still takes a while. I profiled the time it takes to build the BVH on my machine (my machine
+                iiiiiis
+                a 12th Gen Intel(R) Core(TM) i7-12800H yet it is hanging on by a thread hahahahahah):
             <div class="code-block">
                 <pre>BVH Statistics:
   Build time:                657.81 ms
@@ -265,14 +278,18 @@
             </p>
             <p>Basically serial BVH construction builds the tree by appending nodes into a single shared array as it
                 recurses. Therefore, I employ the helpful <a href="https://github.com/uxlfoundation/oneTBB">Thread
-                    Building Blocks Library</a> to attempt to parallelize the tree building process. As my code is right
+                    Building Blocks Library</a> to attempt to parallelize the tree building process. As my code is
+                right
                 now,
                 two threads CANNOT safely push to the same array at
                 the same time. Rather
                 than trying to
-                synchronize access to a shared data structure, I restructured the build so each subtree is constructed
-                in complete isolation (average cs major lifestyle is also to be in complete isolation); it gets its own
-                copy of the triangle indices and builds into its own private arrays of nodes and indices, with no shared
+                synchronize access to a shared data structure, I restructured the build so each subtree is
+                constructed
+                in complete isolation (average cs major lifestyle is also to be in complete isolation); it gets its
+                own
+                copy of the triangle indices and builds into its own private arrays of nodes and indices, with no
+                shared
                 mutable state between threads:</p>
             <div class="code-block">
                 <pre>struct BVHBuildResult {
@@ -286,9 +303,12 @@ BVHBuildResult Accel::buildParallel(std::vector<uint32_t> indices, const Boundin
     // ... SAH split logic, partition into leftIndices / rightIndices ...
                 </pre>
             </div>
-            <p>At each split, if the current subtree contains a shit ton of triangles (I set 1024 as the threshold), the
-                left and right children are dispatched as concurrent tasks using TBB's task_group. Below that threshold
-                we just run the construction serially because teh overhead of task scheduling outweighs the benefits for
+            <p>At each split, if the current subtree contains a shit ton of triangles (I set 1024 as the threshold),
+                the
+                left and right children are dispatched as concurrent tasks using TBB's task_group. Below that
+                threshold
+                we just run the construction serially because teh overhead of task scheduling outweighs the benefits
+                for
                 small workloads!</p>
             <div class="code-block">
                 <pre>BVHBuildResult leftResult, rightResult;
@@ -303,7 +323,8 @@ if (count >= PARALLEL_THRESHOLD) {  // PARALLEL_THRESHOLD = 1024
     rightResult = buildParallel(std::move(rightIndices), rightBox);
 }</pre>
             </div>
-            <p> Once the children finish, their independently built arrays are merged back together into the parent's
+            <p> Once the children finish, their independently built arrays are merged back together into the
+                parent's
                 result. The final merged result slots direcrly into the same flat node layout the serial BVH
                 construction produces, so I didn't have to modify any ray traversal code at all! And this appraoch
                 scales well because TBB's work-stealing scheduler is really good at handling load balancing across
@@ -369,10 +390,13 @@ gracejin@grace:~/nori-26sp/build$</pre>
 
         <section id="entry-1">
             <h2>2/6/2026: starting writing basic, CPU-bound ray tracer in C++.</h2>
-            <p> Question: how do we speed up rendering 500k+ triangles from taking 30+ minutes to take 2 seconds?</p>
+            <p> Question: how do we speed up rendering 500k+ triangles from taking 30+ minutes to take 2 seconds?
+            </p>
             <p>
-                We start with a very basic, unoptimized CPU bound codebase. The base code from this library currently
-                implements a brute force ray intersesctor algorithm, in short it traces a ray against all triangles and
+                We start with a very basic, unoptimized CPU bound codebase. The base code from this library
+                currently
+                implements a brute force ray intersesctor algorithm, in short it traces a ray against all triangles
+                and
                 stores the resulting information in an intersection struct.
                 This shit slow:
             </p>
@@ -398,10 +422,13 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
             <p> Let's do the low hanging fruit of implementing a <a
                     href="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy">Thread
                     Bounding Volume Hiearchy</a>, which organizes a scene's
-                triangles into a binary tree where each node stores an axis-aligned bounding box enclosing all geometry
+                triangles into a binary tree where each node stores an axis-aligned bounding box enclosing all
+                geometry
                 in its subtree. During ray tracing, if a ray misses a node's bounding box, the entire subtree is
-                skipped, which turns O(n) brute force search into something closer to O(logn). For the scene I rendered
-                with more than 500k triangles, this optimization determines the difference between minutes and seconds
+                skipped, which turns O(n) brute force search into something closer to O(logn). For the scene I
+                rendered
+                with more than 500k triangles, this optimization determines the difference between minutes and
+                seconds
                 (for the brute force version of my code, I ran it for 30+ minutes before rage quiting.)
 
                 Here is a picture of BVH acceleration:
@@ -453,7 +480,8 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
             <p> The construction of my BVH is top-down, at each node I use the Surface Area Heuristic to find a good
                 split. I bucket the triangle centroids into a few binds along the bounding box's longest axis, and I
                 evaluate the SAH cost C = S(A) * N_A + S(B) * N_B for each candidate split plane. The split that
-                minimizes the cost is chosen, My design for ray traversal uses an explicit stack rather than recursion,
+                minimizes the cost is chosen, My design for ray traversal uses an explicit stack rather than
+                recursion,
                 which a fixed-size array of 64 entries (more than enough) to avoid any per-ray heap allocation:</p>
             <div class="code-block">
                 <pre>
@@ -475,7 +503,8 @@ while (stackPtr > 0) {
 
                 </pre>
             </div>
-            <p> After I implemented this optimization, I ultimately shaved the brute-force render time from over half an
+            <p> After I implemented this optimization, I ultimately shaved the brute-force render time from over
+                half an
                 hour to about 2 seconds. This is 800x faster!</p>
             <div class="back-to-top">
                 <a href="#top">↑ Back to Top</a>
