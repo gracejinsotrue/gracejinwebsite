@@ -401,11 +401,15 @@ sub {
     background-image: url('/images/raytracer1.png');
 }
 
+#python-ray-tracer .project-bar-bg {
+    background-image: url('/images/rendered.png');
+}
+
 #graphics-rasterizer .project-bar-bg {
     background-image: url('/images/raster.png');
 }
 
-#Shaders .project-bar-bg {
+z #Shaders .project-bar-bg {
     background-image: url('/images/shader.png');
 }
 
