@@ -40,7 +40,7 @@
             z-index: 100;
             background-color: rgba(3, 0, 2, 0.884);
             padding: 10px 20px;
-            border-radius: 8px;
+            border-bottom: 1px solid #333;
         }
 
         .back-links a {
@@ -52,7 +52,6 @@
 
         .back-links a:hover {
             text-decoration: underline;
-            color: #ce64ff;
         }
 
         #container {
@@ -67,18 +66,15 @@
 
         h1 {
             color: #af6bb1;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         canvas {
-            border: 2px solid #af6bb1;
-            border-radius: 8px;
+            border: 1px solid #af6bb1;
             display: block;
             margin: 20px auto;
-            box-shadow: 0 10px 30px rgba(175, 107, 177, 0.3);
         }
 
         #shaderCanvas.pixelated {
@@ -97,32 +93,31 @@
         }
 
         .shader-selector button {
-            margin: 0 10px;
+            margin: 0 6px;
         }
 
         .shader-selector button.active {
-            background: #ce64ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(175, 107, 177, 0.4);
+            color: #af6bb1;
+            border-color: #af6bb1;
         }
 
         button {
-            background: #af6bb1;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            margin: 8px;
+            background: transparent;
+            color: #888;
+            border: 1px solid #444;
+            padding: 8px 20px;
+            margin: 6px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 2px;
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
-            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            transition: color 0.2s ease, border-color 0.2s ease;
         }
 
         button:hover {
-            background: #ce64ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(175, 107, 177, 0.4);
+            color: #af6bb1;
+            border-color: #af6bb1;
         }
 
         .slider-container {
@@ -163,8 +158,7 @@
         }
 
         .info a {
-            color: #ce64ff;
-
+            color: #af6bb1;
             text-decoration: none;
         }
 
@@ -178,10 +172,10 @@
             max-width: 600px;
             margin: 30px auto;
             text-align: left;
-            background-color: rgba(175, 107, 177, 0.1);
+            background-color: #1a1a1a;
             padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #af6bb1;
+            border-radius: 0;
+            border-left: 3px solid #af6bb1;
         }
 
         .info h3 {
@@ -204,7 +198,7 @@
                 justify-content: center;
                 margin: 20px;
                 background-color: transparent;
-                border: 1px solid #af6bb1;
+                border-bottom: 1px solid #333;
             }
 
             #container {
@@ -267,6 +261,21 @@
 
             <div class="earth-controls active" id="earthControls">
                 <div class="slider-container">
+                    <label>Land Hue:</label>
+                    <input type="range" id="landHueShiftSlider" min="-180" max="180" value="0" oninput="updateLandHueShift(this.value)">
+                    <span class="slider-value" id="landHueShiftValue">0°</span>
+                </div>
+                <div class="slider-container">
+                    <label>Ocean Hue:</label>
+                    <input type="range" id="oceanHueShiftSlider" min="-180" max="180" value="0" oninput="updateOceanHueShift(this.value)">
+                    <span class="slider-value" id="oceanHueShiftValue">0°</span>
+                </div>
+                <div class="slider-container">
+                    <label>Saturation:</label>
+                    <input type="range" id="saturationSlider" min="0" max="200" value="100" oninput="updateSaturation(this.value)">
+                    <span class="slider-value" id="saturationValue">1.0</span>
+                </div>
+                <div class="slider-container">
                     <label>Pixel Size:</label>
                     <input type="range" id="pixelSize" min="4" max="16" value="8" oninput="updatePixelSize(this.value)">
                     <span class="slider-value" id="pixelValue">6</span>
@@ -294,6 +303,10 @@
         let currentShader = 'earth';
         let pixelSize = 8.0;
         let brightness = 1;
+        let hueShift = 0.0;
+        let landHueShift = 0.0;
+        let oceanHueShift = 0.0;
+        let saturation = 1.0;
 
         // fractal shader sources
         const vertexShaderSource = `
@@ -345,6 +358,9 @@
             uniform float u_time;
             uniform float u_pixelSize;
             uniform float u_brightness;
+            uniform float u_landHueShift;
+            uniform float u_oceanHueShift;
+            uniform float u_saturation;
             
             // 3D hash function for noise
             float hash3D(vec3 p) {
@@ -393,6 +409,12 @@
                 return value;
             }
             
+            vec3 applyHueShift(vec3 col, float shift) {
+                vec3 k = vec3(0.57735);
+                float c = cos(shift);
+                return col * c + cross(k, col) * sin(shift) + k * dot(k, col) * (1.0 - c);
+            }
+
             // this is the cool stuff it pixelates stuf
             vec2 pixelate(vec2 coord, float pixelSize) {
                 return floor(coord / pixelSize) * pixelSize;
@@ -456,6 +478,7 @@
                     } else {
                         planetColor = mix(vec3(0.9, 0.8, 0.6), vec3(0.95, 0.9, 0.9), (landHeight - 0.6) * 2.5);
                     }
+                    planetColor = applyHueShift(planetColor, u_landHueShift);
 
                     } else {
                         float waterDepth = (seaLevel - elevation) / seaLevel;
@@ -466,6 +489,7 @@
                     
                         planetColor = mix(vec3(0.5, 0.9, 1.0), vec3(0.4, 0.8, 0.95), (waterDepth - 0.3) * 1.43);
                     }
+                    planetColor = applyHueShift(planetColor, u_oceanHueShift);
                     }
                     
                     // lighting (TODO: FIX IT LOOKS SO GULY)
@@ -540,7 +564,9 @@
                 
                 // Apply brightness multiplier
                 color *= u_brightness;
-                color = min(color, vec3(1.0));
+                float luma = dot(color, vec3(0.299, 0.587, 0.114));
+                color = mix(vec3(luma), color, u_saturation);
+                color = clamp(color, 0.0, 1.0);
                 
                 gl_FragColor = vec4(color, 1.0);
             }
@@ -621,18 +647,12 @@
 
             const info = {
                 earth: {
-                    title: 'Pixel‑Art Earth:',
-                    html: `A procedurally generated pixel globe—continents, oceans, clouds, lighting, pixel effect—are all results of Fractal Brownian Motion, cheap dot products + trig, and some other basic maths. I used no image textures! 
-            <br>
-            <a href="https://www.gracejin.dev/projects/grace-self-learns-computer-graphics/#july-15-2025 " style="color:#af6bb1"target="_blank" rel="noopener noreferrer">
-              Here is the full devlog ↗
-            </a>`
+                    title: 'Pixel Art Earth:',
+                    html: `No image textures at all. The landmasses are layered FBM noise (stacked octaves of smoothstep noise, each one doubled in frequency and halved in amplitude), and the ocean color is just a lerp on that same value. Clouds are a second independent FBM pass on top. Lighting is a dot product of the surface normal against a sun direction. The pixel effect snaps UV coords to a grid before sampling. That's basically it.`
                 },
                 fractal: {
                     title: 'Fractal Waves:',
-                    html: `Toggle Animation Reset Time
-Fractal Waves:
-I took apart various shader tutorials to write my own shader! These patterns are all generated with basic math, devlog will be up.`
+                    html: `Same idea as the earth, FBM from rotated sin/cos layers, each octave cranked up in frequency. The phase shifts over time which is what makes it animate. The warping comes from domain distortion: I displace the UV with a second FBM sample before feeding it into the first, which is what makes the shapes fold and curl back on themselves.`
                 }
             };
 
@@ -675,11 +695,17 @@ I took apart various shader tutorials to write my own shader! These patterns are
                 const uResolutionLocation = gl.getUniformLocation(earthProgram, 'u_resolution');
                 const uPixelSizeLocation = gl.getUniformLocation(earthProgram, 'u_pixelSize');
                 const uBrightnessLocation = gl.getUniformLocation(earthProgram, 'u_brightness');
+                const uHueShiftLocation = gl.getUniformLocation(earthProgram, 'u_landHueShift');
+                const uOceanHueShiftLocation = gl.getUniformLocation(earthProgram, 'u_oceanHueShift');
+                const uSaturationLocation = gl.getUniformLocation(earthProgram, 'u_saturation');
 
                 gl.uniform1f(uTimeLocation, currentTime);
                 gl.uniform2f(uResolutionLocation, canvas.width, canvas.height);
                 gl.uniform1f(uPixelSizeLocation, pixelSize);
                 gl.uniform1f(uBrightnessLocation, brightness);
+                gl.uniform1f(uHueShiftLocation, landHueShift);
+                gl.uniform1f(uOceanHueShiftLocation, oceanHueShift);
+                gl.uniform1f(uSaturationLocation, saturation);
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
             }
 
@@ -707,6 +733,26 @@ I took apart various shader tutorials to write my own shader! These patterns are
         function updateBrightness(value) {
             brightness = parseFloat(value);
             document.getElementById('brightnessValue').textContent = value;
+        }
+
+        function updateHueShift(value) {
+            hueShift = parseFloat(value) * Math.PI / 180.0;
+            document.getElementById('hueShiftValue').textContent = value + '°';
+        }
+
+        function updateLandHueShift(value) {
+            landHueShift = parseFloat(value) * Math.PI / 180.0;
+            document.getElementById('landHueShiftValue').textContent = value + '°';
+        }
+
+        function updateOceanHueShift(value) {
+            oceanHueShift = parseFloat(value) * Math.PI / 180.0;
+            document.getElementById('oceanHueShiftValue').textContent = value + '°';
+        }
+
+        function updateSaturation(value) {
+            saturation = parseFloat(value) / 100.0;
+            document.getElementById('saturationValue').textContent = saturation.toFixed(1);
         }
 
         // Initialize when page loads

@@ -59,7 +59,7 @@
                         style="color:#af6bb1">
                         Cornell XR Project Team </a>
                 </p> -->
-                <p>Incoming Software Engineer Intern @ LinkedIn Summer 2026. Prev. Software Engineer Intern @
+                <p>Infrastructure Software Engineer Intern @ LinkedIn Summer 2026. Prev. Software Engineer Intern @
                     Cepton. Co-Founder
                     of <a href="https://cornellxr.com/" target="_blank" style="color:#af6bb1">
                         Cornell XR Project Team </a>
@@ -83,6 +83,14 @@
                         <div class="shader-description">i like visually-appealing stuff! (to be fair, who doesn't)</div>
                     </div>
                 </div>
+                <div class="shader-thumbnail image-thumbnail" id="pbrt-log-thumb"
+                    onclick="window.open('./projects/writing-a-hardware-accelerated-pbrt-engine/index.html', '_blank')">
+                    <div class="shader-overlay">
+                        <div class="shader-title">DEVELOPER LOG - DirectX12 Path Tracer</div>
+                        <div class="shader-description">physically-based rendering with hardware ray tracing on the GPU</div>
+                    </div>
+                </div>
+
                 <div class="shader-thumbnail image-thumbnail" id="graphics-log-thumb"
                     onclick="window.open('./projects/grace-self-learns-computer-graphics/index.html', '_blank')">
                     <div class="shader-overlay">
@@ -109,6 +117,37 @@
         <h3>Projects</h3>
 
 
+
+        <div id="cs5630-pbrt" class="project-bar">
+            <div class="project-bar-bg"></div>
+            <h3 class="project-title">DIRECTX12 PHYSICALLY-BASED PATH TRACER</h3>
+            <div class="project-content">
+                <p> Every ray bounce, material evaluation, and light sample runs
+                    entirely on the GPU, written in DirectX 12 and HLSL. Implements hair BCSDF rendering, Disney-style
+                    rendering, volumetric participating
+                    media, image-based lighting with importance sampling, depth of field, etc.</p>
+                <p>Tech Stack: C++, HLSL, DirectX 12, DirectX Raytracing (DXR), Intel OIDN</p>
+                <a href="https://www.gracejin.dev/projects/writing-a-hardware-accelerated-pbrt-engine/"
+                    target="_blank">Dev Log</a>
+            </div>
+        </div>
+
+        <div id="eta-compiler" class="project-bar">
+            <div class="project-bar-bg"></div>
+            <h3 class="project-title">FULL ETA COMPILER IN C++23</h3>
+            <div class="project-content">
+                <p>A complete, from-scratch compiler for Eta, a C- like statically-typed language. The pipeline covers
+                    12 phases spanning lexing, parsing, type checking, IR translation, canonicalization, basic block
+                    formation, and SSA transformation.</p>
+                <p>Optimizations include constant folding, copy/constant propagation, and dead code elimination on SSA
+                    form. The back end performs liveness analysis, runs graph-coloring register allocator with move
+                    coalescing and spill heuristics, and emits ABI-compliant x86-64 assembly via tree-pattern-matching
+                    instruction tiling.</p>
+                <p>Tech Stack: C++23, Flex, Bison, x86-64 assembly</p>
+                <a href="https://www.gracejin.dev/projects/writing-a-compiler-in-cpp-23/" target="_blank">Dev Log</a>
+                <p><a href="https://github.com/gracejinsotrue/eta-compiler" target="_blank">Source Code</a></p>
+            </div>
+        </div>
 
         <div id="NeuroScent" class="project-bar">
             <div class="project-bar-bg"></div>
@@ -138,7 +177,7 @@
             </div>
         </div>
 
-        <div id="python-ray-tracer" class="project-bar">
+        <!-- <div id="python-ray-tracer" class="project-bar">
             <div class="project-bar-bg"></div>
             <h3 class="project-title">COOLER RAY TRACER BUT IN PYTHON</h3>
             <div class="project-content">
@@ -155,7 +194,7 @@
                 <p><a href="https://github.com/gracejinsotrue/cs4620-backwards-ray-tracing-" target="_blank">Source
                         Code</a></p>
             </div>
-        </div>
+        </div> -->
 
         <div id="cuda-ray-tracer" class="project-bar">
             <div class="project-bar-bg"></div>
