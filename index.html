@@ -87,7 +87,8 @@
                     onclick="window.open('./projects/writing-a-hardware-accelerated-pbrt-engine/index.html', '_blank')">
                     <div class="shader-overlay">
                         <div class="shader-title">DEVELOPER LOG - DirectX12 Path Tracer</div>
-                        <div class="shader-description">physically-based rendering with hardware ray tracing on the GPU</div>
+                        <div class="shader-description">physically-based rendering with hardware ray tracing on the GPU
+                        </div>
                     </div>
                 </div>
 
@@ -149,6 +150,24 @@
             </div>
         </div>
 
+        <div id="cepton-lidar" class="project-bar">
+            <div class="project-bar-bg"></div>
+            <h3 class="project-title">REAL-TIME LIDAR AR OVERLAY — CEPTON (SJ INNOVATION LAB)</h3>
+            <div class="project-content">
+                <p>Intern project at Cepton, an autonomous vehicle startup. Built a pipeline that overlays recorded
+                    real-world LiDAR sensor data onto synthetic GPU-rendered geometry in their real-time simulator,
+                    so simulations carry actual environmental depth without needing hand-authored mesh maps.</p>
+                <p>I designed a parallel rendering stage that runs a custom compute shader
+                    alongside the existing rasterizer. For every LiDAR ray fired, the shader samples both the
+                    rasterized synthetic scene and a preloaded real-world depth texture, then picks the right
+                    surface per pixel in real time. The depth data lives in a dedicated GPU texture packed into
+                    a compact 32-bit format, keeping memory overhead low and the existing render pipeline
+                    untouched. Yay!</p>
+                <p>Tech Stack: Rust, WGSL, wgpu, Cepton SDK</p>
+                <a href="https://developer.cepton.com/blog/AR_simulator" target="_blank">Blog Post</a>
+            </div>
+        </div>
+
         <div id="NeuroScent" class="project-bar">
             <div class="project-bar-bg"></div>
             <h3 class="project-title">NEUROSCENT: MIT REALITY HACK WINNER</h3>
@@ -157,7 +176,7 @@
                     connecting VR brain-computer interfaces with olfactory displays to promote users' mental
                     well-being based on biofeedback. Used OpenBCI's Galea ($30k) BCI VR Headset connected to Unity
                     with a dynamic interactive environment based off of detected alpha brain waves. Basically,
-                    hands-free exploration in a Unity Enviornment that I designed and coded up from scratch. Trying
+                    hands-free exploration in a Unity Environment that I designed and coded up from scratch. Trying
                     to turn this into a cross-university project right now!</p>
                 <p> Tech Stack: C#, Unity, OpenBCI software, Blender, Arduino</p>
                 <a href="https://devpost.com/software/neuroscent" target="_blank">Devpost</a>

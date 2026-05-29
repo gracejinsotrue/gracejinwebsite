@@ -221,6 +221,10 @@ sub {
     background-image: url('public/images/snapshot_68_denoised.png');
 }
 
+#cepton-lidar .project-bar-bg {
+    background-image: url('/images/pcap.png');
+}
+
 .shader-canvas {
     width: 100%;
     height: 100%;
