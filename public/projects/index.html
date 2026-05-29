@@ -632,17 +632,15 @@
             </div>
             <div class="content-wrapper">
                 <a href="writing-a-hardware-accelerated-pbrt-engine/" class="project-title">
-                    Physically-Based Renderer: GPU Path Tracer for CS5630 — 2nd Place
+                    DIRECTX12 PHYSICALLY-BASED PATH TRACER
                     <span class="status-badge">Completed</span>
                 </a>
-                <p class="project-description">A GPU path tracer for Cornell's CS5630 (Physically-Based Rendering) that
-                    won second place in the rendering competition. Every ray bounce, material evaluation, and light
-                    sample runs entirely on the GPU via DirectX Raytracing (DXR) with hardware-accelerated ray-triangle
-                    intersection. Final scene: a self-portrait surrounded by objects I like — 2.5 million triangles, 90+
-                    meshes, 50+ textures assembled over ~100 hours in Blender and post-processed with Intel OIDN.
-                    Implements Disney Principled BRDF, Chiang 2016 hair BCSDF, volumetric participating media,
-                    image-based lighting with importance sampling, depth of field, and stochastic alpha for
-                    hair/eyelashes.</p>
+                <p class="project-description">Every ray bounce, material evaluation, and light sample runs
+                    entirely on the GPU, written in DirectX 12 and HLSL. Implements hair BCSDF rendering, Disney-style
+                    rendering, volumetric participating media, image-based lighting with importance sampling, depth of
+                    field, etc.</p>
+                <p class="project-description">Tech Stack: C++, HLSL, DirectX 12, DirectX Raytracing (DXR), Intel OIDN
+                </p>
             </div>
         </div>
 
@@ -652,35 +650,21 @@
             </div>
             <div class="content-wrapper">
                 <a href="writing-a-compiler-in-cpp-23/" class="project-title">
-                    Full Compiler for Eta in C++23: Cornell CS 4120
+                    FULL ETA COMPILER IN C++23
                     <span class="status-badge">Completed</span>
                 </a>
-                <p class="project-description">A complete, from-scratch compiler for Eta — a statically-typed language
-                    with arrays, records, multiple return values, and a real standard library — built for Cornell's CS
-                    4120 compiler design course. The pipeline covers all 12 phases: lexing, parsing (Flex/Bison), type
-                    checking, IR translation, canonicalization, basic block formation, and SSA transformation.</p>
+                <p class="project-description">A complete, from-scratch compiler for Eta, a C- like statically-typed
+                    language. The pipeline covers
+                    12 phases spanning lexing, parsing, type checking, IR translation, canonicalization, basic block
+                    formation, and SSA transformation.</p>
                 <p class="project-description">Optimizations include constant folding, copy/constant propagation, and
-                    dead code elimination on SSA form. The back end performs liveness analysis, builds an interference
-                    graph, runs Chaitin's graph-coloring register allocator with move coalescing and spill heuristics,
-                    and emits ABI-compliant x86-64 assembly via tree-pattern-matching instruction tiling.</p>
+                    dead code elimination on SSA
+                    form. The back end performs liveness analysis, runs graph-coloring register allocator with move
+                    coalescing and spill heuristics, and emits ABI-compliant x86-64 assembly via tree-pattern-matching
+                    instruction tiling.</p>
+                <p class="project-description">Tech Stack: C++23, Flex, Bison, x86-64 assembly</p>
                 <p class="project-description"><a href="https://github.com/gracejinsotrue/eta-compiler"
                         target="_blank">Source Code</a></p>
-            </div>
-        </div>
-
-        <div class="standalone-project">
-            <div class="thumbnail">
-                <img src="writing-a-hardware-accelerated-pbrt-engine/images/pbrt.png" alt="PBRT Engine">
-            </div>
-            <div class="content-wrapper">
-                <a href="writing-a-hardware-accelerated-pbrt-engine/" class="project-title">
-                    Writing a Hardware-Accelerated PBRT (Physically-Based Ray Tracing) Engine. STARTED: 2/6/2026
-                    <span class="status-badge">Active</span>
-                </a>
-                <p class="project-description coming-soon">Semester-long project for my first master's level computer
-                    science class. This is also Cornell's first ever offering of PBRT graphics class! Also the
-                    demographic breakdown is 16 guys, 1 girl. I am the girl. Yippee! I am really looking forward to this
-                    project I like computer graphics.</p>
             </div>
         </div>
 
