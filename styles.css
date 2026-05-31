@@ -140,6 +140,10 @@ nav a:hover {
     font-size: 1.1rem;
 }
 
+.intro-text p {
+    font-size: 0.85rem;
+}
+
 /* Typography */
 h1 {
     word-wrap: break-word;
