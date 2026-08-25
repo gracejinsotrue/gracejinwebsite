@@ -1,168 +1,127 @@
 // In gallery.js
 import './gallery.css';
 document.addEventListener('DOMContentLoaded', function () {
-    // --- Slideshow Logic for All Carousels ---
-    const categorySections = document.querySelectorAll('.category-section');
-
     // Make sure particles.js is behind our content
     const particlesJS = document.getElementById('particles-js');
     if (particlesJS) {
         particlesJS.style.zIndex = "-1"; // Set lower z-index
     }
 
-    categorySections.forEach(section => {
-        const thumbnailsRow = section.querySelector('.thumbnail-row');
-        const thumbnails = section.querySelectorAll('.thumbnail');
-        const slides = section.querySelector('.slideshow-slides');
-        const slideElements = slides.querySelectorAll('.slide');
-        const prevSlide = section.querySelector('.slide-arrow.prev');
-        const nextSlide = section.querySelector('.slide-arrow.next');
-        const dotsContainer = section.querySelector('.slide-dots');
+    // --- Lightbox ---
+    const lightbox = document.querySelector('.lightbox');
+    const stage = lightbox.querySelector('.lightbox-stage');
+    const infoTitle = lightbox.querySelector('.lightbox-info h3');
+    const infoDesc = lightbox.querySelector('.lightbox-info .project-description');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const prevBtn = lightbox.querySelector('.lightbox-arrow.prev');
+    const nextBtn = lightbox.querySelector('.lightbox-arrow.next');
 
-        let currentSlide = 0;
+    // Navigation stays inside the category you clicked into
+    let currentGroup = [];
+    let currentIndex = 0;
 
-        // Create dot indicators for each slide
-        slideElements.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
+    function showItem(index) {
+        if (!currentGroup.length) return;
 
-            dot.addEventListener('click', (e) => {
-                e.stopPropagation();
-                goToSlide(index);
-            });
+        currentIndex = (index + currentGroup.length) % currentGroup.length;
+        const item = currentGroup[currentIndex];
+        const source = item.querySelector('img, video');
 
-            dotsContainer.appendChild(dot);
-        });
-
-        const dots = dotsContainer.querySelectorAll('.dot');
-
-        // Hide arrows if only one slide
-        if (slideElements.length <= 1) {
-            prevSlide.style.display = 'none';
-            nextSlide.style.display = 'none';
-            dotsContainer.style.display = 'none';
+        stage.innerHTML = '';
+        let media;
+        if (source.tagName === 'IMG') {
+            media = document.createElement('img');
+            // Grid tiles may use a compressed file; the lightbox loads the original
+            media.src = source.dataset.full || source.src;
+            media.alt = source.alt;
+        } else {
+            media = document.createElement('video');
+            media.src = source.querySelector('source').src;
+            media.muted = true;
+            media.loop = true;
+            media.autoplay = true;
+            media.controls = true;
+            media.playsInline = true;
         }
+        stage.appendChild(media);
 
-        // Function to navigate to a specific slide
-        function goToSlide(index) {
-            if (index < 0) {
-                index = slideElements.length - 1;
-            } else if (index >= slideElements.length) {
-                index = 0;
-            }
+        infoTitle.textContent = item.querySelector('figcaption h3').textContent;
+        infoDesc.textContent = item.querySelector('figcaption .project-description').textContent;
 
-            currentSlide = index;
-            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Hide arrows if the category only has one piece
+        const hasSiblings = currentGroup.length > 1;
+        prevBtn.hidden = !hasSiblings;
+        nextBtn.hidden = !hasSiblings;
+    }
 
-            // Update active dot
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentSlide);
-            });
+    function openLightbox(item) {
+        currentGroup = Array.from(item.closest('.category-section').querySelectorAll('.art-item'));
+        lightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        showItem(currentGroup.indexOf(item));
+        closeBtn.focus();
+    }
 
-            // Update active thumbnail
-            thumbnails.forEach((thumbnail, i) => {
-                thumbnail.classList.toggle('active', i === currentSlide);
-            });
-        }
+    function closeLightbox() {
+        lightbox.hidden = true;
+        stage.innerHTML = ''; // stops any playing video
+        document.body.style.overflow = '';
+    }
 
-        // Event listeners for arrow navigation
-        prevSlide.addEventListener('click', (e) => {
-            e.stopPropagation();
-            goToSlide(currentSlide - 1);
-        });
+    document.querySelectorAll('.art-item').forEach(item => {
+        item.addEventListener('click', () => openLightbox(item));
 
-        nextSlide.addEventListener('click', (e) => {
-            e.stopPropagation();
-            goToSlide(currentSlide + 1);
-        });
+        // Make items tabbable for accessibility
+        item.setAttribute('tabindex', '0');
 
-        // Thumbnail navigation
-        thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const index = parseInt(thumbnail.getAttribute('data-index'));
-                goToSlide(index);
-            });
-
-            // Make thumbnails tabbable for accessibility
-            thumbnail.setAttribute('tabindex', '0');
-
-            // Support keyboard navigation
-            thumbnail.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    const index = parseInt(thumbnail.getAttribute('data-index'));
-                    goToSlide(index);
-                }
-            });
-        });
-
-        // Touch swipe support for thumbnails row
-        let isThumbnailDragging = false;
-        let thumbnailStartX = 0;
-        let thumbnailScrollLeft = 0;
-
-        thumbnailsRow.addEventListener('mousedown', (e) => {
-            isThumbnailDragging = true;
-            thumbnailStartX = e.pageX - thumbnailsRow.offsetLeft;
-            thumbnailScrollLeft = thumbnailsRow.scrollLeft;
-            thumbnailsRow.style.cursor = 'grabbing';
-        });
-
-        thumbnailsRow.addEventListener('mousemove', (e) => {
-            if (!isThumbnailDragging) return;
-            e.preventDefault();
-            const x = e.pageX - thumbnailsRow.offsetLeft;
-            const walk = (x - thumbnailStartX) * 2; // Speed multiplier
-            thumbnailsRow.scrollLeft = thumbnailScrollLeft - walk;
-        });
-
-        thumbnailsRow.addEventListener('mouseup', () => {
-            isThumbnailDragging = false;
-            thumbnailsRow.style.cursor = 'grab';
-        });
-
-        thumbnailsRow.addEventListener('mouseleave', () => {
-            isThumbnailDragging = false;
-            thumbnailsRow.style.cursor = '';
-        });
-
-        // Touch swipe support for slides
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        slides.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        }, false);
-
-        slides.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].clientX;
-            handleSwipe();
-        }, false);
-
-        function handleSwipe() {
-            const swipeThreshold = 50; // Minimum swipe distance
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swipe left
-                goToSlide(currentSlide + 1);
-            }
-            if (touchEndX > touchStartX + swipeThreshold) {
-                // Swipe right
-                goToSlide(currentSlide - 1);
-            }
-        }
-
-        // Keyboard navigation when focused
-        section.tabIndex = 0; // Make the section focusable
-        section.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                goToSlide(currentSlide - 1);
-            } else if (e.key === 'ArrowRight') {
-                goToSlide(currentSlide + 1);
+        // Support keyboard navigation
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(item);
             }
         });
     });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', () => showItem(currentIndex - 1));
+    nextBtn.addEventListener('click', () => showItem(currentIndex + 1));
+
+    // Click the backdrop to close
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === stage) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') {
+            closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+            showItem(currentIndex - 1);
+        } else if (e.key === 'ArrowRight') {
+            showItem(currentIndex + 1);
+        }
+    });
+
+    // Touch swipe support inside the lightbox
+    let touchStartX = 0;
+
+    stage.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    }, false);
+
+    stage.addEventListener('touchend', (e) => {
+        const swipeThreshold = 50; // Minimum swipe distance
+        const touchEndX = e.changedTouches[0].clientX;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Swipe left
+            showItem(currentIndex + 1);
+        }
+        if (touchEndX > touchStartX + swipeThreshold) {
+            // Swipe right
+            showItem(currentIndex - 1);
+        }
+    }, false);
 
     // Helper function to check if element is in viewport
     function isElementInViewport(el) {
@@ -173,14 +132,14 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     }
 
-    // Add an intersection observer to lazy load videos when they come into view
-    const videos = document.querySelectorAll('video');
+    // Only play the grid videos that are actually on screen
+    const videos = document.querySelectorAll('.art-item video');
     if ('IntersectionObserver' in window) {
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const video = entry.target;
-                    video.play();
+                    video.play().catch(() => { });
                 } else {
                     const video = entry.target;
                     video.pause(); // Pause video when not in view to save resources
@@ -196,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         window.addEventListener('scroll', () => {
             videos.forEach(video => {
                 if (isElementInViewport(video)) {
-                    video.play();
+                    video.play().catch(() => { });
                 } else {
                     video.pause();
                 }
