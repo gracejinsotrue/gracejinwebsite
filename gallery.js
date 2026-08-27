@@ -7,6 +7,58 @@ document.addEventListener('DOMContentLoaded', function () {
         particlesJS.style.zIndex = "-1"; // Set lower z-index
     }
 
+    // --- Sticky section chips ---
+    const jumpNav = document.querySelector('.section-jump');
+    if (jumpNav) {
+        const siteNav = document.querySelector('body > nav');
+        const jumpLinks = Array.from(jumpNav.querySelectorAll('a'));
+        const sections = jumpLinks.map(a => document.getElementById(a.getAttribute('href').slice(1)));
+
+        const navHeight = () => (siteNav ? siteNav.getBoundingClientRect().height : 0);
+
+        // The navbar is fixed and the chip bar sticks under it, so anchor jumps
+        // need to clear both. Publish the real heights as CSS variables.
+        function syncOffsets() {
+            const isSticky = getComputedStyle(jumpNav).position === 'sticky';
+            const root = document.documentElement.style;
+            root.setProperty('--nav-h', navHeight() + 'px');
+            root.setProperty('--jump-h', (isSticky ? jumpNav.getBoundingClientRect().height : 0) + 'px');
+        }
+
+        // Highlight whichever section is under the bar right now. The line has to
+        // sit a little below where an anchor jump lands a section, or the section
+        // you just jumped to reads as still-above and the previous one stays lit.
+        function updateActive() {
+            const stuckHeight = getComputedStyle(jumpNav).position === 'sticky'
+                ? jumpNav.getBoundingClientRect().height
+                : 0;
+            const line = navHeight() + stuckHeight + 28;
+            let current = 0;
+            sections.forEach((section, i) => {
+                if (section && section.getBoundingClientRect().top <= line) current = i;
+            });
+            jumpLinks.forEach((link, i) => link.classList.toggle('active', i === current));
+        }
+
+        let queued = false;
+        function onScroll() {
+            if (queued) return;
+            queued = true;
+            setTimeout(() => {
+                queued = false;
+                updateActive();
+            }, 100);
+        }
+
+        syncOffsets();
+        updateActive();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', () => {
+            syncOffsets();
+            updateActive();
+        });
+    }
+
     // --- Lightbox ---
     const lightbox = document.querySelector('.lightbox');
     const stage = lightbox.querySelector('.lightbox-stage');
@@ -45,8 +97,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         stage.appendChild(media);
 
-        infoTitle.textContent = item.querySelector('figcaption h3').textContent;
-        infoDesc.textContent = item.querySelector('figcaption .project-description').textContent;
+        // Captions don't all carry a heading, so treat both parts as optional
+        const caption = item.querySelector('figcaption');
+        const titleEl = caption ? caption.querySelector('h3') : null;
+        const descEl = caption ? caption.querySelector('.project-description') : null;
+
+        infoTitle.textContent = titleEl ? titleEl.textContent.trim() : '';
+        infoTitle.hidden = !infoTitle.textContent;
+        infoDesc.textContent = descEl ? descEl.textContent.trim() : '';
+        infoDesc.hidden = !infoDesc.textContent;
 
         // Hide arrows if the category only has one piece
         const hasSiblings = currentGroup.length > 1;
@@ -55,7 +114,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openLightbox(item) {
-        currentGroup = Array.from(item.closest('.category-section').querySelectorAll('.art-item'));
+        // Group by grid, not by section, so a category split into sub-projects
+        // keeps each one's arrows inside that sub-project
+        const group = item.closest('.art-grid') || item.closest('.category-section');
+        currentGroup = Array.from(group.querySelectorAll('.art-item'));
         lightbox.hidden = false;
         document.body.style.overflow = 'hidden';
         showItem(currentGroup.indexOf(item));

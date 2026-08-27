@@ -46,9 +46,11 @@
     <section class="commission-banner">
         <div class="commission-content">
             <h2>Hey there! I draw and make stuff⋆˚✿</h2>
-            <p>I did painting/fine arts in high school before studying Computer Science @ Cornell. From viral CS major
+            <p>I did painting/fine arts in high school before studying Computer Science @ Cornell. In general I like to
+                make things; from viral CS major
                 animations
-                (20,000+ followers!) to random hobbyist work, to design work on campus. I take commissions, so feel free
+                (20,000+ followers!) to random hobbyist work, to design work on campus, I feel like there is no point in
+                my life if I don't make something in general. I take commissions, so feel free
                 to reach out!
             </p>
             <div class="commission-links">
@@ -69,10 +71,20 @@
         </div>
     </section>
 
+    <!-- Jump to a section -->
+    <div class="section-jump" role="navigation" aria-label="Jump to a section">
+        <a href="#animation">Animation</a>
+        <a href="#languages">Programming Languages</a>
+        <a href="#printing">3D Printing</a>
+        <a href="#illustration">Illustration</a>
+        <a href="#design">Design</a>
+        <a href="#paintings">Paintings</a>
+    </div>
+
     <main class="gallery-container">
 
         <!-- Animations Category -->
-        <section class="category-section" style="--cols: 3">
+        <section id="animation" class="category-section" style="--cols: 3">
             <h2>Animation</h2>
             <div class="art-grid">
                 <figure class="art-item">
@@ -124,7 +136,7 @@
         </section>
 
         <!--funny-->
-        <section class="category-section" style="--cols: 3">
+        <section id="languages" class="category-section" style="--cols: 3">
             <h2>Anthropomorphic Programming Languages</h2>
             <div class="art-grid">
                 <figure class="art-item">
@@ -217,8 +229,105 @@
             </div>
         </section>
 
+        <!-- 3D Printing Category -->
+        <section id="printing" class="category-section" style="--cols: 3">
+            <h2>3D Printing</h2>
+            <p class="project-description">during my software engineering internship at LinkedIn, I exploited their 3D
+                printer services to help print some of my 3D
+                models... and then I gave them away to people.</p>
+
+            <h3 class="subsection-title">A gift for my friend!</h3>
+            <div class="art-grid">
+                <figure class="art-item">
+                    <video muted loop playsinline preload="metadata" width="854" height="480">
+                        <source src="images/gallery/3dprinting/friend_turnaround_video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <figcaption>
+
+                        <p class="project-description">super cool turnaround of the finished figure</p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/friend_mesh.jpg" width="2160" height="2880"
+                        alt="Freshly printed white resin figurine still attached to its support structure"
+                        loading="lazy">
+
+                </figure>
+
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/frirend_clean.jpg" width="2160" height="2880"
+                        alt="The print sitting in a wire basket in the wash station" loading="lazy">
+                    <figcaption>
+
+                        <p class="project-description">isopropyl bath to get the uncured resin off</p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/friend_bake.jpg" width="2160" height="2880"
+                        alt="The print curing under UV light in a Formlabs curing station" loading="lazy">
+                    <figcaption>
+
+                        <p class="project-description">bake this mf</p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/friend_paint.jpg" width="2160" height="2880"
+                        alt="The figurine held in hand, hand-painted, above a palette of acrylic paint" loading="lazy">
+                    <figcaption>
+
+                        <p class="project-description">I paint these models with acrylic!</p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/friend_picture.jpg" width="2880" height="2160"
+                        alt="The finished painted figurine sitting on top of the 3D printer" loading="lazy">
+                    <figcaption>
+
+                        <p class="project-description">Done! a little figure of my friend</p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/friend_picture2.jpg" width="2880" height="2160"
+                        alt="Back view of the finished figurine showing its backpack with an NVIDIA sticker"
+                        loading="lazy">
+                    <figcaption>
+
+                        <p class="project-description">Back view! </p>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <h3 class="subsection-title">A gift for my software engineering manager</h3>
+            <div class="art-grid">
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/3d_model_front.jpg" width="2160" height="2880"
+                        alt="Painted figurine of a person standing beside the LinkedIn llama mascot in a LinkedIn t-shirt"
+                        loading="lazy">
+                    <figcaption>
+                        <p class="project-description">My LinkedIn software engineering manager's Slack profile is him
+                            and the LinkedIn llama, so I made and printed a 3D model of it as a gift. </p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/3dmodel_side.jpg" width="2880" height="2160"
+                        alt="Side view of the figurine, showing the llama's sunglasses and headphones" loading="lazy">
+                    <figcaption>
+                        <p class="project-description">side view!</p>
+                    </figcaption>
+                </figure>
+                <figure class="art-item">
+                    <img src="images/gallery/3dprinting/3dmodel_back.jpg" width="2880" height="2160"
+                        alt="Back view of the figurine, the two with an arm around each other" loading="lazy">
+                    <figcaption>
+                        <p class="project-description">back view</p>
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
         <!-- Illustration Category -->
-        <section class="category-section" style="--cols: 3">
+        <section id="illustration" class="category-section" style="--cols: 3">
             <h2>Illustration</h2>
             <div class="art-grid">
                 <figure class="art-item">
@@ -288,7 +397,7 @@
         </section>
 
         <!-- Design Category -->
-        <section class="category-section" style="--cols: 3">
+        <section id="design" class="category-section" style="--cols: 3">
             <h2>Design</h2>
             <div class="art-grid">
                 <figure class="art-item">
@@ -322,7 +431,7 @@
         </section>
 
         <!-- Paintings Category -->
-        <section class="category-section" style="--cols: 2">
+        <section id="paintings" class="category-section" style="--cols: 2">
             <h2>Paintings</h2>
             <div class="art-grid">
                 <figure class="art-item">
