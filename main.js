@@ -32,6 +32,7 @@ const HALF_PI = Math.PI / 2;
 let isHoveringCanvas = false;
 let canvasContainer;
 let isMobile = false;
+let cubeHidden = false;
 
 const faceTextures = {
     right: null,  // +X 
@@ -163,6 +164,10 @@ function setupCanvasContainer() {
     }
 
     canvasContainer.appendChild(renderer.domElement);
+
+    // Set the right opacity before the first paint rather than waiting for a
+    // scroll event that may never come
+    updateCubeVisibility();
 }
 
 function setupHoverDetection() {
@@ -787,7 +792,7 @@ function snapCubeToGrid(cube) {
 function animate() {
     requestAnimationFrame(animate);
 
-    if (allCubes) {
+    if (!cubeHidden && allCubes) {
         allCubes.forEach(cube => {
             if (cube.material) {
                 const materials = Array.isArray(cube.material) ? cube.material : [cube.material];
@@ -805,10 +810,12 @@ function animate() {
         });
     }
 
-    for (const [face, texture] of Object.entries(faceTextures)) {
-        if (texture instanceof THREE.VideoTexture && texture.image instanceof HTMLVideoElement) {
-            if (texture.image.paused) {
-                texture.image.play().catch(e => console.log("Video play error:", e));
+    if (!cubeHidden) {
+        for (const [face, texture] of Object.entries(faceTextures)) {
+            if (texture instanceof THREE.VideoTexture && texture.image instanceof HTMLVideoElement) {
+                if (texture.image.paused) {
+                    texture.image.play().catch(e => console.log("Video play error:", e));
+                }
             }
         }
     }
@@ -824,6 +831,11 @@ function animate() {
         cubeGroup.rotation.y += Math.sin(floatTime * 0.5) * floatRotationSpeed * 0.5;
         cubeGroup.rotation.x += Math.cos(floatTime * 0.3) * floatRotationSpeed * 0.25;
     }
+
+    // Nothing of the cube is on screen, so skip the draw call and the video
+    // texture uploads it drives. That is the single biggest main-thread cost on
+    // this page, and it was running the whole time you were reading projects.
+    if (cubeHidden) return;
 
     renderer.render(scene, camera);
 }
@@ -877,22 +889,79 @@ function solve() {
     startNextMove();
 }
 
-window.addEventListener('scroll', function () {
-    if (!document.getElementById('canvas-container') || isMobile) return;
+// The cube is fixed-position, so it has to fade out once home scrolls away.
+// This has to be callable outside of a scroll event: landing straight on
+// #projects, or reloading partway down the page, never fires one, and the cube
+// would sit on top of the projects section at full opacity.
+// Reading offsetHeight inside the scroll handler forced a reflow on every
+// scroll event. It only changes on resize, so measure it there instead.
+let cachedHomeHeight = 0;
+let lastAppliedOpacity = -1;
 
-    const homeHeight = document.getElementById('home').offsetHeight;
-    const scrollY = window.scrollY;
+function measureHome() {
+    const home = document.getElementById('home');
+    cachedHomeHeight = home ? home.offsetHeight : 0;
+}
+
+function updateCubeVisibility() {
+    const container = document.getElementById('canvas-container');
+    if (!container) return;
+
+    // On mobile the cube sits inline in the page flow and scrolls away by
+    // itself, so it must never be hidden. It also has to be actively restored:
+    // resizing down from desktop while it was faded out would otherwise leave
+    // the hidden inline styles stuck on it.
+    if (isMobile) {
+        if (cubeHidden || lastAppliedOpacity !== 1) {
+            cubeHidden = false;
+            lastAppliedOpacity = 1;
+            container.style.opacity = '1';
+            container.style.pointerEvents = 'auto';
+            container.style.visibility = 'visible';
+        }
+        return;
+    }
+
+    if (!cachedHomeHeight) measureHome();
+    if (!cachedHomeHeight) return;
 
     // start fading earlier - when user scrolls just like 5%  more of home height
-    const fadeStartPoint = homeHeight * 0.04;
+    const fadeStartPoint = cachedHomeHeight * 0.04;
+    const scrollY = window.scrollY;
+
+    let opacity = 1;
     if (scrollY > fadeStartPoint) {
         // calculate fade progress (0 to 1) over the remaining 80% of home height
-        const fadeProgress = Math.min((scrollY - fadeStartPoint) / (homeHeight * 0.6), 1);
-        const opacity = 1 - fadeProgress;
-        document.getElementById('canvas-container').style.opacity = opacity.toString();
-    } else {
-        document.getElementById('canvas-container').style.opacity = '1';
+        const fadeProgress = Math.min((scrollY - fadeStartPoint) / (cachedHomeHeight * 0.6), 1);
+        opacity = 1 - fadeProgress;
     }
+
+    if (opacity === lastAppliedOpacity) return;
+    lastAppliedOpacity = opacity;
+    container.style.opacity = opacity.toString();
+
+    // Fully faded is still hit-testable and still painting, so it would keep
+    // swallowing clicks over the projects section. Take it out of the page.
+    cubeHidden = opacity <= 0.01;
+    container.style.pointerEvents = cubeHidden ? 'none' : 'auto';
+    container.style.visibility = cubeHidden ? 'hidden' : 'visible';
+}
+
+window.addEventListener('scroll', updateCubeVisibility, { passive: true });
+
+window.addEventListener('resize', function () {
+    // This listener is registered before onWindowResize, so refresh isMobile
+    // here rather than relying on that one having run first
+    checkMobileLayout();
+    measureHome();
+    updateCubeVisibility();
+});
+
+// Browsers restore scroll position after DOMContentLoaded, and anchor jumps
+// land after layout, so re-check once everything has settled
+window.addEventListener('load', function () {
+    measureHome();
+    updateCubeVisibility();
 });
 
 // initialize when home section exists

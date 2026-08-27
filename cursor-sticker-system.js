@@ -26,12 +26,14 @@ function initCursorSystem() {
     customCursor = document.getElementById('customCursor');
     stickerContainer = document.getElementById('stickerContainer');
 
+    // Writing left/top forced a layout pass on every single mousemove, which is
+    // what made the dot trail behind the pointer. A transform is compositor-only
+    // - no layout, no repaint of anything else - and the browser already
+    // coalesces mousemove to one per frame, so this runs at most once a frame.
     document.addEventListener('mousemove', (e) => {
-        if (customCursor && !isMobileDevice) {
-            customCursor.style.left = e.clientX + 'px';
-            customCursor.style.top = e.clientY + 'px';
-        }
-    });
+        if (!customCursor || isMobileDevice) return;
+        customCursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+    }, { passive: true });
 
     document.addEventListener('mousedown', () => {
         if (customCursor && !isMobileDevice) customCursor.classList.add('clicking');
