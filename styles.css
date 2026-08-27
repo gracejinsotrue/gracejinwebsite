@@ -113,10 +113,18 @@ nav a:hover {
     margin: 0 auto;
 }
 
-/* Home Section */
-# Make all hyperlinks purple a[href] {
+/* Make all hyperlinks purple.
+   Left off on purpose: the "#" in front of this comment used to be a markdown
+   "#", which is not valid CSS, so the parser threw the rule away and the site
+   has never actually run it. Switching it on now would beat every link colour
+   with !important - the #af6bb1 nav and gallery links, the #8a2be2 project
+   links, the grey footer links and their white hover. Uncomment only if you
+   really do want every link on the site to be plain purple. */
+/* a[href] {
     color: purple !important;
-}
+} */
+
+/* Home Section */
 
 #home {
     min-height: 65vh;
