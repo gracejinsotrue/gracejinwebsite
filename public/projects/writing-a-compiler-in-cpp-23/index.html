@@ -8,6 +8,16 @@
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap" rel="stylesheet">
     <style>
+        /* for all hyperlinks (#af6bb1) */
+        a[href] {
+            color: #af6bb1 !important;
+        }
+
+        a[href]:hover {
+            color: #af6bb1;
+            text-decoration: underline;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -89,23 +99,317 @@
             margin-bottom: 1rem;
         }
 
+        .project-subtitle {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
         p {
             color: #ccc;
             line-height: 1.8;
         }
 
-        .coming-soon {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: #1a1a1a;
+        section {
+            margin-bottom: 2.5rem;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            background-color: #1a1a1a;
+            border-radius: 0.5rem;
             border-left: 3px solid #af6bb1;
-            border-radius: 5px;
-            margin: 2rem 0;
         }
 
-        .coming-soon h2 {
+        section h2 {
             color: #af6bb1;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        section h3 {
+            color: #d79bd8;
+            font-size: 1.08rem;
+            font-weight: 500;
+            margin-top: 2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .lede {
+            color: #bdbdbd;
+            border-left: 2px solid #4a3a4b;
+            padding-left: 1rem;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .toc {
+            background: #2a2a2a;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            border-left: 3px solid #af6bb1;
+        }
+
+        .toc h3 {
+            color: #af6bb1;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            margin: 0;
+            padding-left: 0;
+            list-style-type: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #af6bb1;
+            text-decoration: underline;
+        }
+
+        .toc .toc-num {
+            color: #af6bb1;
+            font-family: 'Courier New', monospace;
+            margin-right: 0.6rem;
+        }
+
+        .back-to-top {
+            text-align: right;
+            margin-top: 1.5rem;
+        }
+
+        .back-to-top a {
+            color: #af6bb1;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-to-top a:hover {
+            text-decoration: underline;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.55;
+        }
+
+        /* --- pipeline diagram --- */
+        .pipeline {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .stage {
+            display: grid;
+            grid-template-columns: 2.2rem 1fr;
+            gap: 0.75rem;
+            align-items: baseline;
+            padding: 0.6rem 0.9rem;
+            background: #202020;
+            border-left: 2px solid #af6bb1;
+            border-radius: 3px;
+        }
+
+        .stage.off {
+            border-left-color: #4a4a4a;
+            opacity: 0.72;
+        }
+
+        .stage .n {
+            color: #af6bb1;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+        }
+
+        .stage .what {
+            color: #ddd;
+            font-size: 0.95rem;
+        }
+
+        .stage .form {
+            display: block;
+            color: #777;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+            margin-top: 0.15rem;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.25rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.88rem;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 0.55rem 0.75rem;
+            text-align: left;
+            vertical-align: top;
+            color: #ccc;
+        }
+
+        th {
+            background: #262026;
+            color: #d79bd8;
+            font-weight: 500;
+        }
+
+        ul.body-list,
+        ol.body-list {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        ul.body-list li,
+        ol.body-list li {
+            margin-bottom: 0.4rem;
+        }
+
+        strong {
+            color: #e8d3e9;
+            font-weight: 500;
+        }
+
+        code {
+            background: #232323;
+            border: 1px solid #333;
+            border-radius: 3px;
+            padding: 0.05rem 0.3rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.86rem;
+            color: #e8d3e9;
+        }
+
+        .note {
+            background: #2a2020;
+            border-left: 3px solid #ff69b4;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            color: #ccc;
+        }
+
+
+        /* --- inline pdf page viewer --- */
+        .pdf-viewer {
+            margin: 1.5rem 0;
+            background: #202020;
+            border: 1px solid #333;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .pdf-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 0.6rem 0.9rem;
+            background: #262026;
+            border-bottom: 1px solid #333;
+        }
+
+        .pdf-title {
+            color: #d79bd8;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .pdf-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pdf-controls button {
+            background: #1a1a1a;
+            color: #af6bb1;
+            border: 1px solid #4a3a4b;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            line-height: 1;
+            padding: 0.35rem 0.7rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .pdf-controls button:hover:not(:disabled) {
+            background: rgba(175, 107, 177, 0.15);
+        }
+
+        .pdf-controls button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .pdf-count {
+            color: #999;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+            min-width: 6.5rem;
+            text-align: center;
+        }
+
+        .pdf-stage {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            background: #161616;
+        }
+
+        .pdf-stage img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 72vh;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .pdf-caption {
+            padding: 0.7rem 0.9rem;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 560px) {
+            .pdf-toolbar {
+                justify-content: center;
+            }
         }
 
         footer {
@@ -133,18 +437,941 @@
         </div>
     </nav>
 
-    <main>
-        <h1>Writing a Compiler in C++ 23</h1>
+    <main id="top">
+        <h1>Writing a Compiler in C++</h1>
+        <p class="project-subtitle">A from-scratch compiler in C++ for Eta, a small C-like statically typed language.
+        </p>
 
-        <div class="coming-soon">
-            <h2>Coming Soon</h2>
-            <p>This page is currently under development. Check back later!</p>
+        <div class="note">
+            This project was a team project for CS 4120 at Cornell, which is a semester-long compiler design course,
+            where with minimal scaffolding you must write a functioning compiler from scratch in the language of your
+            choice.
+            Notably, our compiler was top 5 compilers for that class and the only C++ compiler that made the list (we
+            are group 25):
+            <a href="https://www.cs.cornell.edu/courses/cs4120/2026sp/project/bakeoff/" target="_blank"
+                rel="noopener noreferrer">https://www.cs.cornell.edu/courses/cs4120/2026sp/project/bakeoff/</a>
+            <p>Source
+                code: <a href="https://github.com/gracejinsotrue/eta-compiler" target="_blank"
+                    rel="noopener noreferrer">github.com/gracejinsotrue/eta-compiler</a>
+            </p>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2026 Grace Jin. All rights reserved.</p>
-    </footer>
+        <section id="overview">
+            <h2>What does a compiler actually have to do?</h2>
+            <p>A compiler takes a text file that a person wrote and produces machine instructions that a processor can
+                execute. In general between the two is large, as source code has names, nesting, types, infinte
+                variables etc. A processor has bytes, address space, 14 (give or take) usable registers. A compiler
+                closes the gap between the two in a sequence of small steps, where each step solves one particular
+                problem
+
+            </p>
+            <p>That sequence is the pipeline written below where each stage takes one representation of the program and
+                produces
+                another one that is slightly closer to the machine. </p>
+
+            <h3>The language being compiled</h3>
+            <p>Eta is a small statically typed language with C-like syntax such as <code>int</code> and
+                <code>bool</code>,
+                arbitrarily nested arrays, functions that can return <em>more than one value</em>,
+                <code>if</code> and <code>while</code>, and a module system built on separate interface files. The
+                full language specification is below and what they gave us to work with when implementing compiler for
+                this language.
+            </p>
+
+            <figure class="pdf-viewer" id="spec-viewer">
+                <div class="pdf-toolbar">
+                    <span class="pdf-title">Eta Language Specification</span>
+                    <span class="pdf-controls">
+                        <button type="button" id="spec-prev" aria-controls="spec-page" aria-label="Previous page"
+                            disabled>&#8592; prev</button>
+                        <span class="pdf-count">page <span id="spec-cur">1</span> of 7</span>
+                        <button type="button" id="spec-next" aria-controls="spec-page" aria-label="Next page">next
+                            &#8594;</button>
+                    </span>
+                </div>
+                <div class="pdf-stage">
+                    <img id="spec-page" src="images/spec/page-1.png" width="1275" height="1651"
+                        alt="Eta Language Specification, page 1 of 7">
+                </div>
+                <figcaption class="pdf-caption">
+                    This was deadass our source of truth when writing the compiler, especially for lexing, parsing, type
+                    checking. <a href="language.pdf" target="_blank" rel="noopener noreferrer">Open the original PDF</a>
+                </figcaption>
+            </figure>
+
+            <!-- 
+            <h3>The pipeline</h3>
+            <div class="pipeline">
+                <div class="stage">
+                    <span class="n">01</span><span class="what">Lexical analysis<span class="form">characters to
+                            tokens</span></span>
+                </div>
+                <div class="stage">
+                    <span class="n">02</span><span class="what">Parsing<span class="form">tokens to a syntax
+                            tree</span></span>
+                </div>
+                <div class="stage">
+                    <span class="n">03</span><span class="what">Type checking<span class="form">syntax tree to a typed,
+                            name-resolved tree</span></span>
+                </div>
+                <div class="stage">
+                    <span class="n">04</span><span class="what">IR translation<span class="form">typed tree to
+                            intermediate representation</span></span>
+                </div>
+                <div class="stage">
+                    <span class="n">05</span><span class="what">Canonicalization<span class="form">nested IR to a flat
+                            statement list</span></span>
+                </div>
+                <div class="stage">
+                    <span class="n">06</span><span class="what">Basic blocks and trace scheduling<span
+                            class="form">statements to an ordered control flow graph</span></span>
+                </div>
+                <div class="stage">
+                    <span class="n">07</span><span class="what">Constant folding<span class="form">IR to smaller
+                            IR</span></span>
+                </div>
+                <div class="stage off">
+                    <span class="n">08</span><span class="what">SSA construction<span class="form">to single assignment
+                            form</span></span>
+                </div>
+                <div class="stage off">
+                    <span class="n">09</span><span class="what">Dead code elimination<span class="form">remove unused
+                            computation</span></span>
+                </div>
+                <div class="stage off">
+                    <span class="n">10</span><span class="what">Copy and constant propagation<span class="form">remove
+                            redundant names</span></span>
+                </div>
+                <div class="stage off">
+                    <span class="n">11</span><span class="what">Instruction selection<span class="form">IR to abstract
+                            assembly</span></span>
+                </div>
+                <div class="stage off">
+                    <span class="n">12</span><span class="what">Register allocation<span class="form">unlimited
+                            variables to real registers</span></span>
+                </div>
+                <div class="stage off">
+                    <span class="n">13</span><span class="what">Assembly emission<span class="form">to an x86-64 .s
+                            file</span></span>
+                </div>
+            </div>
+        -->
+
+            <section id="lexer">
+                <h2>01 · Lexical analysis</h2>
+                <p> A source file arrives as a stream of characters. The lexer scans this left to right and
+                    groups characters into
+                    tokens such as the identifier <code>factorial</code>, the keyword <code>while</code>, the
+                    two-character
+                    operator <code>&lt;=</code>, the number <code>42</code>, etc., and whitespace and comments are
+                    thrown
+                    away.
+                    Everything after this point works on tokens from the lexer.</p>
+
+                <h3>Eta has two kinds of file, one set of rules</h3>
+                <p>Eta has implementation files, which contain function bodies, and interface files, which only declare
+                    signatures for other files to import. They need different grammars, but building two entire parsers
+                    to
+                    handle a difference that small would be wasteful. Instead the lexer emits a single invented
+                    token at the very start of the file,
+                    which
+                    says which kind of file this is, and the grammar branches once on that first token and then
+                    proceeds. This
+                    is
+                    a small trick that saves duplicating a few hundred lines.</p>
+
+                <h3>Literals get a state machine instead of some big regex</h3>
+                <p>You could theoretically match a string literal with a single regular expression, but a problem is
+                    what happens when
+                    the
+                    match fails; you'd get one generic error for every possible mistake. Therefore character and string
+                    literals
+                    are
+                    are
+                    scanned by a small state machine with its own modes instead.</p>
+                <h3>Counting columns correctly</h3>
+                <p>Every error message carries a line and column, and those get compared character for character against
+                    a
+                    reference implementation. Two cases are easy to get
+                    wrong: A
+                    tab does not advance one column, it advances to the next tab stop 2. a multi-byte UTF-8 character
+                    is
+                    several bytes but only one column, so the continuation bytes of a character have to be skipped when
+                    counting.</p>
+                <div class="code-block">
+                    <pre>for each byte in the matched text:
+    if byte is '\n':   line++, column = 1
+    elif byte is '\t': column = next multiple of 4, plus 1
+    elif byte is not a UTF-8 continuation byte:
+        column++       // continuation bytes belong to a character already counted</pre>
+                </div>
+                <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+            </section>
+            <!--
+        <section id="parser">
+            <h2>02 · Parsing</h2>
+            <p class="lede">Tokens come out of the lexer as a flat sequence, but programs are nested: a function
+                contains a loop, which contains an <code>if</code>, whose condition contains an expression, which
+                contains more expressions. The parser applies the language's grammar rules to recover that structure,
+                producing an abstract syntax tree. If the tokens cannot be arranged according to any rule, that is a
+                syntax error.</p>
+            <p>The parser is generated by bison from a grammar specification. It reads the token stream once, left to
+                right, deciding at each step whether to consume another token or to reduce what it has already seen into
+                a tree node. This means parsing is linear time, but it also means the grammar has to be unambiguous
+                enough that one token of lookahead is always enough to decide.</p>
+
+            <h3>Precedence instead of a stack of grammar rules</h3>
+            <p>The classic way to make <code>2 + 3 * 4</code> parse as <code>2 + (3 * 4)</code> is to write a separate
+                grammar rule for each level of precedence, so expressions are built from terms, which are built from
+                factors, and so on. It works, but it produces a lot of rules that exist only to encode ordering.</p>
+            <p>The alternative, used here, is to write one rule for expressions and declare the precedence and
+                associativity separately:</p>
+            <div class="code-block">
+                <pre>%left OR
+%left AND
+%left EQ NEQ
+%left LT LEQ GEQ GT
+%left PLUS MINUS
+%left TIMES HIGH_MULT DIV MOD
+%precedence NOT UMINUS
+%left LPAREN LBRACKET
+%nonassoc "lower_than_else"
+%nonassoc ELSE
+
+%expect 0</pre>
+            </div>
+            <p>Lower in the list binds tighter, and <code>%left</code> means that equal precedence groups to the left,
+                so <code>a - b - c</code> is <code>(a - b) - c</code>.</p>
+            <p>The last two lines before <code>%expect 0</code> handle a famous ambiguity called the dangling else. In
+                <code>if a if b x else y</code>, the <code>else</code> could attach to either <code>if</code>, and the
+                grammar alone cannot tell you which. Giving an <code>if</code> without an <code>else</code> a lower
+                precedence than the <code>else</code> token itself resolves it in favour of the nearer
+                <code>if</code>, which is what every C-like language does.
+            </p>
+            <p><code>%expect 0</code> then declares that the grammar must contain <em>zero</em> unresolved ambiguities.
+                Parser generators normally resolve conflicts silently using default rules, which means an ambiguity
+                introduced a year later gets quietly papered over and shows up as a mysterious parse. Setting this to
+                zero turns that into a build failure.</p>
+
+            <h3>Error messages in the reader's vocabulary</h3>
+            <p>Internally the parser knows tokens by names like <code>PLUS</code> and <code>LBRACKET</code>. A person
+                reading an error message has never seen those names; they wrote <code>+</code> and <code>[</code>. So
+                there is a small mapping back from internal names to actual source text, used only when building error
+                messages. It is a trivial piece of code that makes a disproportionate difference when you are the one
+                staring at the output.</p>
+
+            <h3>The tree, and how everything else walks it</h3>
+            <p>The output is a tree of about thirty node types, grouped into expressions, statements, assignment targets
+                and written type annotations. Every stage after this one is written as a <em>visitor</em>: rather than
+                each stage re-implementing how to walk a tree, the traversal is defined once, and a stage supplies only
+                the code that runs at each node type it cares about. The type checker, the IR translator and the tree
+                printer are all the same shape of object with different bodies.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="typecheck">
+            <h2>03 · Type checking</h2>
+            <p class="lede">The grammar only says what shape a program has, not whether it means anything.
+                <code>true + 1</code> parses perfectly and is nonsense. So does calling a function with the wrong number
+                of arguments, or using a variable that was never declared. Type checking is the stage that walks the
+                tree, works out the type of every expression, and rejects the combinations that are not allowed. It is
+                also where names get resolved, which is why it produces the symbol tables that the next stage needs.
+            </p>
+
+            <h3>The types</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>What it is for</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Int</code>, <code>Bool</code></td>
+                            <td>The two primitives. Character literals are just integers.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Array</code></td>
+                            <td>Holds an element type, so arrays nest arbitrarily. Strings are arrays of integers.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Tuple</code></td>
+                            <td>Several values at once, used for multiple return values. A function that returns nothing
+                                has an empty tuple as its return type.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Function</code></td>
+                            <td>A parameter list plus a return type.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Any</code></td>
+                            <td>A placeholder for a type that is not known yet, explained below.</td>
+                        </tr>
+                        <tr>
+                            <td><code>Unit</code>, <code>Void</code></td>
+                            <td>Not value types. These are the types of <em>statements</em>, explained below.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Giving statements types, and getting return checking for free</h3>
+            <p>This is the most interesting idea in the stage. Every language has to answer the question "does every
+                path through this function actually return a value?" and the obvious way to answer it is a separate
+                analysis that walks the control flow looking for paths that fall off the end.</p>
+            <p>Instead, statements are given types too. <code>Unit</code> means execution can continue past this
+                statement. <code>Void</code> means it cannot, because the statement always transfers control away.
+                Assign those according to a few rules and the return check falls out on its own:</p>
+            <ul class="body-list">
+                <li>A <code>return</code> is always <code>Void</code>, since nothing after it runs.</li>
+                <li>A block takes the type of its <em>last</em> statement. If any earlier statement is
+                    <code>Void</code>, then the statement after it can never be reached, which is reported as an
+                    unreachable statement error. Dead code detection comes along for free.
+                </li>
+                <li>An <code>if</code> is <code>Void</code> only when <em>both</em> branches are. An <code>if</code>
+                    with no <code>else</code> is always <code>Unit</code>, since the condition might be false.</li>
+                <li>A <code>while</code> is always <code>Unit</code>, even if its body always returns, because the guard
+                    might be false on the very first check and the body might never run at all. This is exactly why a
+                    function whose only <code>return</code> sits inside a loop is correctly rejected.</li>
+            </ul>
+            <p>And then "every path returns" is simply: a function that declares a return type, whose body is not
+                <code>Void</code>, is a missing return error. No separate pass, no control flow graph, just one more
+                type rule.
+            </p>
+
+            <h3>The empty array problem</h3>
+            <p>An array literal normally gets its type from its elements. <code>{1, 2, 3}</code> is obviously
+                <code>int[]</code>. But <code>{}</code> has no elements to look at, and it still has to be assignable to
+                an <code>int[]</code> variable, or a <code>bool[][]</code> one, or anything else.
+            </p>
+            <p>So it gets the type "array of <code>Any</code>", where <code>Any</code> is a placeholder that has not
+                been pinned down. A unification step resolves <code>Any</code> against the first concrete type it meets.
+                That makes <code>{}</code> assignable to any array type, and makes a literal that mixes an empty array
+                with an <code>int[]</code> resolve to <code>int[]</code> overall.</p>
+
+            <h3>Scopes, and looking ahead at names</h3>
+            <p>Scopes are a tree of symbol tables with parent pointers. Entering a block, a branch, a loop body or a
+                function opens a child table; looking up a name walks up the chain until it finds one. Leaving a scope
+                is just moving the pointer back, so nothing has to be undone.</p>
+            <p>The program itself is checked in two passes rather than one. The first pass registers every top-level
+                function signature and global variable without looking inside any body. Only the second pass descends
+                into bodies. This is what makes forward references and mutual recursion work: by the time the body of
+                <code>f</code> is checked and it calls <code>g</code>, <code>g</code>'s signature is already known even
+                though <code>g</code> is defined further down the file.
+            </p>
+            <p>Imports work similarly. <code>use io</code> loads and parses the corresponding interface file, and caches
+                it, so a diamond of imports does not re-read the same file repeatedly. Those imported signatures live in
+                a separate table from the current file's own declarations, which makes two specific errors easy to
+                catch: two interface files declaring the same name with different signatures, and a function whose
+                definition disagrees with the interface that declared it.</p>
+
+            <h3>Assigning several things at once</h3>
+            <p>There are two forms. One function call on the right feeding several targets on the left, as in
+                <code>x: int, y: bool = f()</code>, where the number of values the function returns has to match the
+                number of targets. Or an equal number of expressions on each side, as in <code>x, y = y, x</code>,
+                checked in pairs. Each target can independently be a new declaration, an existing variable, an array
+                element, or <code>_</code>, which is a wildcard that accepts any type and discards the value.
+            </p>
+            <p>There is a subtlety that needed its own mechanism. In <code>x: int, y: int = 1, 2</code>, the names being
+                declared must not become visible to each other while the statement is still being checked, and
+                declaring the same name twice in one statement has to be an error. So new declarations are staged in a
+                temporary side table and only merged into the real scope once the whole statement has checked.</p>
+
+            <h3>The most negative integer</h3>
+            <p>A signed 64-bit integer ranges from <code>-9223372036854775808</code> to
+                <code>9223372036854775807</code>. Notice that the negative end is one larger in magnitude. There is no
+                negative literal in the grammar, so <code>-9223372036854775808</code> is unary minus applied to the
+                literal <code>9223372036854775808</code>, which on its own is out of range and must be rejected.
+            </p>
+            <p>So negation applied directly to a numeric literal is special cased to allow exactly that one extra value,
+                while a bare <code>9223372036854775808</code> anywhere else is still an error, and
+                <code>-9223372036854775809</code> is still an error.
+            </p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="irgen">
+            <h2>04 · IR translation</h2>
+            <p class="lede">Here is where the front end ends and the back end begins. Up to now the program has been a
+                tree that mirrors what the programmer wrote. From here it becomes an intermediate representation: a tiny
+                made-up instruction set that is explicit about memory, control flow and calling conventions, but not
+                tied
+                to any real processor.</p>
+            <p>Why bother with a middle language at all? Because optimizations written against source constructs would
+                have to handle every syntactic form separately, and optimizations written against x86 would have to be
+                rewritten for every other target. An IR with about a dozen node types means each optimization is written
+                once, against something small.</p>
+            <p>The node types are roughly: constants, temporaries, memory loads, labels, and binary operations for
+                expressions; move, jump, conditional jump, label, call and return for statements. The critical
+                simplification is <strong>temporaries</strong>: at this level the machine is pretended to have an
+                unlimited supply of variables, and every intermediate value gets a fresh one. Reconciling that fiction
+                with fourteen real registers is deferred all the way to stage 13, which is the entire reason the middle
+                of the compiler is pleasant to work on.</p>
+
+            <h3>Encoding types into names</h3>
+            <p>Because files are compiled separately, the linker matches functions up by name alone. If names were just
+                <code>parseInt</code>, then two files disagreeing about its signature would link successfully and crash
+                at runtime. So types are encoded into the emitted name: integers become <code>i</code>, booleans
+                <code>b</code>, arrays an <code>a</code> followed by their element type, and tuples a <code>t</code>
+                followed by a count and the element types. A mismatch becomes a link error instead of a runtime one.
+            </p>
+
+            <h3>Short-circuit operators are control flow, not arithmetic</h3>
+            <p><code>&amp;</code> and <code>|</code> cannot be compiled like other binary operators, because the right
+                operand must not be evaluated at all when the left one already settles the answer. If the right operand
+                calls a function or indexes an array, evaluating it anyway is not a performance problem, it is a
+                correctness problem.</p>
+            <p>So there is a second translation function that compiles a boolean expression <em>directly into
+                    branches</em>
+                toward a "true" destination and a "false" destination, rather than into a value:</p>
+            <div class="code-block">
+                <pre>C[[ !e,      true, false ]]  =  C[[ e, false, true ]]        // just swap the destinations
+C[[ e1 & e2, true, false ]]  =  C[[ e1, next, false ]] ; next: ; C[[ e2, true, false ]]
+C[[ e1 | e2, true, false ]]  =  C[[ e1, true, next  ]] ; next: ; C[[ e2, true, false ]]
+C[[ e,       true, false ]]  =  conditional jump on the value of e             // fallback</pre>
+            </div>
+            <p>Read the second line as: to evaluate <code>e1 &amp; e2</code>, first evaluate <code>e1</code>; if it is
+                false jump straight to the false destination without touching <code>e2</code> at all; otherwise fall
+                through and let <code>e2</code> decide.</p>
+            <p>Notice that <code>!e</code> costs literally nothing. It compiles to no instructions; it just exchanges
+                the two destination labels. The same function is used for <code>if</code> conditions, <code>while</code>
+                guards, and for <code>&amp;</code> and <code>|</code> appearing in ordinary value position, where the
+                two destinations are labels that move <code>1</code> or <code>0</code> into a temporary. Writing it once
+                means the value and control-flow cases cannot drift apart.</p>
+
+            <h3>How arrays are laid out, and why it matters everywhere</h3>
+            <p>An array value is a pointer to its first element. Its length is stored in the machine word
+                <em>immediately before</em> that, at offset -8. This one decision propagates through the whole back
+                end:
+            </p>
+            <ul class="body-list">
+                <li><code>length(a)</code> becomes a single load from <code>a - 8</code>. No separate length object, no
+                    indirection.</li>
+                <li>Allocating an array of <code>n</code> elements requests <code>n*8 + 8</code> bytes, writes
+                    <code>n</code> at the front, and returns a pointer to eight bytes past the start.
+                </li>
+                <li>String literals are placed in the data section with their length as the first word, so a string
+                    constant is just "address of the literal, plus eight" and is completely indistinguishable at runtime
+                    from a heap-allocated array. No special case anywhere downstream.</li>
+            </ul>
+
+            <h3>Bounds checking, and one comparison doing two jobs</h3>
+            <p>Every array index emits a check. The array and the index are each evaluated into a temporary exactly
+                once, which matters because <code>a[f()]</code> must not call <code>f</code> twice:</p>
+            <div class="code-block">
+                <pre>ta &lt;- the array expression
+ti &lt;- the index expression
+tn &lt;- load from (ta - 8)                 // the length, from the header word
+jump to ok if ti &lt; tn, unsigned          // note: unsigned comparison
+err: call the out-of-bounds handler
+ok:  load from (ta + ti*8)</pre>
+            </div>
+            <p>The comparison is deliberately <strong>unsigned</strong>. A negative index, reinterpreted as an unsigned
+                number, becomes enormous, so it fails the same single test that catches an index past the end. One
+                comparison catches both failure modes instead of two.</p>
+
+            <h3>Where the generated code gets big</h3>
+            <p>Two source constructs produce far more instructions than their size suggests.</p>
+            <p><strong>Multi-dimensional array declarations.</strong> Declaring <code>a: int[n][m]</code> allocates the
+                outer array, then loops over it allocating each inner array and storing its pointer. Every dimension
+                expression is evaluated up front, before any loop begins, so that a size expression with side effects
+                runs exactly once rather than once per row.</p>
+            <p><strong>Array concatenation.</strong> <code>a + b</code> expands into an entire inline routine: read both
+                lengths from their header words, allocate a buffer big enough for the sum, write the new length, then
+                two counted copy loops. This is the single largest expansion in the translator, and it is worth knowing
+                that concatenating strings in this language is genuinely expensive rather than free.</p>
+
+            <h3>Calls</h3>
+            <p>Arguments arrive in specially named temporaries and are immediately copied into ordinary ones at the top
+                of the function. That looks like a wasted copy, but it means the special argument locations stop being
+                occupied almost immediately, which gives the register allocator far more freedom later. Return values
+                come back the same way, through specially named temporaries, so a function returning three values
+                becomes one call instruction followed by three copies. That is precisely what makes destructuring
+                assignment straightforward to compile.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="canon">
+            <h2>05 · Canonicalization</h2>
+            <p class="lede">The IR coming out of translation is still tree shaped, and it allows two awkward things:
+                statements nested inside expressions, and function calls nested inside expressions. Both hide side
+                effects in places where the order they happen in is implicit rather than written down. This stage
+                flattens all of that into a plain list of statements containing only simple expressions, with every call
+                pulled out to the top level.</p>
+            <p>The implementation is neat. Every piece of the tree is translated into a pair: the list of statements
+                that
+                had to be pulled out of it, and the simple expression that remains. Combining two subtrees is then just
+                concatenating their statement lists and keeping the second expression. The whole pass is that one idea
+                applied to every node type.</p>
+            <p>A function call becomes:</p>
+            <div class="code-block">
+                <pre>call f(e1, ..., en)   as an expression
+
+    becomes
+
+    ...statements pulled out of each argument...
+    t1 &lt;- e1            // every argument forced into its own temporary
+    ...
+    tn &lt;- en
+    call f(t1, ..., tn) // now a statement in its own right
+    and the value of the original expression is the return temporary</pre>
+            </div>
+            <p>Forcing each argument into a temporary before the call is what actually nails down evaluation order.
+                After this stage the order is written into the statement list explicitly, and no later pass can
+                accidentally reorder it.</p>
+            <p>The genuinely tricky case is storing to memory. If the destination is a computed address and the value
+                being stored has side effects of its own, you cannot simply compute the address and then compute the
+                value, because the value's side effects might change whatever the address depended on. So the computed
+                address is frozen into a temporary first, then the value is computed, then the store happens:</p>
+            <div class="code-block">
+                <pre>t &lt;- the destination address        // freeze it before anything else runs
+...side effects of the value being stored...
+store into memory at t</pre>
+            </div>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="blocks">
+            <h2>06 · Basic blocks and trace scheduling</h2>
+            <p class="lede">A <strong>basic block</strong> is a run of instructions with one entry at the top and one
+                exit at the bottom, with no branches into or out of the middle. Once a program is cut into blocks, the
+                jumps between them form a graph, called the control flow graph, and essentially every analysis in the
+                rest of the compiler is expressed on that graph rather than on a list of instructions.</p>
+            <p>The cutting step enforces three rules that everything downstream depends on. Every block begins with a
+                label, one is invented if the previous stage did not emit one. Every block ends with an explicit jump or
+                return, so a block that used to just fall into the next one gets a jump added. And these invariants are
+                asserted in debug builds rather than assumed.</p>
+
+            <h3>Choosing what order to put the blocks in</h3>
+            <p>Once you have blocks, the order they are laid out in memory is entirely your choice, and that choice
+                decides how many branches actually execute. A conditional branch whose not-taken path sits immediately
+                after it costs nothing when not taken; if the layout is wrong, the same code takes a jump every single
+                iteration.</p>
+            <p>So blocks are laid out greedily into <strong>traces</strong>, which are likely paths of execution. Start
+                from any unplaced block and repeatedly follow, in priority order: the conditional branch's
+                <em>false</em>
+                edge, then its true edge, then an unconditional jump's target, taking whichever is still unplaced.
+            </p>
+            <p>Preferring the false edge is the whole point. It places the not-taken path physically next, so the common
+                case falls straight through.</p>
+
+            <h3>Fixing the branches afterwards</h3>
+            <p>Reordering blocks invalidates all the jumps that were written before the order was known, so a repair
+                step rewrites each block's final instruction to match where things ended up:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Situation after reordering</th>
+                            <th>Rewrite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>The false destination is now the next block</td>
+                            <td>Drop it. The branch simply falls through when not taken.</td>
+                        </tr>
+                        <tr>
+                            <td>The true destination is now the next block</td>
+                            <td>Invert the condition and swap the two destinations, so the fall-through case is the one
+                                that is adjacent.</td>
+                        </tr>
+                        <tr>
+                            <td>Neither is adjacent</td>
+                            <td>Keep the conditional branch and add an explicit jump after it.</td>
+                        </tr>
+                        <tr>
+                            <td>An unconditional jump targets the very next block</td>
+                            <td>Delete it entirely.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>The graph can also dump itself in Graphviz format, which sounds like a small convenience and was in
+                practice how most of the later bugs got found. Reading a control flow graph as a picture is enormously
+                easier than reading it as a list.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="fold">
+            <h2>07 · Constant folding</h2>
+            <p class="lede">The first real optimization, and the simplest one to describe: anything the compiler can
+                compute itself, it should compute itself rather than emitting instructions to compute it at runtime.
+                <code>6 * 7 + 4</code> becomes <code>46</code> at compile time.
+            </p>
+            <p>It works bottom up, folding the children of an expression before trying the parent, so nested arithmetic
+                collapses completely in one pass: <code>6 * 7</code> becomes <code>42</code>, then
+                <code>42 + 4</code> becomes <code>46</code>. It handles arithmetic, bitwise operations, shifts and every
+                comparison, including Eta's high-multiply operator, which returns the top half of a 128-bit product and
+                therefore has to be folded using a 128-bit integer type.
+            </p>
+
+            <h3>Two things it deliberately refuses to fold</h3>
+            <p>Not folding is sometimes the correct behaviour, and both cases here are about not baking a wrong answer
+                into the program.</p>
+            <ul class="body-list">
+                <li><strong>Division or modulo by zero.</strong> The right behaviour is a trap at runtime. Folding it
+                    would mean either crashing the compiler on a program that might never execute that line, or quietly
+                    substituting some invented value. So the expression is left in a form that stays non-constant, which
+                    also stops the surrounding expression from being treated as foldable.</li>
+                <li><strong>The most negative integer divided by negative one.</strong> The true answer is one larger
+                    than the maximum positive integer, so it overflows. In C++ this is undefined behaviour, meaning the
+                    compiler compiling <em>this</em> compiler is free to do anything at all. So it is special cased
+                    explicitly to wrap around, which is what the hardware does.</li>
+            </ul>
+            <p>The pass also does a small tidying job that pays off later: for operators where order does not matter, it
+                moves the constant to the right. That way the instruction selection stage in step 11 needs one pattern
+                for <code>x + 1</code> rather than two patterns for <code>x + 1</code> and <code>1 + x</code>.</p>
+            <p>Ordering within the pipeline matters here. Folding deliberately runs <em>after</em> block reordering,
+                because the branch repair step from stage 6 introduces new foldable expressions every time it inverts a
+                condition. Running the two in the other order would leave those unfolded.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="ssa">
+            <h2>08 · SSA construction</h2>
+            <p class="lede">Static Single Assignment is a way of rewriting a program so that every variable is assigned
+                exactly once. Where the original code assigns <code>x</code> three times, SSA has
+                <code>x&#8321;</code>, <code>x&#8322;</code> and <code>x&#8323;</code>, and every use refers to exactly
+                one of them.
+            </p>
+            <p>The reason this is worth doing is that it makes the question "where did this value come from?" have a
+                single answer instead of requiring a search backwards through every path that could have reached this
+                point. Optimizations that would otherwise need careful dataflow analysis become almost trivial, as the
+                next two sections show. Getting <em>into</em> this form is the hard part, and it is most of the work in
+                this stage.</p>
+
+            <h3>The obvious problem, and phi functions</h3>
+            <p>If a variable is assigned in both branches of an <code>if</code>, then code after the branch has to refer
+                to one of two definitions, and which one depends on which path ran. Single assignment appears
+                impossible.</p>
+            <p>The fix is a pseudo-instruction called a <strong>phi function</strong>, placed where paths merge:
+                <code>x&#8323; = phi(x&#8321;, x&#8322;)</code> means "x&#8323; takes the value of x&#8321; if we
+                arrived from the first predecessor, or x&#8322; if we arrived from the second". It is not a real
+                instruction and cannot be executed; it is bookkeeping that gets removed before code generation.
+            </p>
+
+            <h3>Where do phi functions go? Dominance</h3>
+            <p>You could put a phi function at the top of every block for every variable and be correct, but the result
+                would be enormous. The precise answer comes from dominance.</p>
+            <p>A block <em>D</em> <strong>dominates</strong> block <em>N</em> if every path from the function's entry to
+                <em>N</em> passes through <em>D</em>. Intuitively, if <em>D</em> dominates <em>N</em>, then anything
+                <em>D</em> computed is definitely available at <em>N</em>, because there was no way to get to <em>N</em>
+                without going through <em>D</em>.
+            </p>
+            <p>The <strong>dominance frontier</strong> of a block is then the set of blocks just past the edge of its
+                dominance: the places where control coming from <em>D</em> first meets control that did not come from
+                <em>D</em>. Those are exactly the points where two different definitions of a variable can first
+                collide,
+                which is exactly where a phi function is needed. So the algorithm is: for each variable, for each block
+                that assigns it, place a phi function in every block on the iterated dominance frontier.
+            </p>
+            <p>Dominators themselves are computed with the Cooper, Harvey and Kennedy iterative algorithm, which
+                repeatedly walks up a partially built dominator tree comparing node numbering until the answers stop
+                changing. It is simple to implement and fast on the control flow graphs real programs produce.</p>
+            <p>After placement, a walk over the dominator tree carrying a stack per variable does the renaming: each
+                assignment pushes a fresh version, each use reads whatever version is currently on top. Debug builds
+                then
+                assert the whole point of the exercise, that no variable is assigned twice.</p>
+
+            <h3>One preparatory step: splitting critical edges</h3>
+            <p>Before any of that, edges going from a block with several successors into a block with several
+                predecessors get split by inserting an empty block in between that does nothing but jump. These are
+                called critical edges, and they are a problem because phi functions eventually turn into ordinary copy
+                instructions placed in predecessor blocks. On a critical edge there is nowhere safe to put that copy:
+                the
+                predecessor is shared with another path that must not run it, and the successor is shared with another
+                path that must not either. Inserting a block gives the copy somewhere to live.</p>
+
+            <h3>Getting back out, and the swap problem</h3>
+            <p>Since phi functions are not real instructions, they have to be replaced by copies in the predecessor
+                blocks before code generation. Doing this naively is wrong, in a way that is easy to miss. Consider a
+                block containing both of these:</p>
+            <div class="code-block">
+                <pre>a &lt;- phi(b)
+b &lt;- phi(c)</pre>
+            </div>
+            <p>Emit <code>a &lt;- b</code> and then <code>b &lt;- c</code> and the result is correct. Emit them in the
+                other order and <code>a</code> picks up the <em>new</em> value of <code>b</code> instead of the old one.
+                Phi functions are defined to all happen simultaneously; a sequence of copies does not. This is known as
+                the swap problem.</p>
+            <p>The fix is to build a small dependency graph over the copies, with an edge from one copy to another when
+                the first reads what the second writes, and then topologically sort it so that every read is emitted
+                before the write that would destroy it. A genuine cycle, meaning an actual swap, has no valid ordering,
+                so it is broken by introducing a fresh temporary. Which is exactly the scratch variable you would reach
+                for to swap two values by hand.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="dce">
+            <h2>09 · Dead code elimination</h2>
+            <p class="lede">If a program computes a value and then never uses it, the instructions that computed it can
+                be deleted. This matters more than it sounds, because dead code is rarely written by hand; it is
+                produced by earlier optimizations, by inlining, and by the compiler's own generated temporaries.</p>
+            <p>In single assignment form this becomes almost embarrassingly simple, which is the payoff for all the work
+                in the previous stage. Keep a worklist of variables. Take one; if nothing uses it, delete the single
+                instruction that defines it. Then put every variable that <em>that</em> instruction used back on the
+                worklist, because deleting it may have just made its own inputs unused. Repeat until nothing changes.
+            </p>
+            <p>That cascade is where the value is. One unused result at the end of a chain of computation unravels the
+                entire chain behind it, one instruction per round.</p>
+            <p>The pass is careful about what it is allowed to delete. It only removes instructions it can be sure have
+                no effect beyond producing their result:</p>
+            <ul class="body-list">
+                <li>Stores to memory are never removed. Memory is observable by other parts of the program, and this
+                    compiler does no alias analysis, so it cannot prove a store is unnecessary.</li>
+                <li>Anything touching the special argument or return-value locations is never removed, because those are
+                    visible to the caller and putting a value there is the entire purpose of the instruction.</li>
+            </ul>
+            <p>It leans on the single-assignment property hard enough that it checks for it: if it ever encounters an
+                instruction defining more than one variable, it throws, because that means the input is not actually in
+                SSA form and every conclusion the pass would draw is unsound.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="copyprop">
+            <h2>10 · Copy and constant propagation</h2>
+            <p class="lede">If a variable is just a copy of another variable, or is just a known constant, then every
+                use of it can be replaced by the thing it was assigned, and the copy itself deleted. This cleans up the
+                large number of redundant temporaries that IR translation and canonicalization deliberately created.</p>
+            <p>Four rewrites, all of which are only valid because single assignment guarantees the right hand side
+                cannot
+                have changed between the assignment and the use:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Rewrite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>t &lt;- constant</code></td>
+                            <td>Substitute the constant into every use of <code>t</code>, then delete the assignment.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>t &lt;- s</code></td>
+                            <td>Replace every use of <code>t</code> with <code>s</code>, then delete the assignment.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>t &lt;- c1 op c2</code></td>
+                            <td>Both operands are now constant, so fold it and re-examine the result.</td>
+                        </tr>
+                        <tr>
+                            <td><code>t &lt;- phi(c, c, ..., c)</code></td>
+                            <td>Every incoming path supplies the same constant, so the merge is pointless. Collapse it
+                                to a plain assignment. A phi with only one incoming value becomes a plain copy.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Every rewrite puts the affected instructions back on the worklist, so the four feed each other in a loop:
+                propagating a constant into an expression makes that expression foldable, folding it produces a new
+                constant assignment to propagate, and so on until nothing changes.</p>
+            <p>The most valuable case is a conditional branch. If a branch condition folds to a constant, the branch is
+                now decided at compile time, so one of its two destinations is unreachable. This is the point where
+                constant propagation stops being about arithmetic and starts deleting entire regions of code, with dead
+                code elimination then sweeping up everything those regions were keeping alive.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="tiling">
+            <h2>11 · Instruction selection</h2>
+            <p class="lede">Now the IR has to become real machine instructions. The usual way to think about this is
+                <strong>tiling</strong>: the IR is a tree, each machine instruction can implement some small tree shape,
+                and the job is to cover the whole tree with those shapes. Every tile placed is one instruction emitted.
+                Bigger tiles mean fewer instructions.
+            </p>
+            <p>The matching is done with a small set of composable patterns, so that a tile in the source reads almost
+                exactly like the IR shape it matches. Patterns are tried from most specific to least specific, taking
+                the
+                largest tile that fits at each point. This approach is called maximal munch. It is not guaranteed
+                optimal, which would require a dynamic programming search over all possible tilings, but it is
+                dramatically easier to extend and the difference in practice is small.</p>
+
+            <h3>Where the real wins are</h3>
+            <p><strong>Addressing modes.</strong> This is the big one. x86-64 can compute
+                <code>base + index * scale + offset</code> as part of a single memory operand, at no extra cost, where
+                the scale is 1, 2, 4 or 8. And array indexing produces exactly that shape: base pointer, index variable,
+                element size, header offset. Matching the whole shape as one tile collapses what would otherwise be four
+                instructions (multiply, add, add, load) into one load.
+            </p>
+            <div class="code-block">
+                <pre>load from ( e1 + e2 * 8 + 16 )     as an IR tree
+
+    becomes
+
+    mov  dest, [base + index*8 + 16]     one instruction</pre>
+            </div>
+            <p><strong>Using the address unit for arithmetic.</strong> The same address computation appearing as an
+                ordinary value, not a memory access, becomes a single <code>lea</code> instruction, which computes an
+                address without accessing memory. It is also used for plain addition, because unlike <code>add</code> it
+                does not modify the flags register, so a comparison result can survive across it.</p>
+            <p><strong>Declaring hidden register effects.</strong> Several x86 instructions touch registers that do not
+                appear anywhere in their operands. Division uses and overwrites two specific registers. Shifts clobber
+                another. A function call destroys every caller-saved register. If the register allocator does not know
+                about these, it will happily leave a live value in a register the hardware is about to overwrite, and
+                produce a program that is wrong in a way that is very unpleasant to debug. So each instruction declares
+                the registers it implicitly reads and writes.</p>
+            <p>Finally, this stage performs what is called the <em>view shift</em>: the abstract "argument number 3"
+                that IR translation emitted becomes a read from whatever physical register or stack slot the calling
+                convention actually puts argument three in. That is the moment the program stops being
+                machine-independent.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="frames">
+            <h2>12 · Stack frames and the calling convention</h2>
+            <p class="lede">A calling convention is the agreement between a caller and a callee about where arguments
+                go, where return values come back, who is responsible for preserving which registers, and how the stack
+                is arranged. It has to be followed exactly, because the other side of the call may have been compiled by
+                an entirely different compiler.</p>
+            <p>Each function gets a stack frame, which is the region of stack it owns while it runs. It holds saved
+                registers, any variables that did not fit in registers, and space for arguments and return values that
+                did not fit either.</p>
+            <div class="code-block">
+                <pre>------------------
+| return address |
+------------------
+| caller's frame |
+| pointer        |
+------------------  } total size rounded up to a multiple of 16 bytes
+| saved registers|
+| spilled values |
+------------------  } the sections below are only present if needed
+| extra returns  |  } written by the callee, read by the caller
+------------------
+| extra arguments|  } written by the caller, read by the callee
+------------------</pre>
+            </div>
+            <p>The total is rounded up to a multiple of 16 because the platform requires the stack pointer to be 16-byte
+                aligned at every call instruction, and violating that crashes in library code far away from the actual
+                mistake.</p>
+
+            <h3>Multiple return values bend the convention</h3>
+            <p>This is the one place Eta genuinely departs from the standard convention, and it is a direct consequence
+                of a language feature. Standard practice gives you one return register, and this convention extends that
+                to two. But Eta functions can return any number of values.</p>
+            <p>So when a function returns more than two, the caller allocates space on its own stack and passes the
+                address of that space in the first argument register. The callee writes the extra return values there.
+                The consequence is that the first argument register is now occupied, so all the ordinary arguments shift
+                down one position.</p>
+            <p>Which means the question "where does argument number three live?" cannot be answered from the argument
+                number alone. You also have to know how many values the function being called returns. That coupling
+                between the return arity and the argument positions is the kind of thing that is obvious once written
+                down and extremely confusing when encountered as a bug.</p>
+            <p>Arguments past the available registers go on the stack and are read at fixed offsets from the frame
+                pointer.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="regalloc">
+            <h2>13 · Register allocation</h2>
+            <p class="lede">Every stage since IR translation has pretended the machine has an unlimited number of
+                variables. It has fourteen usable registers. This is the stage that pays for that fiction. Values that
+                cannot be kept in registers get <strong>spilled</strong>, meaning stored to the stack frame and reloaded
+                when needed, which is correct but slow.</p>
+            <p>The allocator currently in the tree is deliberately the simplest one that works. Every abstract variable
+                gets its own stack slot, permanently. Three registers are reserved as scratch space and never used for
+                anything else. Then, for each instruction individually: load the values it reads into scratch registers,
+                run the instruction, and store back anything it wrote.</p>
+            <p>Read-modify-write instructions like <code>add</code> need care, since they consume their destination's
+                old value as well as producing a new one, so their destination counts as both a read and a write.</p>
+            <p>The code this produces is genuinely bad. Every single value makes a round trip through memory, so a loop
+                that should keep its counter in a register instead loads and stores it on every iteration. But it is
+                obviously correct, and having something obviously correct at the bottom of the pipeline means the stages
+                above it can be tested without a second unproven component in the way.</p>
+            <p>The standard better approach is graph colouring: build an interference graph where two variables are
+                connected if they are ever live at the same time, then colour it with fourteen colours, spilling
+                whatever
+                cannot be coloured. Most of what that needs is already present, namely the control flow graph, the
+                per-block record of which variables are defined and used, the dominator tree, and the implicit register
+                declarations from the previous stage. What is missing is liveness analysis, which computes which
+                variables are live at each point, and the interference graph built on top of it.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="emit">
+            <h2>14 · Assembly emission</h2>
+            <p class="lede">The last stage is the least conceptually interesting and still has to be right. It walks the
+                finished instruction list and prints it as text in the assembler's syntax.</p>
+            <p>That means section directives separating code from data, a label for each function, then the instructions
+                themselves, with each operand rendered according to whether it is a register, a memory reference, an
+                immediate constant or a label. Global variables and string constants are written into the data section
+                under the type-encoded names from stage 4. The output is a <code>.s</code> file, which a standard
+                assembler and linker turn into an executable.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+
+        <section id="testing">
+            <h2>How any of this gets tested</h2>
+            <p>Testing a compiler is awkward because the output is another program, and "did it produce the right
+                program" is not a question with a simple assertion. The approach here is differential testing: run the
+                compiler and a known-good reference implementation on the same input and compare.</p>
+            <p>What makes that practical is that every stage can dump its own output to a file. There are separate
+                command line flags to stop after lexing, after parsing, after type checking, or after IR generation,
+                each
+                writing a text file. So when something is wrong, the failing stage can be identified by comparing four
+                files rather than by reasoning backwards from broken assembly. Being able to isolate <em>which</em>
+                stage is wrong is most of debugging a compiler.</p>
+            <p>There is also a mode that runs the generated intermediate representation through an interpreter, so the
+                compiler's output can be executed and checked for correct behaviour before any assembly generation
+                exists
+                at all. That decoupling meant the middle of the pipeline could be finished and trusted while the back
+                end
+                was still being written.</p>
+            <p>On top of the test suites provided with the course, the repository carries programs written to stress the
+                language harder than the assignments do: Conway's game of life, a fractal renderer, merge sort, longest
+                increasing subsequence. Plus targeted cases for the things most likely to be subtly wrong, which are
+                integer arithmetic exactly at the maximum and minimum values, complete truth tables for every boolean
+                and
+                comparison operator, one, two and three dimensional arrays with sizes only known at runtime, empty and
+                nested array literals, concatenation, negative and out-of-range indices, and deeply nested control
+                flow.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to Top</a></div>
+        </section>
+    </main> -->
+
+            <footer>
+                <p>&copy; 2026 Grace Jin. All rights reserved.</p>
+            </footer>
+            <script>
+                (function () {
+                    var TOTAL = 7;
+                    var img = document.getElementById('spec-page');
+                    var cur = document.getElementById('spec-cur');
+                    var prev = document.getElementById('spec-prev');
+                    var next = document.getElementById('spec-next');
+                    if (!img || !cur || !prev || !next) return;
+                    var page = 1;
+
+                    function preload(n) {
+                        if (n < 1 || n > TOTAL) return;
+                        var p = new Image();
+                        p.src = 'images/spec/page-' + n + '.png';
+                    }
+
+                    function show(n) {
+                        page = Math.min(TOTAL, Math.max(1, n));
+                        img.src = 'images/spec/page-' + page + '.png';
+                        img.alt = 'Eta Language Specification, page ' + page + ' of ' + TOTAL;
+                        cur.textContent = page;
+                        prev.disabled = (page === 1);
+                        next.disabled = (page === TOTAL);
+                        preload(page + 1);
+                        preload(page - 1);
+                    }
+
+                    prev.addEventListener('click', function () { show(page - 1); });
+                    next.addEventListener('click', function () { show(page + 1); });
+                    preload(2);
+                })();
+            </script>
 </body>
 
 </html>
