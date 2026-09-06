@@ -7,6 +7,13 @@
     <title>Writing a Hardware-Accelerated PBRT Engine</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;500;700&display=swap" rel="stylesheet">
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         /* for all hyperlinks (#af6bb1) */
         a[href] {
@@ -111,20 +118,6 @@
             line-height: 1.8;
         }
 
-        .coming-soon {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: #1a1a1a;
-            border-left: 3px solid #af6bb1;
-            border-radius: 5px;
-            margin: 2rem 0;
-        }
-
-        .coming-soon h2 {
-            color: #af6bb1;
-            font-size: 1.8rem;
-        }
-
         section {
             margin-bottom: 2.5rem;
             padding: clamp(1.5rem, 3vw, 2rem);
@@ -138,6 +131,22 @@
             font-size: 1.5rem;
             margin-top: 0;
             margin-bottom: 1rem;
+        }
+
+        section h3 {
+            color: #d79bd8;
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2e2e2e;
+        }
+
+        section h3.first {
+            margin-top: 1.5rem;
+            padding-top: 0;
+            border-top: none;
         }
 
         .toc {
@@ -158,6 +167,12 @@
             margin: 0;
             padding-left: 1.5rem;
             list-style-type: none;
+        }
+
+        .toc ul ul {
+            padding-left: 1.25rem;
+            margin-top: 0.5rem;
+            font-size: 0.92rem;
         }
 
         .toc li {
@@ -207,6 +222,111 @@
             line-height: 1.5;
         }
 
+        /* --- figures & image grids --- */
+        figure {
+            margin: 1.5rem 0;
+        }
+
+        figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            background: #111;
+        }
+
+        figcaption {
+            color: #888;
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 0.6rem;
+            text-align: center;
+        }
+
+        .img-grid {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .img-grid.two {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .img-grid.three {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .img-grid figure {
+            margin: 0;
+        }
+
+        @media (max-width: 640px) {
+
+            .img-grid.two,
+            .img-grid.three {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- tables --- */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            vertical-align: top;
+            color: #ccc;
+        }
+
+        th {
+            background: #262026;
+            color: #d79bd8;
+            font-weight: 500;
+        }
+
+        ul.body-list {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        ol.body-list {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        strong {
+            color: #e8d3e9;
+            font-weight: 500;
+        }
+
+        code {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 3px;
+            padding: 0.1rem 0.35rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88rem;
+            color: #e8d3e9;
+        }
+
+        mjx-container[display="true"] {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.25rem 0;
+        }
+
         footer {
             margin-top: 4rem;
             padding: 2rem;
@@ -234,44 +354,552 @@
 
     <main id="top">
         <h1>Writing a Hardware-Accelerated PBRT Engine</h1>
-        <p class="project-subtitle">This entry documents the progress of writing a physically-accurate ray tracer step
-            by step. This starts from bsaic ray tracing optimizations (BVH acceleration structure with thread
-            paralliziation for the 67th time), to adding more cool features. This project is built off of a minimalistic
-            ray tracing library, but it is not enough for what we want to achieve! </p>
+        <p class="project-subtitle">A DirectX12 physically-based renderer running on my sad ass RTX A3000.</p>
 
         <div
             style="background: #2a2020; border-left: 3px solid #ff69b4; border-radius: 5px; padding: 15px 20px; margin: 20px 0; color: #ccc;">
-            <strong style="color: #ff69b4;">📝 Note:</strong> This developer log is a work in progress! In the meantime,
-            the full documentation and source code for this project can be found on GitHub: <a
-                href="https://github.com/gracejinsotrue/PBRT-renderer-" target="_blank"
+            <strong style="color: #ff69b4;">📝 Note:</strong> This writeup is a work in progress and is currently
+            organized by topic rather than chronologically. The full documentation and source code can be found on
+            GitHub: <a href="https://github.com/gracejinsotrue/PBRT-renderer-" target="_blank"
                 rel="noopener noreferrer">github.com/gracejinsotrue/PBRT-renderer-</a>
         </div>
 
-        <div class="toc">
-            <h3>Jump to Entry:</h3>
-            <ul>
-                <li><a href="#entry-1">2/9/2026 - Monte Carlo integration for photorealistic rendering stuff yay woo
-                        wahoo i love math</a></li>
-
-                <li><a href="#entry-1">2/8/2026 - We balling with C++ parallelization library</a></li>
-
-                <li><a href="#entry-1">2/6/2026 - starting writing basic, CPU-bound ray tracer in C++</a></li>
-            </ul>
-        </div>
-        <section id="entry-1">
-            <h2>2/9/2026: Monte Carlo integration for photorealistic rendering stuff yay woo wahoo i love math</h2>
-            <p> yeah </p>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>A physics-based GPU path tracer I built for CS5630 (Physically-Based Rendering) at Cornell, the
+                first-ever offering of the class (<a href="https://pbrt.org/" target="_blank"
+                    rel="noopener noreferrer">more on PBR here</a>). More accurately, I primarily wrote the math-heavy
+                logic (hair, volumetrics, etc.) on CPU during the school semester, then in my free time during my
+                summer internship as a systems software engineering intern at <a
+                    href="https://www.linkedin.com/blog/engineering" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a>, I extended this project to run primarily on GPU.</p>
+            <p>Every ray bounce, material evaluation, and light sample runs entirely on the GPU via DirectX Raytracing
+                (DXR) with hardware-accelerated ray-triangle intersection. With the techniques implemented here
+                (hair/fiber rendering, skin, the Disney BSDF, and more) you can build a diverse, complicated, beautiful
+                scene with physically-accurate lighting.</p>
+            <ol class="body-list">
+                <li>I render a final scene of a "self-portrait" surrounded by nerdy objects I like. This scene contains
+                    roughly 2.5 million triangles, 100+ meshes, 100+ distinct textures.</li>
+                <li>In terms of perf benchmarking, it is able to render 10+ million triangles.</li>
+                <li>Quite a few other interesting scenes are to come...</li>
+            </ol>
             <div class="back-to-top">
                 <a href="#top">↑ Back to Top</a>
             </div>
         </section>
-        <section id="entry-1">
-            <h2>2/8/2026: We balling with C++ parallelization library</h2>
-            <p> After implementing the basic BVH, one tends to figure out two things. One, BVH fast. Two, building
-                the
+
+        <div class="toc">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#final-render">Final Render (CS5630 Rendering Competition)</a></li>
+                <li><a href="#san-miguel">San Miguel Renders</a></li>
+                <li><a href="#bmw-m6">BMW M6</a></li>
+                <li><a href="#sportscar">Sportscar</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#techniques">Rendering Techniques</a>
+                    <ul>
+                        <li><a href="#hair">Hair (Chiang et al. 2016 BCSDF)</a></li>
+                        <li><a href="#disney">Disney "Principled" BRDF</a></li>
+                        <li><a href="#volumetrics">Volumetric Participating Media</a></li>
+                        <li><a href="#sss">Subsurface Scattering: Random-Walk BSSRDF</a></li>
+                        <li><a href="#textures">More Boring and but Fundamental Stuff: Textures</a></li>
+                        <li><a href="#normal-mapping">Normal Mapping</a></li>
+                        <li><a href="#dof">Depth of Field (Thin Lens Model)</a></li>
+                        <li><a href="#ibl">Image-Based Lighting (IBL)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#performance">Performance &amp; Optimization</a></li>
+                <li><a href="#devlog">Development Log (CPU-side beginnings)</a></li>
+            </ul>
+        </div>
+
+        <section id="final-render">
+            <h2>Final Render That I Submitted for CS5630 Rendering Competition</h2>
+            <p>The scene was assembled in Blender (about 100 hours in a piece of software I did not know going in),
+                exported mesh by mesh with all world-space transforms baked in, and post-processed with Intel's
+                open-source denoiser.</p>
+            <p>In terms of the Blender scene assembly, I had some help scanning my face and reconstructing it as a mesh
+                with clean geometry. It looks good, right? And then, I modelled so many small objects in Blender, or
+                took them off of SketchFab and moved them to their respective coordinates in Blender. Consider this a
+                glorified art project. See if you can spot any references (e.g., how many Miku's can you spot?)</p>
+            <figure>
+                <img src="images/snapshot_68_denoised.png" alt="Final denoised scene" loading="lazy">
+                <figcaption>Final denoised scene</figcaption>
+            </figure>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/blender_ss.png" alt="Blender scene layout" loading="lazy">
+                    <figcaption>Blender scene layout</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/blender_wireframe.png" alt="Blender wireframe" loading="lazy">
+                    <figcaption>Blender wireframe</figcaption>
+                </figure>
+            </div>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="san-miguel">
+            <h2>San Miguel Renders</h2>
+            <p>This is a popular computer graphics scene to render. The scene is about 10M triangles so it is a nice
+                way to stress-test performance as well as just get a generally very diverse and pretty scene to render.
+                Credits to McGuire Computer Graphics Archive for all the geometry and textures!</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/bloom_ON_i0.05_16spp_DENOISED.png" alt="San Miguel with bloom, 16spp, denoised"
+                        loading="lazy">
+                </figure>
+                <figure>
+                    <img src="images/san_miguel_5.png" alt="San Miguel render" loading="lazy">
+                </figure>
+                <figure>
+                    <img src="images/san_miguel_3.png" alt="San Miguel render" loading="lazy">
+                </figure>
+                <figure>
+                    <img src="images/san_miguel_4.png" alt="San Miguel render" loading="lazy">
+                </figure>
+            </div>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="bmw-m6">
+            <h2>BMW M6</h2>
+            <p>The model and texture is from the <a href="https://github.com/mmp/pbrt-v4-scenes" target="_blank"
+                    rel="noopener noreferrer">pbrt-v4-scenes</a> collection. The car itself is "BMW M6 2006" by tyrant
+                monkey, released CC0 on BlendSwap.</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/bmw_m6.png" alt="BMW M6 render" loading="lazy">
+                </figure>
+                <figure>
+                    <img src="images/bmw_2.png" alt="BMW M6 render, second angle" loading="lazy">
+                </figure>
+            </div>
+            <p>This one not only looks cool but serves as a material stress test. It leans on the <a
+                    href="#disney">Disney BRDF</a> primarily, where nearly every knob on it gets used somewhere on the
+                car. There are about 26 different materials resolved to a few different categories:</p>
+            <ul class="body-list">
+                <li>dielectric coat over diffuse base: body paint, tires, leather, brake discs, studio floor</li>
+                <li>bare metal: chrome trim, kidney grille, silver in roundel</li>
+                <li>metal under clearcoat: wheel rims</li>
+                <li>specular glass for glass objects</li>
+                <li>flat lambertian</li>
+            </ul>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="sportscar">
+            <h2>Sportscar</h2>
+            <p>Also from the <a href="https://github.com/mmp/pbrt-v4-scenes" target="_blank"
+                    rel="noopener noreferrer">pbrt-v4-scenes</a> collection.</p>
+            <figure>
+                <img src="images/sportscar_front3q.png" alt="Sportscar, front three-quarter view" loading="lazy">
+            </figure>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>Architecture</h2>
+            <p>The whole pipeline (shooting rays, finding intersections, all the beautiful shading math, shadow
+                testing) is implemented in HLSL and dispatched through DXR. Here are some interesting design decisions
+                (in my opinion):</p>
+            <p><strong>All textures in one array.</strong> Every texture in the scene is loaded into a single unbounded
+                GPU array. Each material stores small integer indices pointing into that array, so any shader
+                invocation can reach any texture with a single indexed sample. 50+ textures can coexist without any
+                special-casing.</p>
+            <p><strong>Geometry in flat GPU buffers.</strong> UVs, normals, and tangents for every mesh are
+                concatenated into large flat buffers at scene build time. When a ray hits a triangle, DXR gives the
+                shader an instance ID and primitive index, which it uses to look up the right three vertices and
+                interpolate the attributes at the hit point, without any per-mesh binding.</p>
+            <p><strong>Mip levels from hit distance.</strong> Without a proper ray differential framework, mip level is
+                approximated from the hit distance and the screen resolution. It's not perfect, but it avoids obvious
+                aliasing on surfaces seen at a glancing angle.</p>
+            <p><strong>Stochastic alpha for hair and eyelashes.</strong> Alpha-textured meshes (hair cards, eyelashes,
+                eyebrows) are marked as non-opaque in the acceleration structure. This tells DXR to call a small
+                any-hit shader on each candidate intersection rather than accepting it automatically. The shader
+                samples the alpha texture and probabilistically accepts or discards the hit (using α² rather than α,
+                since alpha maps from most DCC tools are perceptually encoded). This applies to both primary rays and
+                shadow rays, so strand silhouettes cut out in shadows too.</p>
+            <p><strong>Intel OIDN at the end.</strong> The raw HDR framebuffer goes through Intel Open Image Denoiser
+                before tone-mapping.</p>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="techniques">
+            <h2>Rendering Techniques</h2>
+
+            <h3 class="first" id="hair">Hair (Chiang et al. 2016 BCSDF)</h3>
+            <p>Rendering hair is hard, both in terms of performance and visual accuracy. This is because a single fiber
+                is a translucent dielectric cylinder, so light can reflect off the outside, transmit straight through,
+                bounce internally, or some combination. Now imagine thousands of these.</p>
+            <p>I implemented the Chiang 2016 model, which breaks this down into four scattering paths:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>R</strong></td>
+                            <td>Reflects off the outer cuticle surface</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TT</strong></td>
+                            <td>Transmits in through one side and out the other</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TRT</strong></td>
+                            <td>Transmits in, bounces off the inside, transmits back out</td>
+                        </tr>
+                        <tr>
+                            <td><strong>residual</strong></td>
+                            <td>Everything with 3 or more internal bounces, summed analytically as a geometric series
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Each path is attenuated by Fresnel reflectance at each interface and Beer-law absorption through the
+                fiber interior:</p>
+            <p>$$T = \exp\!\left(-\sigma_a \cdot \frac{2\cos\gamma_t}{\cos\theta_t}\right)$$</p>
+            <p>where $\sigma_a$ is the absorption coefficient, derived from the target hair color via a polynomial fit:
+                you specify color directly, not raw absorption values. The four attenuation values work out to:</p>
+            <div class="code-block">
+                <pre>ap[0] = f;                          // R:  one Fresnel reflection
+ap[1] = (1-f)*(1-f) * T;           // TT: transmit in, absorb, transmit out
+ap[2] = ap[1] * T * f;             // TRT: TT path + internal bounce + T again
+ap[3] = ap[2] * f*T / (1 - f*T);   // residual: geometric series for p&gt;=3</pre>
+            </div>
+            <p>The full scattering function factors into longitudinal ($M_p$), attenuation ($A_p$), and azimuthal
+                ($N_p$) terms. Importance sampling picks a path by luminance weight, draws a longitude direction from
+                the $M_p$ distribution, and an azimuth from a trimmed logistic distribution.</p>
+            <p><strong>Hair cards</strong> are supported!: flat quad meshes textured with a grayscale strand atlas,
+                made transparent via the alpha any-hit shader described above.</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/hair_1.png" alt="Hair render, view 1" loading="lazy">
+                </figure>
+                <figure>
+                    <img src="images/hair_2.png" alt="Hair render, view 2" loading="lazy">
+                </figure>
+            </div>
+
+            <h3 id="disney">Disney "Principled" BRDF</h3>
+            <p>The Disney BRDF (Burley 2012) is the material model used in most production renderers and game engines.
+                It wraps five physically-motivated scattering lobes into one material with artist-friendly parameters
+                (<code>metallic</code>, <code>roughness</code>, <code>subsurface</code>, <code>sheen</code>,
+                <code>clearcoat</code>, etc.) instead of raw physical coefficients.
+            </p>
+            <p>The five lobes, with $\omega_i$ and $\omega_o$ being the incident and outgoing directions and
+                $\mathbf{h} = \text{normalize}(\omega_i + \omega_o)$ the half-vector:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lobe</th>
+                            <th>Formula</th>
+                            <th>What it does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Burley diffuse</strong></td>
+                            <td>$\frac{c}{\pi}(1+(F_{D90}-1)(1-\cos\theta_i)^5)(1+(F_{D90}-1)(1-\cos\theta_o)^5)$</td>
+                            <td>Rough diffuse with retroreflection at grazing angles</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hanrahan-Krueger subsurface</strong></td>
+                            <td>$\frac{1.25c}{\pi}\left(F_{ss,i} F_{ss,o}\left(\frac{1}{\cos\theta_i+\cos\theta_o} -
+                                0.5\right) + 0.5\right)$</td>
+                            <td>Flat-slab subsurface approximation; softens the shadow terminator</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GGX specular</strong></td>
+                            <td>$\frac{D_\text{GGX}\, F_\text{Schlick}\, G_\text{Smith}}{4\cos\theta_i\cos\theta_o}$
+                            </td>
+                            <td>Microfacet specular highlight</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sheen</strong></td>
+                            <td>$\kappa_\text{sheen}\, C_\text{sheen}\, (1-\cos\theta_D)^5$</td>
+                            <td>Grazing-angle brightening for cloth/fabric</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Clearcoat</strong></td>
+                            <td>$\frac{0.25\, k_{cc}\, D_\text{GTR1}\, F_{0.04}\,
+                                G_{0.25}}{4\cos\theta_i\cos\theta_o}$</td>
+                            <td>Thin dielectric layer on top, like the coating on car paint or glossy plastic</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>The combined BRDF is $f = (1-\text{metallic})\,f_\text{diffuse} + f_\text{specular} + f_\text{sheen} +
+                f_\text{clearcoat}$. Setting <code>metallic=1</code> zeroes out the diffuse and tints the specular by
+                <code>baseColor</code>, making a conductor. For sampling, a lobe is chosen weighted by its estimated
+                contribution, then a direction is drawn from that lobe's distribution.
+            </p>
+            <div class="img-grid three">
+                <figure>
+                    <img src="images/disney_metallic_ours.png" alt="Disney BRDF, metallic" loading="lazy">
+                    <figcaption>Metallic</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/disney_clearcoat_ours.png" alt="Disney BRDF, clearcoat" loading="lazy">
+                    <figcaption>Clearcoat</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/disney_sheen_ours.png" alt="Disney BRDF, sheen" loading="lazy">
+                    <figcaption>Sheen</figcaption>
+                </figure>
+            </div>
+
+            <h3 id="volumetrics">Volumetric Participating Media</h3>
+            <figure>
+                <img src="images/bunny_cloud.png" alt="Bunny rendered as a participating medium" loading="lazy">
+            </figure>
+            <p>Volumetrics are objects that are not solid, and they are another rendering challenge mathematically,
+                accurately, performance-wise, whatever. Fog, smoke, and clouds scatter or absorb light as rays travel
+                through them, not just at surfaces. A homogeneous medium has three parameters: absorption $\sigma_a$,
+                scattering $\sigma_s$, and an asymmetry parameter $g$ that controls how directional the scattering is.
+            </p>
+            <p>The probability that a ray makes it distance $d$ without interacting follows Beer's law:</p>
+            <p>$$T(d) = \exp(-\sigma_t\, d), \quad \sigma_t = \sigma_a + \sigma_s$$</p>
+            <p>When a scatter event does happen, the new direction is drawn from the <strong>Henyey-Greenstein phase
+                    function</strong>:</p>
+            <p>$$f_p(\cos\theta) = \frac{1-g^2}{4\pi\,(1 + g^2 - 2g\cos\theta)^{3/2}}$$</p>
+            <p>$g=0$ is isotropic (scatter equally in all directions); $g \to 1$ concentrates light forward, like thin
+                aerosols or clouds in sunlight. This function is analytically invertible, so importance sampling is
+                exact.</p>
+            <p>Free-flight distances are sampled via <strong>Woodcock (null-collision) tracking</strong>: propose a
+                step under an overestimate of the density, then randomly decide if it's a real collision or a null one.
+                This also extends cleanly to heterogeneous media since you only need an upper bound on the density, not
+                the exact value everywhere.</p>
+            <div class="img-grid three">
+                <figure>
+                    <img src="images/vol_g0_ours.png" alt="Volumetric render, g = 0" loading="lazy">
+                    <figcaption>g = 0 (isotropic)</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/vol_g03_ours.png" alt="Volumetric render, g = 0.3" loading="lazy">
+                    <figcaption>g = 0.3</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/vol_g08_ours.png" alt="Volumetric render, g = 0.8" loading="lazy">
+                    <figcaption>g = 0.8 (forward)</figcaption>
+                </figure>
+            </div>
+
+            <h3 id="sss">Subsurface Scattering: Random-Walk BSSRDF</h3>
+            <p>A BRDF assumes light leaves where it entered, so for general opaque materials this holds. However this
+                does not hold for skin, where light sinks into the skin, scatters, and surfaces from some other angle.
+                This is the reason why ears and fingers glow red when backlit.</p>
+            <p>So I simulate the photon directly, reusing the <a href="#volumetrics">participating media</a> transport
+                with the medium bounded by the mesh:</p>
+            <ol class="body-list">
+                <li>Refract in at the hit point and Fresnel decides reflect vs. transmit.</li>
+                <li>Sample a free-flight distance under the medium.</li>
+                <li>Reaching the boundary from inside, refract out or turn back on total internal reflection.</li>
+                <li>Otherwise scatter with Henyey-Greenstein and go back to 2.</li>
+            </ol>
+            <p>Path tracing resumes where the photon escapes.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>What it is</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>albedo</strong> $A$</td>
+                            <td>The color you want coming back out</td>
+                        </tr>
+                        <tr>
+                            <td><strong>radius</strong></td>
+                            <td>Mean free path: distance travelled between scattering events.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>You hand it a color, not physical coefficients, which is how both columns below can use the same albedo
+                texture. An interesting note is that the conversion is not obvious, though: a photon collides many
+                times before it escapes, so its survival odds per collision must run much higher than the color you
+                want back, and $A = 0.62$ needs $\alpha = 0.959$. Chiang, Kutz and Burley fitted that curve in their
+                subsurface paper:</p>
+            <p>$$\alpha = 1 - \exp\left(-5.09406A + 2.61188A^2 - 4.31805A^3\right)$$</p>
+            <p>with $\sigma_t = 1/\text{radius}$ and $\sigma_s = \alpha\,\sigma_t$. It runs per channel, where red
+                survives the most collisions (therefore light that leaks into shadow sometimes has a red tint!)</p>
+            <p>Head from <a href="https://github.com/mmp/pbrt-v4-scenes/tree/master/head" target="_blank"
+                    rel="noopener noreferrer">pbrt-v4-scenes</a>. Generally, Disney BRDF can render a lot of materials,
+                including cartoon character skin, but for more realistic skin, you can see where it falls short. Both
+                columns share geometry, albedo, camera, light, 1024 spp, etc etc and only the diffuse model changes:</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/sss_head_sky_disney.png" alt="Head under sky HDRI, Disney BRDF" loading="lazy">
+                    <figcaption>Sky HDRI, Disney</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/sss_head_sky_sss.png" alt="Head under sky HDRI, random walk SSS" loading="lazy">
+                    <figcaption>Sky HDRI, random walk</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/sss_head_dark_disney.png" alt="Head under single key light, Disney BRDF"
+                        loading="lazy">
+                    <figcaption>Single key, Disney</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/sss_head_dark_sss.png" alt="Head under single key light, random walk SSS"
+                        loading="lazy">
+                    <figcaption>Single key, random walk</figcaption>
+                </figure>
+            </div>
+
+            <h3 id="textures">More Boring and but Fundamental Stuff: Textures</h3>
+            <p>At the hit point, the shader computes the UV by barycentrically interpolating the three vertex UVs of
+                the struck triangle. Albedo textures decode sRGB automatically (the hardware handles the gamma); normal
+                and roughness maps are loaded as linear data. The sampled value then replaces the material's flat
+                scalar before the BSDF runs.</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/texture_texvsflat_textured.png" alt="Render with texture" loading="lazy">
+                    <figcaption>With texture</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/texture_texvsflat_flat.png" alt="Render without texture" loading="lazy">
+                    <figcaption>Without texture</figcaption>
+                </figure>
+            </div>
+
+            <h3 id="normal-mapping">Normal Mapping</h3>
+            <p>Normal mapping makes a flat polygon look like it has surface detail by perturbing the shading normal at
+                each hit point using a texture that stores tangent-space normals.</p>
+            <p>To do this, the shader reconstructs a per-triangle tangent frame from the UV layout. Given the three
+                edge vectors and UV differences of the hit triangle, the tangent direction is:</p>
+            <p>$$\mathbf{T} = \frac{\Delta v_2 \, \mathbf{e}_1 - \Delta v_1 \, \mathbf{e}_2}{\Delta u_1 \Delta v_2 -
+                \Delta u_2 \Delta v_1}$$</p>
+            <p>This gets orthogonalized against the interpolated vertex normal $\mathbf{N}$ (Gram-Schmidt), and the
+                bitangent follows as $\mathbf{B} = \mathbf{N} \times \mathbf{T}$. The RGB value from the normal map is
+                then mapped from $[0,1]^3$ to $[-1,1]^3$ and rotated into world space:</p>
+            <p>$$\mathbf{N'} = \text{normalize}(\mathbf{T} n_x + \mathbf{B} n_y + \mathbf{N} n_z)$$</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/nmvsflat_normalmap.png" alt="Render with normal map" loading="lazy">
+                    <figcaption>With normal map</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/nmvsflat_flat.png" alt="Render without normal map" loading="lazy">
+                    <figcaption>Without</figcaption>
+                </figure>
+            </div>
+
+            <h3 id="dof">Depth of Field (Thin Lens Model)</h3>
+            <p>A pinhole camera is sharp everywhere. A real lens has a finite aperture, so anything off the focal plane
+                blurs into a <strong>circle of confusion</strong> whose radius scales with how out of focus it is:</p>
+            <p>$$r_\text{CoC} = r \cdot \frac{|z - d_f|}{z}$$</p>
+            <p>where $r$ is the lens radius and $d_f$ is the focal distance. To simulate this, each primary ray is
+                generated in two steps: first find where the pinhole ray would hit the focal plane (the focus point),
+                then randomly offset the ray origin across the aperture disk while keeping the ray aimed at that same
+                focus point. The aperture is sampled with a uniform disk distribution (concentric mapping to avoid
+                bunching at the center).</p>
+            <div class="img-grid three">
+                <figure>
+                    <img src="images/dof_sweep_r0.png" alt="Depth of field, r = 0" loading="lazy">
+                    <figcaption>r = 0 (pinhole)</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/dof_sweep_r005.png" alt="Depth of field, r = 0.05" loading="lazy">
+                    <figcaption>r = 0.05</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/dof_sweep_r015.png" alt="Depth of field, r = 0.15" loading="lazy">
+                    <figcaption>r = 0.15</figcaption>
+                </figure>
+            </div>
+            <p>The subject (red cube) stays sharp while the background blurs more as the aperture opens up.</p>
+
+            <h3 id="ibl">Image-Based Lighting (IBL)</h3>
+            <p>Rather than placing explicit lights, a scene can be lit by an HDR panorama (or a combination of lights +
+                IBL. Also IBL is a good hack for getting non-grainy scenes because it has less high-variance
+                sampling!) Rays that miss all geometry look up their direction in the panorama and return that
+                radiance.</p>
+            <p>In sampling IBL, a uniform random direction wastes most samples on the dark sky, so at load time we
+                build a 2D CDF over the image pixels, with each pixel weighted by its luminance times $\sin\theta$ (to
+                correct for equirectangular pixels covering less solid angle near the poles). At render time, two
+                binary searches pick a row then a column, sampling directions proportional to their brightness. The
+                resulting solid-angle PDF is:</p>
+            <p>$$p_\omega = p_\text{pixel} \cdot \frac{W \cdot H}{2\pi^2 \sin\theta}$$</p>
+            <p>Environment samples are combined with BSDF samples using MIS.</p>
+            <div class="img-grid two">
+                <figure>
+                    <img src="images/ibl_ours.png" alt="IBL, diffuse sphere" loading="lazy">
+                    <figcaption>Diffuse sphere</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/ibl_mirror_ours.png" alt="IBL, mirror sphere" loading="lazy">
+                    <figcaption>Mirror sphere</figcaption>
+                </figure>
+            </div>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="performance">
+            <h2>Performance &amp; Optimization</h2>
+            <p>The renderer is a <strong>megakernel path tracer</strong>: the whole bounce loop, every BSDF above,
+                next-event estimation with MIS, and the volume tracking all run inline in one <code>RayGen()</code>
+                shader. It's a progressive accumulator, so each frame adds one sample per pixel and the image refines
+                over time. All development and profiling was on a <strong>mobile RTX A3000</strong>, which throttles
+                and crashes under sustained load, so this section leans on cheap measurements rather than heavy
+                reference renders.</p>
+
+            <h3 class="first">Megakernel vs wavefront</h3>
+            <p>The alternative to a megakernel is a <strong>wavefront</strong> tracer that splits the work into
+                separate generation, intersection, shading, and shadow passes and sorts rays by material between
+                bounces. That's the design "Megakernels Considered Harmful" (Laine, Karras, Aila 2013) argues for, and
+                it's what PBRT's GPU backend uses; it gets higher throughput on big scenes because sorting restores
+                coherence and each small pass hits higher occupancy.</p>
+            <p>The tradeoff is that a wavefront tracer spills path state to global memory between passes and turns
+                every new material into a scheduling problem. The megakernel keeps path state in registers across
+                bounces and keeps the whole renderer in one shader, which made adding hair, then Disney, then volumes,
+                then subsurface scattering cheap. For my renderer that outputs an accumulated, denoised final (not a
+                1-spp real-time frame), this iterative design choice was ok.</p>
+
+            <h3>Measurement setup</h3>
+            <p>to come</p>
+            <div class="back-to-top">
+                <a href="#top">↑ Back to Top</a>
+            </div>
+        </section>
+
+        <section id="devlog">
+            <h2>Development Log (CPU-side beginnings)</h2>
+            <p>Before any of the above ran on the GPU, this started as a CPU-bound ray tracer. These entries document
+                that earlier progress step by step, starting from basic ray tracing optimizations (BVH acceleration
+                structure with thread parallelization for the 67th time) and building up from there.</p>
+
+            <h3 class="first" id="entry-3">2/9/2026: Monte Carlo integration for photorealistic rendering stuff yay woo
+                wahoo i love math</h3>
+            <p>yeah</p>
+
+            <h3 id="entry-2">2/8/2026: We balling with C++ parallelization library</h3>
+            <p>After implementing the basic BVH, one tends to figure out two things. One, BVH fast. Two, building the
                 BVH still takes a while. I profiled the time it takes to build the BVH on my machine (my machine
-                iiiiiis
-                a 12th Gen Intel(R) Core(TM) i7-12800H yet it is hanging on by a thread hahahahahah):
+                iiiiiis a 12th Gen Intel(R) Core(TM) i7-12800H yet it is hanging on by a thread hahahahahah):</p>
             <div class="code-block">
                 <pre>BVH Statistics:
   Build time:                657.81 ms
@@ -282,63 +910,49 @@
   Bytes per node:            32
   Total nodes:               155141</pre>
             </div>
-            Spoiler alert, I brought that time down to 160ms. Let's see how!
-            </p>
+            <p>Spoiler alert, I brought that time down to 160ms. Let's see how!</p>
             <p>Basically serial BVH construction builds the tree by appending nodes into a single shared array as it
-                recurses. Therefore, I employ the helpful <a href="https://github.com/uxlfoundation/oneTBB">Thread
-                    Building Blocks Library</a> to attempt to parallelize the tree building process. As my code is
-                right
-                now,
-                two threads CANNOT safely push to the same array at
-                the same time. Rather
-                than trying to
-                synchronize access to a shared data structure, I restructured the build so each subtree is
-                constructed
-                in complete isolation (average cs major lifestyle is also to be in complete isolation); it gets its
-                own
-                copy of the triangle indices and builds into its own private arrays of nodes and indices, with no
-                shared
-                mutable state between threads:</p>
+                recurses. Therefore, I employ the helpful <a href="https://github.com/uxlfoundation/oneTBB"
+                    target="_blank" rel="noopener noreferrer">Thread Building Blocks Library</a> to attempt to
+                parallelize the tree building process. As my code is right now, two threads CANNOT safely push to the
+                same array at the same time. Rather than trying to synchronize access to a shared data structure, I
+                restructured the build so each subtree is constructed in complete isolation (average cs major lifestyle
+                is also to be in complete isolation); it gets its own copy of the triangle indices and builds into its
+                own private arrays of nodes and indices, with no shared mutable state between threads:</p>
             <div class="code-block">
                 <pre>struct BVHBuildResult {
-    std::vector<BVHNode> nodes;
-    std::vector<uint32_t> indices;
+    std::vector&lt;BVHNode&gt; nodes;
+    std::vector&lt;uint32_t&gt; indices;
 };
 
 // each call owns its indices (passed by value) and writes to its own result
-BVHBuildResult Accel::buildParallel(std::vector<uint32_t> indices, const BoundingBox3f &bbox) {
+BVHBuildResult Accel::buildParallel(std::vector&lt;uint32_t&gt; indices, const BoundingBox3f &amp;bbox) {
     BVHBuildResult result;
-    // ... SAH split logic, partition into leftIndices / rightIndices ...
-                </pre>
+    // ... SAH split logic, partition into leftIndices / rightIndices ...</pre>
             </div>
             <p>At each split, if the current subtree contains a shit ton of triangles (I set 1024 as the threshold),
-                the
-                left and right children are dispatched as concurrent tasks using TBB's task_group. Below that
-                threshold
-                we just run the construction serially because teh overhead of task scheduling outweighs the benefits
-                for
-                small workloads!</p>
+                the left and right children are dispatched as concurrent tasks using TBB's task_group. Below that
+                threshold we just run the construction serially because the overhead of task scheduling outweighs the
+                benefits for small workloads!</p>
             <div class="code-block">
                 <pre>BVHBuildResult leftResult, rightResult;
 
-if (count >= PARALLEL_THRESHOLD) {  // PARALLEL_THRESHOLD = 1024
+if (count &gt;= PARALLEL_THRESHOLD) {  // PARALLEL_THRESHOLD = 1024
     tbb::task_group tg;
-    tg.run([&]() { leftResult = buildParallel(std::move(leftIndices), leftBox); });
-    tg.run([&]() { rightResult = buildParallel(std::move(rightIndices), rightBox); });
+    tg.run([&amp;]() { leftResult = buildParallel(std::move(leftIndices), leftBox); });
+    tg.run([&amp;]() { rightResult = buildParallel(std::move(rightIndices), rightBox); });
     tg.wait();
 } else {
     leftResult = buildParallel(std::move(leftIndices), leftBox);
     rightResult = buildParallel(std::move(rightIndices), rightBox);
 }</pre>
             </div>
-            <p> Once the children finish, their independently built arrays are merged back together into the
-                parent's
-                result. The final merged result slots direcrly into the same flat node layout the serial BVH
-                construction produces, so I didn't have to modify any ray traversal code at all! And this appraoch
+            <p>Once the children finish, their independently built arrays are merged back together into the parent's
+                result. The final merged result slots directly into the same flat node layout the serial BVH
+                construction produces, so I didn't have to modify any ray traversal code at all! And this approach
                 scales well because TBB's work-stealing scheduler is really good at handling load balancing across
-                cores. </p>
-
-            <p> With fallat said,the build time is now much smaller with all other stats being the same! </p>
+                cores.</p>
+            <p>With all that said, the build time is now much smaller with all other stats being the same!</p>
             <div class="code-block">
                 <pre>BVH Statistics:
   Build time:                168.2 ms
@@ -349,7 +963,7 @@ if (count >= PARALLEL_THRESHOLD) {  // PARALLEL_THRESHOLD = 1024
   Bytes per node:            32
   Total nodes:               155141</pre>
             </div>
-            <p> C++ library import is a nightmare but we balling. Here is some more stats if you gaf: </p>
+            <p>C++ library import is a nightmare but we balling. Here is some more stats if you gaf:</p>
             <div class="code-block">
                 <pre>gracejin@grace:~/nori-26sp/build$ ./nori ../scenes/a1/ajax-normals.xml --no-gui
 Loading "../scenes/a1/ajax.obj" .. done. (V=409676, F=544566, took 1.5s and 18.7 MiB)
@@ -391,29 +1005,17 @@ Writing a 768x768 OpenEXR file to "../scenes/a1/ajax-normals"
 Writing a 768x768 PNG file to "../scenes/a1/ajax-normals"
 gracejin@grace:~/nori-26sp/build$</pre>
             </div>
-            <div class="back-to-top">
-                <a href="#top">↑ Back to Top</a>
-            </div>
-        </section>
 
-        <section id="entry-1">
-            <h2>2/6/2026: starting writing basic, CPU-bound ray tracer in C++.</h2>
-            <p> Question: how do we speed up rendering 500k+ triangles from taking 30+ minutes to take 2 seconds?
-            </p>
-            <p>
-                We start with a very basic, unoptimized CPU bound codebase. The base code from this library
-                currently
-                implements a brute force ray intersesctor algorithm, in short it traces a ray against all triangles
-                and
-                stores the resulting information in an intersection struct.
-                This shit slow:
-            </p>
-
+            <h3 id="entry-1">2/6/2026: starting writing basic, CPU-bound ray tracer in C++</h3>
+            <p>Question: how do we speed up rendering 500k+ triangles from taking 30+ minutes to take 2 seconds?</p>
+            <p>We start with a very basic, unoptimized CPU bound codebase. The base code from this library currently
+                implements a brute force ray intersector algorithm, in short it traces a ray against all triangles and
+                stores the resulting information in an intersection struct. This shit slow:</p>
             <div class="code-block">
                 <pre>/* Brute force search through all triangles */
-for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
+for (uint32_t idx = 0; idx &lt; m_mesh-&gt;getTriangleCount(); ++idx) {
     float u, v, t;
-    if (m_mesh->rayIntersect(idx, ray, u, v, t)) {
+    if (m_mesh-&gt;rayIntersect(idx, ray, u, v, t)) {
         /* An intersection was found! Can terminate
            immediately if this is a shadow ray query */
         if (shadowRay)
@@ -425,25 +1027,20 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
         foundIntersection = true;
     }
 }</pre>
-
             </div>
-            <p> Let's do the low hanging fruit of implementing a <a
-                    href="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy">Thread
-                    Bounding Volume Hiearchy</a>, which organizes a scene's
-                triangles into a binary tree where each node stores an axis-aligned bounding box enclosing all
-                geometry
-                in its subtree. During ray tracing, if a ray misses a node's bounding box, the entire subtree is
-                skipped, which turns O(n) brute force search into something closer to O(logn). For the scene I
-                rendered
-                with more than 500k triangles, this optimization determines the difference between minutes and
-                seconds
-                (for the brute force version of my code, I ran it for 30+ minutes before rage quiting.)
-
-                Here is a picture of BVH acceleration:
-                And, My basic
-                algorithm looks
-                like this:</p>
-            <img src="images/raytracing.png" alt="BVH Raytracing Example" style="max-width:100%;margin-bottom:1em;" />
+            <p>Let's do the low hanging fruit of implementing a <a
+                    href="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy" target="_blank"
+                    rel="noopener noreferrer">Bounding Volume Hierarchy</a>, which organizes a scene's triangles into a
+                binary tree where each node stores an axis-aligned bounding box enclosing all geometry in its subtree.
+                During ray tracing, if a ray misses a node's bounding box, the entire subtree is skipped, which turns
+                O(n) brute force search into something closer to O(log n). For the scene I rendered with more than 500k
+                triangles, this optimization determines the difference between minutes and seconds (for the brute force
+                version of my code, I ran it for 30+ minutes before rage quitting.) Here is a picture of BVH
+                acceleration:</p>
+            <figure>
+                <img src="images/raytracing.png" alt="BVH raytracing example" loading="lazy">
+            </figure>
+            <p>And, my basic algorithm looks like this:</p>
             <div class="code-block">
                 <pre>buildBVH(triangles, bbox):
     if no triangles: return null
@@ -460,7 +1057,7 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
     for each split plane between bins:
         cost = surfaceArea(left) × count(left)
              + surfaceArea(right) × count(right)
-        if cost < bestCost: record this split
+        if cost &lt; bestCost: record this split
 
     // only split if it's cheaper than a leaf
     if bestCost ≥ surfaceArea(bbox) × totalCount:
@@ -471,7 +1068,6 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
         left  = buildBVH(leftTriangles, leftBBox),
         right = buildBVH(rightTriangles, rightBBox)
     )</pre>
-
                 <pre>rayTraverse(ray):
     stack = [root]
     while stack not empty:
@@ -485,20 +1081,18 @@ for (uint32_t idx = 0; idx < m_mesh->getTriangleCount(); ++idx) {
             stack.push(right child)
     return closest hit</pre>
             </div>
-            <p> The construction of my BVH is top-down, at each node I use the Surface Area Heuristic to find a good
-                split. I bucket the triangle centroids into a few binds along the bounding box's longest axis, and I
+            <p>The construction of my BVH is top-down, at each node I use the Surface Area Heuristic to find a good
+                split. I bucket the triangle centroids into a few bins along the bounding box's longest axis, and I
                 evaluate the SAH cost C = S(A) * N_A + S(B) * N_B for each candidate split plane. The split that
-                minimizes the cost is chosen, My design for ray traversal uses an explicit stack rather than
-                recursion,
-                which a fixed-size array of 64 entries (more than enough) to avoid any per-ray heap allocation:</p>
+                minimizes the cost is chosen. My design for ray traversal uses an explicit stack rather than recursion,
+                with a fixed-size array of 64 entries (more than enough) to avoid any per-ray heap allocation:</p>
             <div class="code-block">
-                <pre>
-uint32_t stack[64];
+                <pre>uint32_t stack[64];
 int stackPtr = 0;
 stack[stackPtr++] = 0; // start at root
 
-while (stackPtr > 0) {
-    const BVHNode &node = m_nodes[stack[--stackPtr]];
+while (stackPtr &gt; 0) {
+    const BVHNode &amp;node = m_nodes[stack[--stackPtr]];
     if (!node.bbox.rayIntersect(ray))
         continue;
     if (node.isLeaf()) {
@@ -507,12 +1101,9 @@ while (stackPtr > 0) {
         stack[stackPtr++] = nodeIdx + 1;   // left child
         stack[stackPtr++] = node.start;     // right child
     }
-}
-
-                </pre>
+}</pre>
             </div>
-            <p> After I implemented this optimization, I ultimately shaved the brute-force render time from over
-                half an
+            <p>After I implemented this optimization, I ultimately shaved the brute-force render time from over half an
                 hour to about 2 seconds. This is 800x faster!</p>
             <div class="back-to-top">
                 <a href="#top">↑ Back to Top</a>
