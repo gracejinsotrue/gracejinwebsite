@@ -366,21 +366,28 @@
 
         <section id="overview">
             <h2>Overview</h2>
-            <p>A physics-based GPU path tracer I built for CS5630 (Physically-Based Rendering) at Cornell, the
-                first-ever offering of the class (<a href="https://pbrt.org/" target="_blank"
-                    rel="noopener noreferrer">more on PBR here</a>). More accurately, I primarily wrote the math-heavy
+            <p>Cornell had its first ever offering of CS5630 (Physically-Based Rendering) (<a href="https://pbrt.org/"
+                    target="_blank" rel="noopener noreferrer">more on PBR here</a>) in Spring 2026. I really like
+                graphics! So I signed up for the class and learned a lot (also there were like, 17 males and I was the
+                only female in the room.) For the class I ended up writing a physics-based GPU path tracer. More
+                accurately, I
+                primarily wrote the math-heavy
                 logic (hair, volumetrics, etc.) on CPU during the school semester, then in my free time during my
                 summer internship as a systems software engineering intern at <a
                     href="https://www.linkedin.com/blog/engineering" target="_blank"
-                    rel="noopener noreferrer">LinkedIn</a>, I extended this project to run primarily on GPU.</p>
+                    rel="noopener noreferrer">LinkedIn</a>, I extended this project to run primarily on GPU</p>
             <p>Every ray bounce, material evaluation, and light sample runs entirely on the GPU via DirectX Raytracing
                 (DXR) with hardware-accelerated ray-triangle intersection. With the techniques implemented here
                 (hair/fiber rendering, skin, the Disney BSDF, and more) you can build a diverse, complicated, beautiful
                 scene with physically-accurate lighting.</p>
             <ol class="body-list">
-                <li>I render a final scene of a "self-portrait" surrounded by nerdy objects I like. This scene contains
+                <li>For CS5630 final rendering competition held in class, I render a final scene of a "self-portrait"
+                    surrounded by nerdy objects I like. It won runner up in the compeititon. This scene contains
                     roughly 2.5 million triangles, 100+ meshes, 100+ distinct textures.</li>
                 <li>In terms of perf benchmarking, it is able to render 10+ million triangles.</li>
+                <li>I also pulled a few popular 3d scenes from McGuire Computer Graphics Archive to stress-test perf as
+                    well as diverse material rendering tests. </li>
+
                 <li>Quite a few other interesting scenes are to come...</li>
             </ol>
             <div class="back-to-top">
